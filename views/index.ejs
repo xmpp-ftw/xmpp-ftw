@@ -1,0 +1,49 @@
+<html>
+<head>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+window.onload = function() {
+    socket = io.connect('//' + window.document.location.host);
+
+    socket.on('error', function(error) { console.log(error); } );
+
+    socket.on('connect', function(data) {
+        console.log('connected');
+    });
+
+    socket.on('connect.fail', function(reason) {
+        console.log("Connection failed: " + reason);
+    });
+
+    socket.on('xmpp.connection', function(status) {
+        console.log("Connection status is: " + status);
+    });
+
+    socket.on('xmpp.message.chat', function(data) {
+        console.log("Received a chat from: " + data.from);
+        console.log("Content was: " + data.content);
+    });
+}
+</script>
+</head>
+<body>
+<h1>Welcome to XMPP over websockets using JSON</h1>
+<h2>Login</h2>
+<pre>
+// Not a real account!
+socket.emit('xmpp.login', {jid: 'test@example.com', password: 'password'});
+</pre>
+<h3>Send a message</h3>
+<pre>
+socket.emit('xmpp.send-message', {to: 'other@example.com', message: 'Hello world'});
+</pre>
+
+<h3>Receive a chat message</h3>
+<pre>
+socket.on('xmpp.message.chat', function(data) {
+    console.log('Got message from ' + data.from);
+    console.log('Content was: ' + data.content);
+});
+</pre>
+</body>
+</html

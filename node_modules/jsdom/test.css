@@ -1,0 +1,6 @@
+
+@media screen,handheld {
+    .citation *.printonly {
+        display: none;
+    }
+}

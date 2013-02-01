@@ -1,0 +1,20 @@
+var Connection = require('./xmpp/connection');
+var Client = require('./xmpp/client').Client;
+var Component = require('./xmpp/component').Component;
+var C2SServer = require('./xmpp/c2s').C2SServer;
+var JID = require('./xmpp/jid').JID;
+var Router = require('./xmpp/router');
+var ltx = require('ltx');
+var Stanza = require('./xmpp/stanza');
+
+exports.Connection = Connection;
+exports.Client = Client;
+exports.Component = Component;
+exports.C2SServer = C2SServer;
+exports.JID = JID;
+exports.Element = ltx.Element;
+exports.Stanza = Stanza.Stanza;
+exports.Message = Stanza.Message;
+exports.Presence = Stanza.Presence;
+exports.Iq = Stanza.Iq;
+exports.Router = Router.Router;

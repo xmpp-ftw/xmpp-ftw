@@ -1,0 +1,26 @@
+{
+  "name": "xmpp-websocket-json",
+  "version": "0.0.1",
+  "description": "XMPP over websockets using JSON",
+  "main": "server.js",
+  "dependencies": {
+    "socket.io": "~0.9.11",
+    "ejs-locals": "1.0.2",
+    "express": "3.0.3",
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lloydwatkin/xmpp-websocket-json.git"
+  },
+  "keywords": [
+    "xmpp",
+    "json",
+    "websocket",
+    "socket.io"
+  ],
+  "author": "Steven Lloyd Watkin <lloyd@evilprofessor.co.uk>",
+  "license": "Apache 2.0",
+  "engines": {
+    "node": "0.8.x"
+  }
+}
