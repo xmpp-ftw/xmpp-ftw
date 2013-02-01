@@ -18,13 +18,13 @@ Xmpp.prototype.registerXmppEvents = function() {
 
 Xmpp.prototype.registerSocketEvents = function() {
     var self = this;
-    this.socket.on('xmpp.set-presence', function(data) {
+    this.socket.on('xmpp.presence', function(data) {
         self.setPresence(data);
     });
     this.socket.on('xmpp.login', function(data) { 
         self.login(data.jid, data.password);
     });
-    this.socket.on('xmpp.send-message', function(data) {
+    this.socket.on('xmpp.message.send', function(data) {
         self.sendMessage(data);
     });
 }
@@ -33,7 +33,7 @@ Xmpp.prototype.setPresence = function(data) {
     if (!this.client) return this.socket.emit('xmpp.error', 'You are not connected');
     this.client.send(new nodeXmpp.Element('presence', { }).
 		    c('show').t(data.status || "online").up().
-		    c('status').t(data.status || ""));
+		    c('status').t(data.message || ""));
 }
 
 Xmpp.prototype.sendMessage = function(data) {
@@ -61,8 +61,12 @@ Xmpp.prototype.error = function(error) {
 Xmpp.prototype.handleStanza = function(stanza) {
     console.log("Stanza received: " + stanza);
     if (stanza.is('message')) return this.handleMessage(stanza);
-
+    if (stanza.is('presence')) return this.handlePresence(stanza);
     console.log('I don\'t handle this: ' + stanza);
+}
+
+Xmpp.prototype.handlePresence = function(presence) {
+    this.socket.emit('xmpp.presence', {from: presence.attrs.from, status: $(presence.toString()).find('show').text(), message: $(presence.toString()).find('status').text()});
 }
 
 Xmpp.prototype.handleMessage = function(message) {

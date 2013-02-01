@@ -23,6 +23,12 @@ window.onload = function() {
         console.log("Received a chat from: " + data.from);
         console.log("Content was: " + data.content);
     });
+
+    socket.on('xmpp.presence', function(data) {
+        console.log("Presence update from: " + data.from);
+        console.log("Availability: " + data.status);
+        console.log(data.message);
+    });
 }
 </script>
 </head>
@@ -35,7 +41,7 @@ socket.emit('xmpp.login', {jid: 'test@example.com', password: 'password'});
 </pre>
 <h3>Send a message</h3>
 <pre>
-socket.emit('xmpp.send-message', {to: 'other@example.com', message: 'Hello world'});
+socket.emit('xmpp.message.send', {to: 'other@example.com', message: 'Hello world'});
 </pre>
 
 <h3>Receive a chat message</h3>
@@ -44,6 +50,17 @@ socket.on('xmpp.message.chat', function(data) {
     console.log('Got message from ' + data.from);
     console.log('Content was: ' + data.content);
 });
+</pre>
+
+<h3>Set presence</h3>
+<pre>
+socket.emit('xmpp.presence', {status: 'online', message: 'I'm using this script!'});
+</pre>
+
+<h3>Receive presence</h3>
+
+<pre>
+socket.on('xmpp.presence', function(data) { console.log(data); } );
 </pre>
 </body>
 </html
