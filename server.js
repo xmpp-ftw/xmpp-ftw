@@ -29,4 +29,7 @@ app.engine('ejs', engine);
 
 app.get('/', function(req, res) {
     res.render('index');
+});
+app.get('/client.js', function(req, res) {
+    res.render('client');
 }); 

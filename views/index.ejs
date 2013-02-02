@@ -1,66 +1,44 @@
 <html>
-<head>
-<script type="text/javascript" src="/socket.io/socket.io.js"></script>
-<script type="text/javascript">
-window.onload = function() {
-    socket = io.connect('//' + window.document.location.host);
+    <head>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="/client.js"></script>
+    </head>
+    <body>
+        <h1>Welcome to XMPP over websockets using JSON</h1>
+      
+        <h2>Authentication</h2>
+ 
+        <h3>Login</h3>
+        <pre>
+        // Not a real account!
+        socket.emit('xmpp.login', {jid: 'test@example.com', password: 'password'});
+        </pre>
 
-    socket.on('error', function(error) { console.log(error); } );
+        <h2>Messaging</h2>
 
-    socket.on('connect', function(data) {
-        console.log('connected');
-    });
+        <h3>Send a message</h3>
+        <pre>
+        socket.emit('xmpp.message.send', {to: 'other@example.com', message: 'Hello world'});
+        </pre>
 
-    socket.on('connect.fail', function(reason) {
-        console.log("Connection failed: " + reason);
-    });
+        <h3>Receive a chat message</h3>
+        <pre>
+        socket.on('xmpp.message.chat', function(data) {
+            console.log('Got message from ' + data.from);
+            console.log('Content was: ' + data.content);
+        });
+        </pre>
 
-    socket.on('xmpp.connection', function(status) {
-        console.log("Connection status is: " + status);
-    });
+        <h2>Presence</h2>
 
-    socket.on('xmpp.message.chat', function(data) {
-        console.log("Received a chat from: " + data.from);
-        console.log("Content was: " + data.content);
-    });
+        <h3>Set presence</h3>
+        <pre>
+        socket.emit('xmpp.presence', {status: 'online', message: 'I'm using this script!'});
+        </pre>
 
-    socket.on('xmpp.presence', function(data) {
-        console.log("Presence update from: " + data.from);
-        console.log("Availability: " + data.status);
-        console.log(data.message);
-    });
-}
-</script>
-</head>
-<body>
-<h1>Welcome to XMPP over websockets using JSON</h1>
-<h2>Login</h2>
-<pre>
-// Not a real account!
-socket.emit('xmpp.login', {jid: 'test@example.com', password: 'password'});
-</pre>
-<h3>Send a message</h3>
-<pre>
-socket.emit('xmpp.message.send', {to: 'other@example.com', message: 'Hello world'});
-</pre>
-
-<h3>Receive a chat message</h3>
-<pre>
-socket.on('xmpp.message.chat', function(data) {
-    console.log('Got message from ' + data.from);
-    console.log('Content was: ' + data.content);
-});
-</pre>
-
-<h3>Set presence</h3>
-<pre>
-socket.emit('xmpp.presence', {status: 'online', message: 'I'm using this script!'});
-</pre>
-
-<h3>Receive presence</h3>
-
-<pre>
-socket.on('xmpp.presence', function(data) { console.log(data); } );
-</pre>
-</body>
+        <h3>Receive presence</h3>
+        <pre>
+        socket.on('xmpp.presence', function(data) { console.log(data); } );
+        </pre>
+    </body>
 </html
