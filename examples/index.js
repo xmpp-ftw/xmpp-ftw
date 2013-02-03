@@ -1,4 +1,4 @@
-var xmpp = require('./src/xmpp')
+var xmpp = require('../index')
     , express = require('express')
     , app = express()
     , engine = require('ejs-locals')    
@@ -31,5 +31,13 @@ app.get('/', function(req, res) {
     res.render('index');
 });
 app.get('/client.js', function(req, res) {
-    res.render('client');
+    res.render('client-js');
+});
+
+app.get('/chat.js', function(req, res) {
+    res.render('chat-js');
+});
+
+app.get('/chat', function(req, res) {
+    res.render('chat');
 }); 

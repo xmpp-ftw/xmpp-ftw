@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="/chat.js"></script>
+        <style>
+            .offline { background-color: #FF0000; }
+            .online { background-color: #00FF00; }
+            .out { color: #CC0000; }
+            .in  { color: #0000CC; }
+        </style>
+    </head>
+    <body>
+        <div class="auth">
+            JID: <input type="text" name="username" class="jid" placeholder="jid" />
+            Password: <input type="password" class="password" />
+            <a href="#" class="login">Login</a>
+        </div>    
+        <div class="connection offline">
+        <p>Status: <span class="status">offline</span></p>
+        </div>
+
+        <div class="chat">
+            <div class="with">
+            
+            </div>
+
+            <div class="send"> 
+                JID: <input type="email" class="to" placeholder="Bare JID" />
+                Message: <textarea class="message"></textarea>
+                <a href="#" class="send-message">Send Message</a>
+            </div>
+        </div>
+    </body>
+</html
