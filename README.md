@@ -29,7 +29,7 @@ var io = xmpp.init(server); /* express-type server */
 io.sockets.on('connection', function(socket) {
      new xmpp.Xmpp(socket);       
 });
-``
+```
 * All events are prefixed with 'xmpp.'
 
 For an example of usage and a breakdown of commands simply install the development dependencies and run the index.js file the examples directory.
