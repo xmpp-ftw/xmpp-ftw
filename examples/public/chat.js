@@ -18,7 +18,7 @@ window.onload = function() {
         var message = $('.message').val();
         console.log(to, message);
         if (!to || !message) return alert("Missing some info dude, fix and try again!");
-        socket.emit('xmpp.message.send', {to: to, message: message});
+        socket.emit('xmpp.message.chat', {to: to, message: message});
         addChatEntry(to, message);
     });
     socket.on('connect.fail', function(reason) {
@@ -33,6 +33,7 @@ window.onload = function() {
     socket.on('xmpp.message.chat', function(data) {
         console.log("Received a chat from: " + data.from);
         console.log("Content was: " + data.content);
+        addChatEntry(data.from, data.content);
     });
 
     socket.on('xmpp.presence', function(data) {

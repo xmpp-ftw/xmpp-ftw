@@ -13,7 +13,7 @@ io.sockets.on('connection', function(socket) {
 });
 
 app.configure(function(){
-	app.use(express.static(__dirname + '/../public'));
+	app.use(express.static(__dirname + '/public'));
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
 	app.use(express.bodyParser());
@@ -29,13 +29,6 @@ app.engine('ejs', engine);
 
 app.get('/', function(req, res) {
     res.render('index');
-});
-app.get('/client.js', function(req, res) {
-    res.render('client-js');
-});
-
-app.get('/chat.js', function(req, res) {
-    res.render('chat-js');
 });
 
 app.get('/chat', function(req, res) {
