@@ -1,5 +1,7 @@
 # xmpp-websockets-json
 
+## Current progress
+
 ```Note:``` I've started a rewrite to get the code closer to my idea of how it should work. 
 I'll attempt to keep this readme up to date as I progress. Currently....
 
@@ -11,6 +13,9 @@ I'll attempt to keep this readme up to date as I progress. Currently....
 - Start working on MUC
 - Implement pubsub
 
+
+## ...and back to main readme
+
 The goal of this project is to make XMPP really simple to use for developers. This module takes away all of the XML and works by hooking to events hich are passed between client and server using socket.io in JSON.
 
 ``` Note package doesn't exist yet! ```
@@ -18,6 +23,13 @@ The goal of this project is to make XMPP really simple to use for developers. Th
 * npm i easy-xmpp
 * require('easy-xmpp')
 * Create your socket.io connection manually and then pass this socket into the constructor
+
+```javascript
+var io = xmpp.init(server); /* express-type server */
+io.sockets.on('connection', function(socket) {
+     new xmpp.Xmpp(socket);       
+});
+``
 * All events are prefixed with 'xmpp.'
 
 For an example of usage and a breakdown of commands simply install the development dependencies and run the index.js file the examples directory.
