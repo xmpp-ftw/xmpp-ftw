@@ -8,7 +8,8 @@
     "node-xmpp": "~0.3.2",
     "jQuery": "~1.7.4",
     "jsdom": "~0.3.4",
-    "xmlhttprequest": "~1.5.0"
+    "xmlhttprequest": "~1.5.0",
+    "MD5": "~1.0.3"
   },
   "devDependencies": {
     "ejs-locals": "~1.0.2",

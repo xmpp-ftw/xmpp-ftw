@@ -4,12 +4,12 @@ var nodeXmpp = require('node-xmpp')
 var Xmpp = function(socket) {
     this.prototype = new events.EventEmitter;
     this.socket    = socket;
-    this.registerSocketEvents();
-    
+    this.tracking  = new Array();
     this.listeners = [
        require('./lib/presence'),
        require('./lib/chat')
     ]
+    this.registerSocketEvents();
 }
 
 Xmpp.prototype.clearListeners = function() {
@@ -55,8 +55,19 @@ Xmpp.prototype.error = function(error) {
      this.socket.emit('xmpp.error', error);
 }
 
+Xmpp.prototype.trackId = function(id, callback) {
+	this.tracking[id] = callback;
+}
+
+Xmpp.prototype.catchTracked = function(stanza) {
+	if (!stanza.attr('id') || !this.tracking[stanza.attr('id')]) return false;
+	this.tracking[stanza.attr('id')](stanza);
+	return true;
+}
+
 Xmpp.prototype.handleStanza = function(stanza) {
     console.log("Stanza received: " + stanza);
+    if (this.catchTracked(stanza)) return;
     var handled = false
     this.listeners.forEach(function(listener) {
     	if (listener.handles(stanza)) {
