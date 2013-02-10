@@ -8,16 +8,35 @@
             .online { background-color: #00FF00; }
             .out { color: #CC0000; }
             .in  { color: #0000CC; }
+            .with > div { border: 1px solid #000; padding: 5px; margin: 5px; }
+            .connection { width: 200px; }
+            .presence { }
+            .presence-status-undefined { background-color: #ddd }
+            .presence-status-chat { background-color: #00ff00 }
+            .presence-status-away { background-color: orange }
+            .presence-status-dnd { background-color: #ff0000 }
+            .presence-status-xa { background-color: light-orange }
         </style>
     </head>
     <body>
         <div class="auth">
-            JID: <input type="text" name="username" class="jid" placeholder="jid" />
-            Password: <input type="password" class="password" />
+            JID: <input type="text" name="username" class="jid" placeholder="jid" value="test@evilprofessor.co.uk" />
+            Password: <input type="password" class="password" value="12345test" />
             <a href="#" class="login">Login</a>
         </div>    
         <div class="connection offline">
-        <p>Status: <span class="status">offline</span></p>
+        <p>Connection: <span class="status">offline</span></p>
+        </div>
+        
+        <div class="presence">
+            <select>
+                <option value="away">away</option>
+                <option value="chat">online</option>
+                <option value="dnd">dnd</option>
+                <option value="xa">xa</option>
+            </select>
+            <input type="text" placeholder="Add a status message here..." class="presence-status" />
+            <a href="#" class="set-presence">Set presence</a>                
         </div>
 
         <div class="chat">
@@ -31,5 +50,6 @@
                 <a href="#" class="send-message">Send Message</a>
             </div>
         </div>
+        <p>Note: This example completely ignores resources</p>
     </body>
 </html

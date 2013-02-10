@@ -1,6 +1,5 @@
 var nodeXmpp = require('node-xmpp')
-    , events = require('events')
-    , $ = require('jQuery')
+    events = require('events');
 
 var Xmpp = function(socket) {
     this.prototype = new events.EventEmitter;
@@ -8,7 +7,7 @@ var Xmpp = function(socket) {
     this.registerSocketEvents();
     
     this.listeners = [
-       // require('./lib/presence'),
+       require('./lib/presence'),
        require('./lib/chat')
     ]
 }
@@ -18,7 +17,7 @@ Xmpp.prototype.clearListeners = function() {
 }
 
 Xmpp.prototype.addListener = function(listener) {
-	if (this.client) listener.init(this.socket, this.client, nodeXmpp, $)
+	if (this.client) listener.init(this);
 	this.listeners.unshift(listener)
 }
 
@@ -31,30 +30,18 @@ Xmpp.prototype.registerXmppEvents = function() {
 
 Xmpp.prototype.registerSocketEvents = function() {
     var self = this;
-
     this.socket.on('xmpp.login', function(data) { 
         self.login(data.jid, data.password);
     });
-    /*
-    this.socket.on('xmpp.presence', function(data) {
-        self.setPresence(data);
-    });
-    */
 }
-/*
-Xmpp.prototype.setPresence = function(data) {
-    if (!this.client) return this.socket.emit('xmpp.error', 'You are not connected');
-    this.client.send(new nodeXmpp.Element('presence', { }).
-		    c('show').t(data.status || "online").up().
-		    c('status').t(data.message || ""));
-}
-*/
+
 Xmpp.prototype.login = function(jid, password) {
    console.log("Attempting to connect to " + jid);
-   var self = this
+   var self = this;
+   self.jid = jid;
    this.client = new nodeXmpp.Client({jid: jid, password: password});
    this.listeners.forEach(function(listener) {
-	   listener.init(self.socket, self.client, nodeXmpp, $)
+	   listener.init(self)
    })
    this.registerXmppEvents();
 }

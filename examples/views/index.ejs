@@ -2,10 +2,28 @@
     <head>
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="/client.js"></script>
+        <style>
+            pre { 
+                border: 1px solid #000;
+                margin: 5px;
+                background-color: #ddd;
+            }
+        </style>
     </head>
     <body>
         <h1>Welcome to XMPP over websockets using JSON</h1>
       
+        <h2>JIDs</h2>
+        
+        <p>JIDs are always sent as an object as follows:</p>
+        <pre>
+        { 
+            node: 'user',
+            domain: 'example.com',
+            resource: 'lounge'
+        }
+        </pre>
+        
         <h2>Authentication</h2>
  
         <h3>Login</h3>
@@ -18,7 +36,7 @@
 
         <h3>Send a message</h3>
         <pre>
-        socket.emit('xmpp.message.send', {to: 'other@example.com', message: 'Hello world'});
+        socket.emit('xmpp.message.chat', {to: 'other@example.com', message: 'Hello world'});
         </pre>
 
         <h3>Receive a chat message</h3>
@@ -33,12 +51,45 @@
 
         <h3>Set presence</h3>
         <pre>
-        socket.emit('xmpp.presence', {status: 'online', message: 'I'm using this script!'});
+        socket.emit('xmpp.presence', {show: 'online', status: 'I'm using this script!', priority: 10});
         </pre>
-
+        <p>Each of the parameters for presence are <i>optional</i>.</p>
+        
         <h3>Receive presence</h3>
         <pre>
-        socket.on('xmpp.presence', function(data) { console.log(data); } );
+        socket.on('xmpp.presence', function(data) { 
+            console.log(data); 
+            /*
+              { show: 'away', status: "I'm going away", priority: 10 }
+              ...each of these are optional...
+             */
+        });
+        </pre>
+        
+        <h3>Subscribe</h3>
+        <p>Request to subsribe to a user</p>
+        <pre>
+        socket.emit('xmpp.presence.subscribe', {to: 'user@example.com' });
+        </pre>
+        
+        <p>User requests to subscribe to your presence</p>
+        <pre>
+        socket.on('xmpp.presence.subscribe', function(data) {
+            console.log(data);
+            /* { 
+                   from: 'user@example.com'
+                   nick: 'Example user' // ...optional...
+               } */
+        });
+        </pre>
+        
+        <h4>Reply</h4>
+        <pre>
+        socket.emit('xmpp.presence.subscribed', { to: 'user@example.com' });
+        
+        //   ..... or .....
+        
+        socket.emit('xmpp.presence.unsubscribed', { to: 'user@example.com' });
         </pre>
     </body>
 </html
