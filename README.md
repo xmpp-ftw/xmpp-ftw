@@ -18,6 +18,10 @@ I'll attempt to keep this readme up to date as I progress. Currently....
 
 The goal of this project is to make XMPP really simple to use for developers. This module takes away all of the XML and works by hooking to events hich are passed between client and server using socket.io in JSON.
 
+# Build status
+
+[![Build Status](https://secure.travis-ci.org/lloydwatkin/xmpp-websocket-json.png)](http://travis-ci.org/lloydwatkin/xmpp-websocket-json)
+
 ``` Note package doesn't exist yet! ```
 
 * npm i easy-xmpp
