@@ -66,6 +66,18 @@
         });
         </pre>
         
+        <h3>Directed presence</h3>
+        
+        <pre>
+        socket.emit('xmpp.presence.get', { to: 'user@example.com' });
+        </pre>
+
+        <h3>Go offline</h3>
+        
+        <pre>
+        socket.emit('xmpp.presence.offline');
+        </pre>
+        
         <h3>Subscribe</h3>
         <p>Request to subsribe to a user</p>
         <pre>
@@ -83,7 +95,7 @@
         });
         </pre>
         
-        <h4>Reply</h4>
+        <p>Respond with subscribed or unsubscribed</p>
         <pre>
         socket.emit('xmpp.presence.subscribed', { to: 'user@example.com' });
         
