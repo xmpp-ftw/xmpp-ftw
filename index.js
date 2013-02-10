@@ -6,6 +6,7 @@ var Xmpp = function(socket) {
     this.socket    = socket;
     this.tracking  = new Array();
     this.listeners = [
+       require('./lib/roster'),
        require('./lib/presence'),
        require('./lib/chat')
     ]
@@ -76,16 +77,9 @@ Xmpp.prototype.handleStanza = function(stanza) {
     		return 
     	}
     })
-    /*
-    if (stanza.is('presence')) return this.handlePresence(stanza);
-    */
     if (!handled) console.log('No listeners for: ' + stanza);
 }
-/*
-Xmpp.prototype.handlePresence = function(presence) {
-    this.socket.emit('xmpp.presence', {from: presence.attrs.from, status: $(presence.toString()).find('show').text(), message: $(presence.toString()).find('status').text()});
-}
-*/
+
 var init = function(server) {
     return require('socket.io').listen(server);
 }

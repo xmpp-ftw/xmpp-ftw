@@ -103,5 +103,25 @@
         
         socket.emit('xmpp.presence.unsubscribed', { to: 'user@example.com' });
         </pre>
+        
+        <h2>Roster</h2>
+        
+        <h3>Get</h3>
+        
+        <pre>
+        socket.emit(
+            'xmpp.roster.get',
+            {},
+            function(roster) { console.log('roster', roster)}
+        );
+        
+        /* Data returns as array of objects, e.g.
+         * [ {
+         *      jid: { node: 'user', domain: 'example.com' },
+         *      subscription: 'both',
+         *      name: 'Example user',
+         *      group: 'Buddies'
+         * } ]
+        </pre>
     </body>
 </html
