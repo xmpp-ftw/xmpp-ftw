@@ -5,11 +5,13 @@
 ```Note:``` I've started a rewrite to get the code closer to my idea of how it should work. 
 I'll attempt to keep this readme up to date as I progress. Currently....
 
-- login works
-- chat send/receive is working
-- Updating the example chat client to work for basic chat and 'status'
-- Get basic presence working again
+- <del>login works</del>
+- <del>chat send/receive is working</del> -- to revisit later
+- <del>Updating the example chat client to work for basic chat and 'status'</del>
+- <del>Get basic presence working again</del>
+- Roster
 - Logout
+- Better chat implementation
 - Start working on MUC
 - Implement pubsub
 
