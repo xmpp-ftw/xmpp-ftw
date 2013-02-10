@@ -20,7 +20,7 @@ The goal of this project is to make XMPP really simple to use for developers. Th
 
 # Build status
 
-[![Build Status](https://secure.travis-ci.org/lloydwatkin/xmpp-websocket-json.png)](http://travis-ci.org/lloydwatkin/xmpp-websocket-json)
+[![Build Status](https://secure.travis-ci.org/lloydwatkin/xmpp-websockets-json.png)](http://travis-ci.org/lloydwatkin/xmpp-websockets-json)
 
 ``` Note package doesn't exist yet! ```
 
