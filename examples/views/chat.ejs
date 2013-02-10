@@ -16,6 +16,9 @@
             .presence-status-away { background-color: orange }
             .presence-status-dnd { background-color: #ff0000 }
             .presence-status-xa { background-color: light-orange }
+            .roster-items { overflow: auto; }
+            .roster-item { padding: 5px; border: 1px solid #000; width: 300px; float: left }
+            .roster-item p { margin: 0; padding: 0; }
         </style>
     </head>
     <body>
@@ -50,6 +53,11 @@
                 <a href="#" class="send-message">Send Message</a>
             </div>
         </div>
+        
+        <div class="roster">
+        <h2>Roster</h2>
+        <p><a href="#" class="get-roster">Get Roster</a></p>
+        <div class="roster-items"><p>Click to load</div>
         <p>Note: This example completely ignores resources</p>
     </body>
 </html

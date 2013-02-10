@@ -111,4 +111,33 @@ window.onload = function() {
     		socket.emit('xmpp.presence.subscribed', { to: jid });
     	}
     });
+    
+    /*---------------- ROSTER ----------------*/
+   
+   $('.get-roster').on('click', function() {
+       socket.emit('xmpp.roster.get', {}, function(roster) {
+       	   $('.roster-items').find('*').remove();
+           $(roster).each(function(index, item) {
+               var rosterItem = $(document.createElement('div')).attr('class', 'roster-item');
+               if (item.name) {
+                   rosterItem.append(
+                       $(document.createElement('p')).text('Name: ' + item.name)
+                   );
+               }
+               rosterItem.append(
+                   $(document.createElement('p')).text('JID: ' + item.jid.node + '@' + item.jid.domain)
+               );
+               rosterItem.append(
+                   $(document.createElement('p')).text('Subscription: ' + item.subscription)
+               );
+               if (item.group) {
+                   rosterItem.append(
+                       $(document.createElement('p')).text('Group: ' + item.group)
+                   );
+               }
+               rosterItem.appendTo($('.roster-items'));
+               console.log(rosterItem, $('.roster-items'));
+           });
+       });
+   });
 }
