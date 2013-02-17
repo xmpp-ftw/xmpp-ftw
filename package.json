@@ -9,7 +9,8 @@
     "jQuery": "~1.7.4",
     "jsdom": "~0.3.4",
     "xmlhttprequest": "~1.5.0",
-    "MD5": "~1.0.3"
+    "MD5": "~1.0.3",
+    "node-stringprep": "~0.1.5"
   },
   "devDependencies": {
     "ejs-locals": "~1.0.2",
