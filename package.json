@@ -1,6 +1,6 @@
 {
   "name": "xmpp-websocket-json",
-  "version": "0.0.1",
+  "version": "0.0.1-2",
   "description": "XMPP over websockets using JSON",
   "main": "index.js",
   "dependencies": {
@@ -10,7 +10,9 @@
     "jsdom": "~0.3.4",
     "xmlhttprequest": "~1.5.0",
     "MD5": "~1.0.3",
-    "node-stringprep": "~0.1.5"
+    "node-stringprep": "~0.1.5",
+    "express": "*",
+    "ejs-locals": "*"
   },
   "devDependencies": {
     "ejs-locals": "~1.0.2",
@@ -30,5 +32,9 @@
   "license": "Apache 2.0",
   "engines": {
     "node": "0.8.x"
+  },
+  "subdomain": "xmpp-websocket-json",
+  "scripts": {
+    "start": "examples/index.js"
   }
 }
