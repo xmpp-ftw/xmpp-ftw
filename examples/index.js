@@ -27,10 +27,16 @@ app.configure(function(){
 
 app.engine('ejs', engine);
 
+var options = { 
+	ga: process.env['GOOGLE_ANALYTICS_ID'] || null,
+	username: process.env['NODE_XMPP_USERNAME'] || null,
+	password: process.env['NODE_XMPP_PASSWORD'] || null
+}
+
 app.get('/', function(req, res) {
-    res.render('index');
+    res.render('index', options);
 });
 
 app.get('/chat', function(req, res) {
-    res.render('chat');
+    res.render('chat', options);
 }); 

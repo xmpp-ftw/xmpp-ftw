@@ -23,8 +23,8 @@
     </head>
     <body>
         <div class="auth">
-            JID: <input type="text" name="username" class="jid" placeholder="jid"  />
-            Password: <input type="password" class="password"  />
+            JID: <input type="text" name="username" class="jid" placeholder="jid" value="<%=username || "" %>" />
+            Password: <input type="password" class="password" value="<%=password || "" %>" />
             <a href="#" class="login">Login</a>
         </div>    
         <div class="connection offline">
@@ -58,6 +58,13 @@
         <h2>Roster</h2>
         <p><a href="#" class="get-roster">Reload Roster</a></p>
         <div class="roster-items"><p>Click to load</div>
+        <h3>Add user to roster</h3>
+        JID: <input type="text" class="roster-add-jid" />
+        Name: <input type="text" class="roster-add-name" placeholder="Leave empty for none..." />
+        Group: <input type="text" placeholder="Leave empty for new group..." class="roster-add-group" />
+        <a href="#" class="roster-add">Add user to roster</a>
+        
         <p>Note: This example completely ignores resources</p>
+        <% include ./ga %>
     </body>
 </html
