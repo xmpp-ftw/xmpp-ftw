@@ -20,6 +20,15 @@ I'll attempt to keep this readme up to date as I progress. Currently....
 
 The goal of this project is to make XMPP really simple to use for developers. This module takes away all of the XML and works by hooking to events hich are passed between client and server using socket.io in JSON.
 
+# Try it out...
+
+The code is now up and running at https://xmpp-websocket-json.jit.su so you can try it out. Be aware that this setup is only for trying xmpp-websockets-json out
+ an may be slow as we need to go client->nodejitsu->your XMPP server and back each time.
+
+The site root is a short manual which I will add to as new code is added, navigate to /chat to see an in progress chat client.
+
+The version running on the website matches 'master' branch here and auto-deploys with commits.
+
 # Build status
 
 [![Build Status](https://secure.travis-ci.org/lloydwatkin/xmpp-websockets-json.png)](http://travis-ci.org/lloydwatkin/xmpp-websockets-json)
