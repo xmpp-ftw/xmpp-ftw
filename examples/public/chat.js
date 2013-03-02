@@ -39,7 +39,11 @@ window.onload = function() {
     socket.on('xmpp.connection', function(status) {
         console.log("Connection status is: " + status);
         $('.connection').addClass(status).find('span.status').text(status);
-        if (status == 'online') socket.emit('xmpp.roster.get', {}, handleRoster);
+        if (status == 'online') {
+        	socket.emit('xmpp.presence', {status: 'online'});
+        	socket.emit('xmpp.roster.get', {}, handleRoster);
+        	$('div.presence select').val('online');
+        }
     });
 
     /*---------------- CHAT ----------------*/
@@ -115,6 +119,23 @@ window.onload = function() {
     
     /*---------------- ROSTER ----------------*/
    
+   $('.roster-add').on('click', function() {
+       var jid   = $('.roster-add-jid');
+       var group = $('.roster-add-group');
+       var name  = $('.roster-add-name');
+       if (jid.val().length == 0) return alert("Please enter a JID");
+       var data = { jid: jid.val() };
+       if (group.length > 0) data.group = group.val();
+       if (name.val().length > 0) data.name = name.val();
+       socket.emit('xmpp.roster.add', data, function(reply) {
+           if (reply && reply.error) return alert(reply.error);
+           group.val('');
+           jid.val('');
+           name.val('');
+           console.log("Roster add successful");
+       });
+   });
+   
    $('.get-roster').on('click', function() {
        socket.emit('xmpp.roster.get', {}, handleRoster);
    });
@@ -122,25 +143,66 @@ window.onload = function() {
    var handleRoster = function(roster) {
    	   $('.roster-items').find('*').remove();
        $(roster).each(function(index, item) {
-           var rosterItem = $(document.createElement('div')).attr('class', 'roster-item');
-           if (item.name) {
-               rosterItem.append(
-                   $(document.createElement('p')).text('Name: ' + item.name)
-               );
-           }
-           rosterItem.append(
-               $(document.createElement('p')).text('JID: ' + item.jid.node + '@' + item.jid.domain)
-           );
-           rosterItem.append(
-               $(document.createElement('p')).text('Subscription: ' + item.subscription)
-           );
-           if (item.group) {
-               rosterItem.append(
-                   $(document.createElement('p')).text('Group: ' + item.group)
-               );
-           }
-           rosterItem.appendTo($('.roster-items'));
-           console.log(rosterItem, $('.roster-items'));
+           addRosterItem(item);
        });
    }
+   
+   addRosterItem = function(item) {
+       var rosterItem = $(document.createElement('div')).attr('class', 'roster-item');
+       if (item.name) {
+           rosterItem.append(
+               $(document.createElement('p')).text('Name: ' + item.name)
+           );
+       }
+       rosterItem.append(
+           $(document.createElement('p')).text('JID: ' + item.jid.node + '@' + item.jid.domain)
+       );
+       rosterItem.append(
+           $(document.createElement('p')).text('Subscription: ' + item.subscription)
+       );
+       if (item.group) {
+           rosterItem.append(
+               $(document.createElement('p')).text('Group: ' + item.group)
+           );
+       }
+       if (item.ask && (item.ask == 'subscribe')) {
+       	   var request = $(document.createElement('div'));
+       	   request.append(
+       	       $(document.createElement('button')).attr(
+       	           'onclick',
+       	           "subscribeAndAdd(this, '" + item.jid.node + '@' + item.jid.domain + "');"
+       	       ).text('Allow and add')
+       	   );
+           request.append(
+               $(document.createElement('button')).attr(
+                   'onclick',
+                   "subscribe(this, '" + item.jid.node + '@' + item.jid.domain + "');"
+               ).text('Allow subscription?')
+           );
+           request.append(
+               $(document.createElement('button')).attr(
+                   'onclick',
+                   "unsubscribe(this, '" + item.jid.node + '@' + item.jid.domain + "');"
+               ).text('Ignore request')
+           );
+           rosterItem.append(request);
+       }
+       rosterItem.appendTo($('.roster-items'));
+   }
+   subscribeAndAdd = function(element, jid) {
+   	   socket.emit('xmpp.presence.subscribe', {to: jid });
+       subscribe(element, jid);	
+   }
+   subscribe = function(element, jid) {
+   	   console.log("Allowing subscription from " + jid);
+       socket.emit("xmpp.presence.subscribed", { to: jid });
+       $(element).parent().remove();
+   }
+   unsubscribe = function(element, jid) {
+   	   console.log("Ignoring subscription from " + jid);
+       socket.emit("xmpp.presence.unsubscribed", { to: jid });
+       $(element).parent().remove();
+   }
+
+   socket.on('xmpp.roster.add', addRosterItem);
 }

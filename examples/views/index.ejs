@@ -106,6 +106,25 @@
         
         <h2>Roster</h2>
         
+        <h3>Add user to roster</h3>
+        
+        <pre>
+        socket.emit(
+            'xmpp.roster.add',
+            {},
+            function(reply) { 
+                if (reply.error) console.log(reply.error);
+            }
+        );
+        /* Data to send:
+         * {
+         *     jid: 'user@example.com',
+         *     name: 'Example user',    // ...optional...
+         *     group: 'example-users'   // ...optional...
+         * }
+         */
+        </pre>
+        
         <h3>Get</h3>
         
         <pre>
@@ -120,8 +139,28 @@
          *      jid: { node: 'user', domain: 'example.com' },
          *      subscription: 'both',
          *      name: 'Example user',
-         *      group: 'Buddies'
+         *      group: 'Buddies',
+         *      [ ask = 'subscribe' ]
          * } ]
         </pre>
+        
+        <h3>New incoming Roster request</h3>
+        
+        <pre>
+        socket.on('xmpp.roster.add', function(data) {
+            console.log(data);
+        });
+        
+        /*
+         * {
+         *      jid: { node: 'user', domain: 'example.com' },
+         *      subscription: 'both',
+         *      name: 'Example user',
+         *      group: 'Buddies',
+         *      [ ask = 'subscribe' ]
+         * }
+         */
+        </pre>
+        <% include ./ga %>
     </body>
 </html
