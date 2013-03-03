@@ -11,7 +11,7 @@ I'll attempt to keep this readme up to date as I progress. Currently....
 - <del>Get basic presence working again</del>
 - <del>Roster</del>
 - <del>Hosted for people to experiment</del>
-- Start working on MUC
+- Add MUC (xep-0045)   *** Currently adding, not stable ***
 - Logout
 - Better chat implementation
 - Rich chat messages (xep-0071)
