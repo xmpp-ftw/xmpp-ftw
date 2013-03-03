@@ -36,6 +36,6 @@
   },
   "subdomain": "xmpp-websocket-json",
   "scripts": {
-    "start": "examples/index.js"
+    "start": "node examples/index.js"
   }
 }

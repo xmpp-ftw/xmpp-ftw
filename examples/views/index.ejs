@@ -8,11 +8,33 @@
                 margin: 5px;
                 background-color: #ddd;
             }
+            a { 
+                text-decoration: none;
+            }
         </style>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $("h2, h3, h4").each(function(i) {
+                var current = $(this);
+                current.attr("id", "title" + i);
+                var indent = ''
+                if (current[0].nodeName == 'H3') indent = '&nbsp;&nbsp;&nbsp;&nbsp;'
+                if (current[0].nodeName == 'H4') indent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                $("#toc").append(indent + "<a id='link" + i + "' href='#title" +
+                    i + "' title='" + current.attr("tagName") + "'>" + 
+                    current.html() + "</a><br/>")
+                current.append(' <a href="#top">&uarr;</a>')
+            });
+            $("#toc").before('<h2><a name="top"></a>Contents</h2>')
+        })
+        </script>
     </head>
     <body>
         <h1>Welcome to XMPP over websockets using JSON</h1>
       
+        <div id="toc"></div>
+        
         <h2>JIDs</h2>
         
         <p>JIDs are always sent as an object as follows:</p>
@@ -28,30 +50,31 @@
  
         <h3>Login</h3>
         <pre>
-        // Not a real account!
-        socket.emit('xmpp.login', {jid: 'test@example.com', password: 'password'});
+        socket.emit('xmpp.login', {jid: 'test@example.com', password: 'password'})
         </pre>
+        <p>You can also add an optional parameter of <i>resource</i>, if not provided the XMPP 
+           server will add this automatically.</p>
 
         <h2>Messaging</h2>
 
         <h3>Send a message</h3>
         <pre>
-        socket.emit('xmpp.message.chat', {to: 'other@example.com', message: 'Hello world'});
+        socket.emit('xmpp.message.chat', {to: 'other@example.com', message: 'Hello world'})
         </pre>
 
         <h3>Receive a chat message</h3>
         <pre>
         socket.on('xmpp.message.chat', function(data) {
-            console.log('Got message from ' + data.from);
-            console.log('Content was: ' + data.content);
-        });
+            console.log('Got message from ' + data.from)
+            console.log('Content was: ' + data.content)
+        })
         </pre>
 
         <h2>Presence</h2>
 
         <h3>Set presence</h3>
         <pre>
-        socket.emit('xmpp.presence', {show: 'online', status: 'I\'m using this script!', priority: 10});
+        socket.emit('xmpp.presence', {show: 'online', status: "I'm using this script!", priority: 10})
         </pre>
         <p>Each of the parameters for presence are <i>optional</i>.</p>
         
@@ -63,25 +86,25 @@
               { show: 'away', status: "I'm going away", priority: 10 }
               ...each of these are optional...
              */
-        });
+        })
         </pre>
         
         <h3>Directed presence</h3>
         
         <pre>
-        socket.emit('xmpp.presence.get', { to: 'user@example.com' });
+        socket.emit('xmpp.presence.get', { to: 'user@example.com' })
         </pre>
 
         <h3>Go offline</h3>
         
         <pre>
-        socket.emit('xmpp.presence.offline');
+        socket.emit('xmpp.presence.offline')
         </pre>
         
         <h3>Subscribe</h3>
         <p>Request to subsribe to a user</p>
         <pre>
-        socket.emit('xmpp.presence.subscribe', {to: 'user@example.com' });
+        socket.emit('xmpp.presence.subscribe', {to: 'user@example.com' })
         </pre>
         
         <p>User requests to subscribe to your presence</p>
@@ -92,16 +115,16 @@
                    from: 'user@example.com'
                    nick: 'Example user' // ...optional...
                } */
-        });
+        })
         </pre>
         
         <p>Respond with subscribed or unsubscribed</p>
         <pre>
-        socket.emit('xmpp.presence.subscribed', { to: 'user@example.com' });
+        socket.emit('xmpp.presence.subscribed', { to: 'user@example.com' })
         
         //   ..... or .....
         
-        socket.emit('xmpp.presence.unsubscribed', { to: 'user@example.com' });
+        socket.emit('xmpp.presence.unsubscribed', { to: 'user@example.com' })
         </pre>
         
         <h2>Roster</h2>
@@ -115,7 +138,7 @@
             function(reply) { 
                 if (reply.error) console.log(reply.error);
             }
-        );
+        )
         /* Data to send:
          * {
          *     jid: 'user@example.com',
@@ -132,7 +155,7 @@
             'xmpp.roster.get',
             {},
             function(roster) { console.log('roster', roster)}
-        );
+        )
         
         /* Data returns as array of objects, e.g.
          * [ {
@@ -149,7 +172,7 @@
         <pre>
         socket.on('xmpp.roster.add', function(data) {
             console.log(data);
-        });
+        })
         
         /*
          * {
