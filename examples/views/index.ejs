@@ -190,6 +190,57 @@
         <pre>
         socket.emit('xmpp.roster.group', { jid: 'user@example.com', group: 'buddies' })
         </pre>
+        
+        <h2>Multi-user chat (MUC) [XEP-0045]</h2>
+        
+        <h3>Join a room</h3>
+        
+        <pre>
+        socket.emit('xmpp.muc.join', { room: 'jdev@conference.jabber.org', nick: 'MyNickname' })
+        </pre>
+        
+        <h3>Receive room roster</h3>
+        
+        <pre>
+        socket.on('xmpp.muc.roster', function(data) { console.log(data) })
+        
+        /* Note: You may receive many of these messages
+         * {
+         *     room: 'jdev@conference.jabber.org',
+         *     nick: 'TheirNickname'
+         * }
+         */
+        </pre>
+         
+        <h3>Receive a message</h3>
+         
+        <pre>
+        socket.on('xmpp.muc.message', function(data) { console.log(data) })
+        
+        /*
+         * {
+         *     room: 'jdev@conference.jabber.org',
+         *     nick: 'TheirNickname',
+         *     content: 'Hello world!',
+         *   [ timestamp: '2012-03-03T20:22:00Z', ]
+         *   [ private: false ]
+         * }
+         */
+        </pre>
+        
+        <h3>Send a message</h3>
+        
+        <pre>
+        socket.emit(
+            'xmpp.muc.message',
+            {
+                room: 'jdev@conference.jabber.org',
+                content: 'Hello XMPP people!',
+              [ to: 'TheirNickname' ]
+            }
+        </pre>
+        <p>If 'to' is provided then message becomes a private message.</p>
+        
         <% include ./ga %>
     </body>
 </html

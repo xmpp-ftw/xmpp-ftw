@@ -8,7 +8,8 @@ server.listen(3000);
 var io = xmpp.init(server);
 io.sockets.on('connection', function(socket) {
 
-     new xmpp.Xmpp(socket);
+     var xmppFtw = new xmpp.Xmpp(socket);
+     xmppFtw.addListener(require('../lib/multi-user-chat'))
           
 });
 

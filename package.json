@@ -17,7 +17,8 @@
   "devDependencies": {
     "ejs-locals": "~1.0.2",
     "express": "~3.0.3",
-    "mocha": "~1.8.1"
+    "mocha": "~1.8.1",
+    "nodemon": "~0.7.2"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,6 @@
   },
   "subdomain": "xmpp-websocket-json",
   "scripts": {
-    "start": "node examples/index.js"
+    "start": "nodemon --watch lib examples/index.js"
   }
 }
