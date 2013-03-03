@@ -28,8 +28,9 @@ window.onload = function() {
     $('.login').click(function() {
         var jid = $('.jid').val();
         var password = $('.password').val();
+        var resource = $('.resource').val();
         me = jid;
-        socket.emit('xmpp.login', {jid: jid, password: password});
+        socket.emit('xmpp.login', {jid: jid, password: password, resource: resource});
     });
 
     socket.on('connect.fail', function(reason) {

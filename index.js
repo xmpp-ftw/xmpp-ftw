@@ -32,28 +32,38 @@ Xmpp.prototype.registerXmppEvents = function() {
 Xmpp.prototype.registerSocketEvents = function() {
     var self = this;
     this.socket.on('xmpp.login', function(data) { 
-        self.login(data.jid, data.password);
-    });
+        self.login(data.jid, data.password, data.resource)
+    })
 }
 
-Xmpp.prototype.login = function(jid, password) {
+Xmpp.prototype.login = function(jid, password, resource) {
    console.log("Attempting to connect to " + jid);
    var self = this;
-   self.jid = jid;
-   this.client = new nodeXmpp.Client({jid: jid, password: password});
+   self.jid = jid; 
+   var credentials = {jid: jid, password: password}
+   if (resource) credentials.jid += '/' + resource
+   this.client = new nodeXmpp.Client(credentials);
    this.listeners.forEach(function(listener) {
 	   listener.init(self)
    })
    this.registerXmppEvents();
 }
 
-Xmpp.prototype.online = function(status) {
-     console.log("Connection status is online");
-     this.socket.emit('xmpp.connection', 'online');
+Xmpp.prototype.online = function() {
+    console.log("Connection status is online");
+    this.socket.emit('xmpp.connection', 'online');
 }
 
 Xmpp.prototype.error = function(error) {
-     this.socket.emit('xmpp.error', error);
+	var message = JSON.stringify(error, function(key, value) {
+		console.log(key, value)
+        if (key == 'parent') {
+        	if (!value) return value
+        	return value.id
+        }
+        return value
+    })
+    this.socket.emit('xmpp.error', message)
 }
 
 Xmpp.prototype.trackId = function(id, callback) {
