@@ -9,12 +9,14 @@ I'll attempt to keep this readme up to date as I progress. Currently....
 - <del>chat send/receive is working</del> -- to revisit later
 - <del>Updating the example chat client to work for basic chat and 'status'</del>
 - <del>Get basic presence working again</del>
-- Roster
+- <del>Roster</del>
+- <del>Hosted for people to experiment</del>
+- Start working on MUC
 - Logout
 - Better chat implementation
-- Start working on MUC
-- Implement pubsub
-
+- Rich chat messages (xep-0071)
+- Chat status notifications (xep-0085)
+- Implement pubsub (xep-0060+ )
 
 ## ...and back to main readme
 
@@ -36,7 +38,7 @@ The version running on the website matches 'master' branch here and auto-deploys
 ``` Note package doesn't exist yet! ```
 
 * npm i easy-xmpp
-* require('easy-xmpp')
+* require('xmpp-ftw')
 * Create your socket.io connection manually and then pass this socket into the constructor
 
 ```javascript
