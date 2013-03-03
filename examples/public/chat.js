@@ -64,11 +64,11 @@ window.onload = function() {
         var to = $('.to').val();
         var message = $('.message').val();
         if (!to || !message) return alert("Missing some info dude, fix and try again!");
-        socket.emit('xmpp.message.chat', {to: to, message: message});
+        socket.emit('xmpp.chat.message', {to: to, message: message});
         addChatEntry(to, message, 'out');
     });
 
-    socket.on('xmpp.message.chat', function(data) {
+    socket.on('xmpp.chat.message', function(data) {
         console.log("Received a chat from: " + data.from.node + '@' + data.from.domain);
         console.log("Content was: " + data.content);
         addChatEntry(data.from, data.content, 'in');

@@ -59,12 +59,12 @@
 
         <h3>Send a message</h3>
         <pre>
-        socket.emit('xmpp.message.chat', {to: 'other@example.com', message: 'Hello world'})
+        socket.emit('xmpp.chat.message', {to: 'other@example.com', message: 'Hello world'})
         </pre>
 
         <h3>Receive a chat message</h3>
         <pre>
-        socket.on('xmpp.message.chat', function(data) {
+        socket.on('xmpp.chat.message', function(data) {
             console.log('Got message from ' + data.from)
             console.log('Content was: ' + data.content)
         })
