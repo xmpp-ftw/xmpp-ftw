@@ -184,6 +184,12 @@
          * }
          */
         </pre>
+        
+        <h3>Add a user to a roster group</h3>
+        
+        <pre>
+        socket.emit('xmpp.roster.group', { jid: 'user@example.com', group: 'buddies' })
+        </pre>
         <% include ./ga %>
     </body>
 </html

@@ -41,11 +41,22 @@ window.onload = function() {
         console.log("Connection status is: " + status);
         $('.connection').addClass(status).find('span.status').text(status);
         if (status == 'online') {
-        	socket.emit('xmpp.presence', {status: 'online'});
+        	socket.emit('xmpp.presence', {status: 'online', priority: 1});
         	socket.emit('xmpp.roster.get', {}, handleRoster);
         	$('div.presence select').val('online');
         }
     });
+    
+    socket.on('xmpp.error', function(error) {
+    	console.log('ERROR: ' + error)
+    })
+    socket.on('xmpp.presence.error', function(error) {
+    	console.log('PRESENCE ERROR: ' + error)
+    })
+    
+    window.onunload = function() {
+    	socket.emit('xmpp.logout')
+    }
 
     /*---------------- CHAT ----------------*/
 
