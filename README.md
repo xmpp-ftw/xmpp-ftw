@@ -1,4 +1,4 @@
-# xmpp-websockets-json
+# XMPP-FTW (For The Web/Win)
 
 ## Current progress
 
@@ -24,7 +24,7 @@ The goal of this project is to make XMPP really simple to use for developers. Th
 
 # Try it out...
 
-The code is now up and running at https://xmpp-websocket-json.jit.su so you can try it out. Be aware that this setup is only for trying xmpp-websockets-json out
+The code is now up and running at https://xmpp-ftw.jit.su so you can try it out. Be aware that this setup is only for trying xmpp-ftw out
  an may be slow as we need to go client->nodejitsu->your XMPP server and back each time.
 
 The site root is a short manual which I will add to as new code is added, navigate to /chat to see an in progress chat client.
@@ -33,11 +33,11 @@ The version running on the website matches 'master' branch here and auto-deploys
 
 # Build status
 
-[![Build Status](https://secure.travis-ci.org/lloydwatkin/xmpp-websockets-json.png)](http://travis-ci.org/lloydwatkin/xmpp-websockets-json)
+[![Build Status](https://secure.travis-ci.org/lloydwatkin/xmpp-ftw.png)](http://travis-ci.org/lloydwatkin/xmpp-ftw)
 
 ``` Note package doesn't exist yet! ```
 
-* npm i easy-xmpp
+* npm i xmpp-ftw
 * require('xmpp-ftw')
 * Create your socket.io connection manually and then pass this socket into the constructor
 
@@ -51,7 +51,7 @@ io.sockets.on('connection', function(socket) {
 
 For an example of usage and a breakdown of commands simply install the development dependencies and run the index.js file the examples directory.
 
-* git clone https://github.com/lloydwatkin/xmpp-websockets-json
+* git clone https://github.com/lloydwatkin/xmpp-ftw
 * npm i .
 * node index
 * Go to http://localhost:3000
@@ -61,3 +61,5 @@ Alternatively have a look at the example chat client:
 
 * ```node index```
 * Go to ```http://localhost:3000/chat```
+
+To work on the code in 'development mode' (where process restarts as files change) run `npm run-script develop`.
