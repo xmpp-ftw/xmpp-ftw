@@ -257,6 +257,26 @@
             }
         )
         </pre>
+        
+        <h3>Errors</h3>
+        
+        <h4>Message Errors</h4>
+        
+        <pre>
+        socket.on('xmpp.muc.error', function(data) { console.log(data) })
+        
+        /*
+         * {
+         *     type: 'message',
+         *     error: 'SERVICE-UNAVAILABLE'  // example only
+         * }
+         */
+        </pre>
+        <p>Code will attempt to grab the extended reason from the 
+        '<abbr title="urn:ietf:params:xml:ns:xmpp-stanzas">xmpp-stanzas</abbr>' namespaced 
+        element, otherwise it will grab the 'type' attribute from the error tag.</p>
+
+        
         <% include ./ga %>
     </body>
 </html
