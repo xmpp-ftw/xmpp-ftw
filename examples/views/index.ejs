@@ -247,6 +247,16 @@
         </pre>
         <p>If 'to' is provided then message becomes a private message.</p>
         
+        <h4>Leave a room</h4>
+        
+        <pre>
+        socket.emit(
+            'xmpp.muc.leave',
+            {
+                room: 'jdev@conference.jabber.org'
+            }
+        )
+        </pre>
         <% include ./ga %>
     </body>
 </html
