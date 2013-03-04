@@ -38,6 +38,6 @@
   "subdomain": "xmpp-ftw",
   "scripts": {
     "start": "node examples/index.js",
-    "develop": "nodemon --watch lib examples/index.js"
+    "develop": "nodemon --watch lib --watch index.js examples/index.js"
   }
 }

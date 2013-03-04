@@ -80,10 +80,10 @@ Xmpp.prototype.handleStanza = function(stanza) {
     console.log("Stanza received: " + stanza)
     if (this.catchTracked(stanza)) return;
     var handled = false
-    this.listeners.forEach(function(listener) {
+    this.listeners.some(function(listener) {
     	if (true == listener.handles(stanza)) {
-    		if (listener.handle(stanza)) return
     		handled = true
+    		if (true == listener.handle(stanza)) return true
     	}
     })
     if (!handled) console.log('No listeners for: ' + stanza)
