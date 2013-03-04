@@ -1,57 +1,57 @@
-var nodeXmpp = require('node-xmpp')
-    events = require('events');
+var nodeXmpp = require('node-xmpp'),
+    events = require('events')
 
 var Xmpp = function(socket) {
-    this.prototype = new events.EventEmitter;
-    this.socket    = socket;
-    this.tracking  = new Array();
+    this.prototype = new events.EventEmitter
+    this.socket    = socket
+    this.tracking  = new Array()
     this.listeners = [
        require('./lib/roster'),
        require('./lib/presence'),
        require('./lib/chat')
     ]
-    this.registerSocketEvents();
+    this.registerSocketEvents()
 }
 
 Xmpp.prototype.clearListeners = function() {
-	this.listeners = [];
+	this.listeners = []
 }
 
 Xmpp.prototype.addListener = function(listener) {
-	if (this.client) listener.init(this);
+	if (this.client) listener.init(this)
 	this.listeners.unshift(listener)
 }
 
 Xmpp.prototype.registerXmppEvents = function() {
-    var self = this;
-    this.client.on('error', function(error) { self.error(error); });
-    this.client.on('online', function() { self.online(); });
-    this.client.on('stanza', function(stanza) { self.handleStanza(stanza); });
+    var self = this
+    this.client.on('error', function(error) { self.error(error) })
+    this.client.on('online', function() { self.online() })
+    this.client.on('stanza', function(stanza) { self.handleStanza(stanza) })
 }
 
 Xmpp.prototype.registerSocketEvents = function() {
-    var self = this;
+    var self = this
     this.socket.on('xmpp.login', function(data) { 
         self.login(data.jid, data.password, data.resource)
     })
 }
 
 Xmpp.prototype.login = function(jid, password, resource) {
-   console.log("Attempting to connect to " + jid);
-   var self = this;
-   self.jid = jid; 
+   console.log("Attempting to connect to " + jid)
+   var self = this
+   self.jid = jid
    var credentials = {jid: jid, password: password}
    if (resource) credentials.jid += '/' + resource
-   this.client = new nodeXmpp.Client(credentials);
+   this.client = new nodeXmpp.Client(credentials)
    this.listeners.forEach(function(listener) {
 	   listener.init(self)
    })
-   this.registerXmppEvents();
+   this.registerXmppEvents()
 }
 
 Xmpp.prototype.online = function() {
-    console.log("Connection status is online");
-    this.socket.emit('xmpp.connection', 'online');
+    console.log("Connection status is online")
+    this.socket.emit('xmpp.connection', 'online')
 }
 
 Xmpp.prototype.error = function(error) {
@@ -67,31 +67,31 @@ Xmpp.prototype.error = function(error) {
 }
 
 Xmpp.prototype.trackId = function(id, callback) {
-	this.tracking[id] = callback;
+	this.tracking[id] = callback
 }
 
 Xmpp.prototype.catchTracked = function(stanza) {
 	if (!stanza.attr('id') || !this.tracking[stanza.attr('id')]) return false;
-	this.tracking[stanza.attr('id')](stanza);
-	return true;
+	this.tracking[stanza.attr('id')](stanza)
+	return true
 }
 
 Xmpp.prototype.handleStanza = function(stanza) {
-    console.log("Stanza received: " + stanza);
+    console.log("Stanza received: " + stanza)
     if (this.catchTracked(stanza)) return;
     var handled = false
     this.listeners.forEach(function(listener) {
-    	if (listener.handles(stanza)) {
-    		if (!listener.handle(stanza)) return
+    	if (true == listener.handles(stanza)) {
+    		if (listener.handle(stanza)) return
     		handled = true
     	}
     })
-    if (!handled) console.log('No listeners for: ' + stanza);
+    if (!handled) console.log('No listeners for: ' + stanza)
 }
 
 var init = function(server) {
-    return require('socket.io').listen(server);
+    return require('socket.io').listen(server)
 }
 
-exports.Xmpp = Xmpp;
-exports.init = init;
+exports.Xmpp = Xmpp
+exports.init = init
