@@ -1,7 +1,7 @@
 {
-  "name": "xmpp-websocket-json",
-  "version": "0.0.1-3",
-  "description": "XMPP over websockets using JSON",
+  "name": "xmpp-ftw",
+  "version": "0.0.1-7",
+  "description": "XMPP-FTW (For the Win/Web) ::: XMPP over websockets using JSON",
   "main": "index.js",
   "dependencies": {
     "socket.io": "~0.9.13",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lloydwatkin/xmpp-websockets-json.git"
+    "url": "https://github.com/lloydwatkin/xmpp-ftw.git"
   },
   "keywords": [
     "xmpp",
@@ -35,8 +35,9 @@
   "engines": {
     "node": "0.8.x"
   },
-  "subdomain": "xmpp-websocket-json",
+  "subdomain": "xmpp-ftw",
   "scripts": {
-    "start": "nodemon --watch lib examples/index.js"
+    "start": "node examples/index.js",
+    "develop": "nodemon --watch lib examples/index.js"
   }
 }
