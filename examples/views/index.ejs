@@ -278,6 +278,20 @@
         '<abbr title="urn:ietf:params:xml:ns:xmpp-stanzas">xmpp-stanzas</abbr>' namespaced 
         element, otherwise it will grab the 'type' attribute from the error tag.</p>
 
+        <h3>Change a user's role</h3>
+        
+        <pre>
+        socket.emit(
+            'xmpp.muc.role', 
+            {
+                room: 'jdev@conference.jabber.org',
+                nick: 'TheirNickname',
+                role: 'participant'
+            },
+            function(error, success) { console.log(error, success) }
+        )
+        </pre>
+        <p>Success will be true and error `null` if all is ok.</p>
         
         <% include ./ga %>
     </body>
