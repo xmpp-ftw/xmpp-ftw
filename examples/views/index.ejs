@@ -162,7 +162,7 @@
         socket.emit(
             'xmpp.roster.get',
             {},
-            function(roster) { console.log('roster', roster)}
+            function(error, roster) { console.log('roster', roster) }
         )
         
         /* Data returns as array of objects, e.g.
@@ -269,7 +269,7 @@
         
         /*
          * {
-         *     type: 'message',
+         *     type:  'message',
          *     error: 'SERVICE-UNAVAILABLE'  // example only
          * }
          */

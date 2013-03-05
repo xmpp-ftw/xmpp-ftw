@@ -152,8 +152,9 @@ window.onload = function() {
        socket.emit('xmpp.roster.get', {}, handleRoster);
    });
    
-   var handleRoster = function(roster) {
-   	   $('.roster-items').find('*').remove();
+   var handleRoster = function(error, roster) {
+   	   if (error != null) return alert('Error getting roster: ' + error)
+   	   $('.roster-items').find('*').remove()
        $(roster).each(function(index, item) {
            addRosterItem(item);
        });
