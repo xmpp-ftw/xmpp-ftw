@@ -302,6 +302,21 @@
         </pre>
         <p>Success will be true and error `null` if all is ok.</p>
         
+        <h3>Change a user's affiliation</h3>
+        
+        <pre class="out callback" message="xmpp.muc.affiliation">
+        socket.emit(
+            'xmpp.muc.role',
+            {
+                room: 'jdev@conference.jabber.org',
+                jid: 'user@example.com',
+                affiliation: 'outcast'
+            }
+            function(error, success) { console.log(error, success) }
+        )
+        </pre>
+        
+        
         <% include ./ga %>
     </body>
 </html
