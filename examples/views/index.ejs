@@ -57,7 +57,7 @@
         <h2>Authentication</h2>
  
         <h3>Login</h3>
-        <pre>
+        <pre class="out" message="xmpp.login">
         socket.emit('xmpp.login', {jid: 'test@example.com', password: 'password'})
         </pre>
         <p>You can also add an optional parameter of <i>resource</i>, if not provided the XMPP 
@@ -66,12 +66,12 @@
         <h2>Messaging</h2>
 
         <h3>Send a message</h3>
-        <pre>
+        <pre class="out" message="xmpp.chat.message"">
         socket.emit('xmpp.chat.message', {to: 'other@example.com', message: 'Hello world'})
         </pre>
 
         <h3>Receive a chat message</h3>
-        <pre>
+        <pre class="in" message="xmpp.chat.message">
         socket.on('xmpp.chat.message', function(data) {
             console.log('Got message from ' + data.from)
             console.log('Content was: ' + data.content)
@@ -81,13 +81,13 @@
         <h2>Presence</h2>
 
         <h3>Set presence</h3>
-        <pre>
+        <pre class="out" message="xmpp.presence">
         socket.emit('xmpp.presence', {show: 'online', status: "I'm using this script!", priority: 10})
         </pre>
         <p>Each of the parameters for presence are <i>optional</i>.</p>
         
         <h3>Receive presence</h3>
-        <pre>
+        <pre class="in" message="xmpp.presence">
         socket.on('xmpp.presence', function(data) { 
             console.log(data); 
             /*
@@ -99,24 +99,24 @@
         
         <h3>Directed presence</h3>
         
-        <pre>
+        <pre class="out" message="xmpp.presence.get">
         socket.emit('xmpp.presence.get', { to: 'user@example.com' })
         </pre>
 
         <h3>Go offline</h3>
         
-        <pre>
+        <pre class="out" message="xmpp.presence.offline">
         socket.emit('xmpp.presence.offline')
         </pre>
         
         <h3>Subscribe</h3>
         <p>Request to subsribe to a user</p>
-        <pre>
+        <pre class="out" message="xmpp.presence.subscribe">
         socket.emit('xmpp.presence.subscribe', {to: 'user@example.com' })
         </pre>
         
         <p>User requests to subscribe to your presence</p>
-        <pre>
+        <pre class="in" message="xmpp.presence.subscribe">
         socket.on('xmpp.presence.subscribe', function(data) {
             console.log(data);
             /* { 
@@ -127,11 +127,10 @@
         </pre>
         
         <p>Respond with subscribed or unsubscribed</p>
-        <pre>
+        <pre class="out" message="xmpp.presence.subscribed">
         socket.emit('xmpp.presence.subscribed', { to: 'user@example.com' })
-        
-        //   ..... or .....
-        
+        </pre>
+        <pre class="out" messsage="xmpp.presence.unsubscribed">
         socket.emit('xmpp.presence.unsubscribed', { to: 'user@example.com' })
         </pre>
         
@@ -139,7 +138,7 @@
         
         <h3>Add user to roster</h3>
         
-        <pre>
+        <pre class="out callback" message="xmpp.roster.add">
         socket.emit(
             'xmpp.roster.add',
             {},
@@ -147,55 +146,58 @@
                 if (reply.error) console.log(reply.error);
             }
         )
-        /* Data to send:
-         * {
-         *     jid: 'user@example.com',
-         *     name: 'Example user',    // ...optional...
-         *     group: 'example-users'   // ...optional...
-         * }
-         */
+        </pre>
+        <p>Example:</p>
+        <pre class="example">
+          {
+              jid: 'user@example.com',
+              name: 'Example user',    // ...optional...
+              group: 'example-users'   // ...optional...
+          }
         </pre>
         
         <h3>Get</h3>
         
-        <pre>
+        <pre class="out callback" message="xmpp.roster.get">
         socket.emit(
             'xmpp.roster.get',
             {},
             function(error, roster) { console.log('roster', roster) }
         )
-        
-        /* Data returns as array of objects, e.g.
-         * [ {
-         *      jid: { node: 'user', domain: 'example.com' },
-         *      subscription: 'both',
-         *      name: 'Example user',
-         *      group: 'Buddies',
-         *      [ ask = 'subscribe' ]
-         * } ]
+        </pre>
+        <p>Data returns as array of objects, e.g.</p>
+        <pre class="example">
+          [ {
+               jid: { node: 'user', domain: 'example.com' },
+               subscription: 'both',
+               name: 'Example user',
+               group: 'Buddies',
+               [ ask = 'subscribe' ]
+          } ]
         </pre>
         
         <h3>New incoming Roster request</h3>
         
-        <pre>
+        <pre class="in" message="xmpp.roster.add">
         socket.on('xmpp.roster.add', function(data) {
             console.log(data);
         })
+        </pre>
         
-        /*
-         * {
-         *      jid: { node: 'user', domain: 'example.com' },
-         *      subscription: 'both',
-         *      name: 'Example user',
-         *      group: 'Buddies',
-         *      [ ask = 'subscribe' ]
-         * }
-         */
+        <p>Example:</p>
+        <pre class="example">
+          {
+               jid: { node: 'user', domain: 'example.com' },
+               subscription: 'both',
+               name: 'Example user',
+               group: 'Buddies',
+               [ ask = 'subscribe' ]
+          }
         </pre>
         
         <h3>Add a user to a roster group</h3>
         
-        <pre>
+        <pre class="out" message="xmpp.roster.group">
         socket.emit('xmpp.roster.group', { jid: 'user@example.com', group: 'buddies' })
         </pre>
         
@@ -203,45 +205,47 @@
         
         <h3>Join a room</h3>
         
-        <pre>
+        <pre class="out" message="xmpp.muc.join">
         socket.emit('xmpp.muc.join', { room: 'jdev@conference.jabber.org', nick: 'MyNickname' })
         </pre>
         
         <h3>Receive room roster</h3>
         
-        <pre>
+        <pre class="in" message="xmpp.muc.roster">
         socket.on('xmpp.muc.roster', function(data) { console.log(data) })
-        
-        /* Note: You may receive many of these messages
-         * {
-         *     room: 'jdev@conference.jabber.org',
-         *     nick: 'TheirNickname',
-         *   [ affiliation: 'member', ]
-         *   [ role: 'member' ]
-         * }
-         */
         </pre>
+        
+        <p>Example: <i>You may receive many of these messages</i></p>
+        <pre class="example">
+          {
+              room: 'jdev@conference.jabber.org',
+              nick: 'TheirNickname',
+            [ affiliation: 'member', ]
+            [ role: 'member' ]
+          }
+        </pre>
+        
         <p>'Affilition' and 'role' tend to be sent on affiliation or role changes.</p>
          
         <h3>Receive a message</h3>
          
-        <pre>
+        <pre class="in" message="xmpp.muc.message">
         socket.on('xmpp.muc.message', function(data) { console.log(data) })
-        
-        /*
-         * {
-         *     room: 'jdev@conference.jabber.org',
-         *     nick: 'TheirNickname',
-         *     content: 'Hello world!',
-         *   [ timestamp: '2012-03-03T20:22:00Z', ]
-         *   [ private: false ]
-         * }
-         */
+        </pre>
+        <p>Example:</p>
+        <pre class="example">
+          {
+              room: 'jdev@conference.jabber.org',
+              nick: 'TheirNickname',
+              content: 'Hello world!',
+            [ timestamp: '2012-03-03T20:22:00Z', ]
+            [ private: false ]
+          }
         </pre>
         
         <h3>Send a message</h3>
         
-        <pre>
+        <pre class="out" message="xmpp.muc.message">
         socket.emit(
             'xmpp.muc.message',
             {
@@ -254,7 +258,7 @@
         
         <h3>Leave a room</h3>
         
-        <pre>
+        <pre class="out" message="xmpp.muc.leave">
         socket.emit(
             'xmpp.muc.leave',
             {
@@ -267,15 +271,17 @@
         
         <h4>Message Errors</h4>
         
-        <pre>
+        <pre class="in" message="xmpp.muc.error">
         socket.on('xmpp.muc.error', function(data) { console.log(data) })
-        
-        /*
-         * {
-         *     type:  'message',
-         *     error: 'SERVICE-UNAVAILABLE'  // example only
-         * }
-         */
+        </pre>
+        <p>Example:</p>
+        <pre class="example">
+          {
+              type:  'message',
+              error: 'SERVICE-UNAVAILABLE',
+              room:  'jdev@conference.jabber.org',
+            [ content: 'Original message content' ]
+          }
         </pre>
         <p>Code will attempt to grab the extended reason from the 
         '<abbr title="urn:ietf:params:xml:ns:xmpp-stanzas">xmpp-stanzas</abbr>' namespaced 
@@ -283,7 +289,7 @@
 
         <h3>Change a user's role</h3>
         
-        <pre>
+        <pre class="out callback" message="xmpp.muc.role">
         socket.emit(
             'xmpp.muc.role', 
             {
