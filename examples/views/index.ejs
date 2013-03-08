@@ -316,7 +316,50 @@
         )
         </pre>
         
+        <h3>Register with a room</h3>
         
+        <h4>Get registration information</h4>
+        
+        <pre class="out callback" message="xmpp.muc.register.info">
+        socket.emit(
+            'xmpp.muc.register.info',
+            { room: 'jdev@conference.jabber.org' },
+            function(error, info) { console.log(error, info) }
+        )
+        </pre>
+        
+        <p>Example:</p>
+        <pre class="example">
+        {
+            'instructions': 'Reply with the following form',
+            'form': {
+                title: 'Register with the dev room!',
+                instructions: 'Please fill out all required fields',
+                fields: [
+                    {
+                        type: 'hidden',
+                        value: '',
+                        var: 'muc#register_email',
+                        required: true,
+                        [ label: 'Email address', ]
+                ] 
+            }
+        }
+        </pre>
+        
+        <h4>Perform registration</h4>
+        
+        <pre class="out callback" message="xmpp.muc.register">
+        socket.emit(
+            'xmpp.muc.register',
+            { room: 'jev@conference.jabber.org', form: [ ] },
+            function(error, success) { console.log(error, success)
+        )
+        </pre>
+
+
+
+
         <% include ./ga %>
     </body>
 </html
