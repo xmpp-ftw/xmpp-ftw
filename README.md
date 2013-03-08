@@ -13,6 +13,7 @@ I'll attempt to keep this readme up to date as I progress. Currently....
 - <del>Hosted for people to experiment</del>
 - Add MUC (xep-0045)   *** Currently adding, not stable ***
 - New demo system (chat client to be retired)
+- More advanced xep-0004 support (e.g. multi-select, etc)
 - Client errors
 - Logout
 - Better chat implementation
