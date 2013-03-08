@@ -46,11 +46,23 @@
         <h2>JIDs</h2>
         
         <p>JIDs are always sent as an object as follows:</p>
-        <pre>
+        <pre class="example">
         { 
             node: 'user',
             domain: 'example.com',
             resource: 'lounge'
+        }
+        </pre>
+        
+        <h2>Errors</h2>
+        
+        <p>Errors are delivered in the following form:</p>
+        
+        <pre class="example">
+        {
+            type: 'auth',
+          [ condition: 'forbidden', ]
+          [ description: 'Only owners can configure rooms' ]
         }
         </pre>
         
