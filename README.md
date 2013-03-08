@@ -23,7 +23,7 @@ I'll attempt to keep this readme up to date as I progress. Currently....
 
 ## ...and back to main readme
 
-The goal of this project is to make XMPP really simple to use for developers. This module takes away all of the XML and works by hooking to events hich are passed between client and server using socket.io in JSON.
+The goal of this project is to make XMPP really simple to use for developers. This module takes away all of the XML and works by hooking to events which are passed between client and server using socket.io in JSON.
 
 # Try it out...
 
