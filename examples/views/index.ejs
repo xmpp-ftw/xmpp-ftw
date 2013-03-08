@@ -373,9 +373,9 @@
         
         <h4>Get room configuration</h4>
         
-        <pre class="out callback" message="xmpp.muc.room.info">
+        <pre class="out callback" message="xmpp.muc.room.config.get">
         socket.emit(
-            'xmpp.muc.room.info',
+            'xmpp.muc.room.config.get',
             { room: 'test@conference.evilprofessor.co.uk' },
             function(error, success) { console.log(error, success) }
         )
@@ -403,9 +403,9 @@
 
         <h4>Set room configurtion</h4>
         
-        <pre class="out callback" message="xmpp.muc.room.config">
+        <pre class="out callback" message="xmpp.muc.room.config.set">
         socket.emit(
-            'xmpp.muc.room.config',
+            'xmpp.muc.room.config.set',
             { room: 'test@conference.evilprofessor.co.uk', form: [ ] },
             function(error, success) { console.log(error, success) }
         )
