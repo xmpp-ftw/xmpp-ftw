@@ -218,7 +218,7 @@
         <h3>Join a room</h3>
         
         <pre class="out" message="xmpp.muc.join">
-        socket.emit('xmpp.muc.join', { room: 'jdev@conference.jabber.org', nick: 'MyNickname' })
+        socket.emit('xmpp.muc.join', { room: 'test@conference.evilprofessor.co.uk', nick: 'MyNickname' })
         </pre>
         
         <h3>Receive room roster</h3>
@@ -230,7 +230,7 @@
         <p>Example: <i>You may receive many of these messages</i></p>
         <pre class="example">
           {
-              room: 'jdev@conference.jabber.org',
+              room: 'test@conference.evilprofessor.co.uk',
               nick: 'TheirNickname',
             [ affiliation: 'member', ]
             [ role: 'member' ]
@@ -247,7 +247,7 @@
         <p>Example:</p>
         <pre class="example">
           {
-              room: 'jdev@conference.jabber.org',
+              room: 'test@conference.evilprofessor.co.uk',
               nick: 'TheirNickname',
               content: 'Hello world!',
             [ timestamp: '2012-03-03T20:22:00Z', ]
@@ -261,7 +261,7 @@
         socket.emit(
             'xmpp.muc.message',
             {
-                room: 'jdev@conference.jabber.org',
+                room: 'test@conference.evilprofessor.co.uk',
                 content: 'Hello XMPP people!',
               [ to: 'TheirNickname' ]
             }
@@ -274,7 +274,7 @@
         socket.emit(
             'xmpp.muc.leave',
             {
-                room: 'jdev@conference.jabber.org'
+                room: 'test@conference.evilprofessor.co.uk'
             }
         )
         </pre>
@@ -291,7 +291,7 @@
           {
               type:  'message',
               error: 'SERVICE-UNAVAILABLE',
-              room:  'jdev@conference.jabber.org',
+              room:  'test@conference.evilprofessor.co.uk',
             [ content: 'Original message content' ]
           }
         </pre>
@@ -305,7 +305,7 @@
         socket.emit(
             'xmpp.muc.role', 
             {
-                room: 'jdev@conference.jabber.org',
+                room: 'test@conference.evilprofessor.co.uk',
                 nick: 'TheirNickname',
                 role: 'participant'
             },
@@ -320,7 +320,7 @@
         socket.emit(
             'xmpp.muc.role',
             {
-                room: 'jdev@conference.jabber.org',
+                room: 'test@conference.evilprofessor.co.uk',
                 jid: 'user@example.com',
                 affiliation: 'outcast'
             }
@@ -335,7 +335,7 @@
         <pre class="out callback" message="xmpp.muc.register.info">
         socket.emit(
             'xmpp.muc.register.info',
-            { room: 'jdev@conference.jabber.org' },
+            { room: 'test@conference.evilprofessor.co.uk' },
             function(error, info) { console.log(error, info) }
         )
         </pre>
@@ -364,14 +364,64 @@
         <pre class="out callback" message="xmpp.muc.register">
         socket.emit(
             'xmpp.muc.register',
-            { room: 'jev@conference.jabber.org', form: [ ] },
+            { room: 'test@conference.evilprofessor.co.uk', form: [ ] },
             function(error, success) { console.log(error, success)
         )
         </pre>
 
+        <h3>Update room configuration</h3>
+        
+        <h4>Get room configuration</h4>
+        
+        <pre class="out callback" message="xmpp.muc.room.info">
+        socket.emit(
+            'xmpp.muc.room.info',
+            { room: 'test@conference.evilprofessor.co.uk' },
+            function(error, success) { console.log(error, success) }
+        )
+        </pre>
+        
+        <p>Response (can) look like this:</p>
+        
+        <pre class="example">
+        {
+            title: "Configuration for test@conference.evilprofessor.co.uk",
+            instructions: "Configuration for test@conference.evilprofessor.co.uk",
+            form: {
+                fields: [
+                    { var: "FORM_TYPE", type: "hidden", required: false, value: "http://jabber.org/protocol/muc#roomconfig" },
+                    { var: "muc#roomconfig_roomname", type: "text-single", required: false, value: "test2", label: "Name" },
+                    { var: "muc#roomconfig_persistentroom", type: "boolean", required: false, value: false, label: "Make Room Persistent?" },
+                    { var: "muc#roomconfig_whois", type: "list-single", required: false, value:["moderators", "moderators", "anyone"], label: "Who May Discover Real JIDs?" },
+                    { var: "muc#roomconfig_roomsecret", type: "text-private", required: false, value: "", label: "Password" },
+                ],
+                title: "Configuration for test@conference.evilprofessor.co.uk",
+                instructions: "Configuration for test@conference.evilprofessor.co.uk"
+          }
+        }
+        </pre>
 
-
-
-        <% include ./ga %>
-    </body>
-</html
+        <h4>Set room configurtion</h4>
+        
+        <pre class="out callback" message="xmpp.muc.room.config">
+        socket.emit(
+            'xmpp.much.room.config',
+            { room: 'test@conference.evilprofessor.co.uk', form: [ ] },
+            function(error, success) { console.log(error, success) }
+        }
+        </pre>
+        
+        <p>Form data example:</p>
+        <pre class="example">
+        {
+            room: 'test@conference.evilprofessor.co.uk',
+            form: [
+                { field: 'muc#roomconfig_membersonly', value: true },
+                { field: 'muc#roomconfig_roomname', value: 'Cool XMPP-FTW configured room' },
+                { field: 'muc#roomconfig_roomsecret', value: 'abracadabra' }
+            ]
+        }
+        </pre>
+        
+        <% include ./partials/ga %>
+        <% include ./partials/cat-finder %>
