@@ -423,5 +423,21 @@
         }
         </pre>
         
+        <h4>Updates to room configuration</h4>
+        
+        <pre class="in" message="xmpp.muc.room.config">
+        socket.on('xmpp.muc.room.config', function(data) { console.log(data) })
+        </pre>
+        
+        <p>Example confguration updates:</p>
+        
+        <pre class="example">
+        {
+            room: test@conference.evilprofessor.co.uk',
+            status: [ 100, 110, 104 ]
+        }
+       
+        </pre>
+        
         <% include ./partials/ga %>
         <% include ./partials/cat-finder %>
