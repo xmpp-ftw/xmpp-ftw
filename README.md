@@ -41,7 +41,7 @@ The version running on the website matches 'master' branch here and auto-deploys
 # Blog posts
 
 * http://www.evilprofessor.co.uk/562-new-demo-system-for-xmpp-ftw/
-** How the demo client works
+ * How the demo client works
 
 # Build status
 
