@@ -32,9 +32,16 @@ The goal of this project is to make XMPP really simple to use for developers. Th
 The code is now up and running at https://xmpp-ftw.jit.su so you can try it out. Be aware that this setup is only for trying xmpp-ftw out
  an may be slow as we need to go client->nodejitsu->your XMPP server and back each time.
 
-The site root is a short manual which I will add to as new code is added, navigate to /chat to see an in progress chat client.
+* https://xmpp-ftw.jit.su/manual -- XMPP-FTW manual
+* https://xmpp-ftw.jit.su/demo -- Awesome new demo, generated from manual
+* https://xmpp-ftw.jit.su/chat -- Old chat client, no longer updated
 
 The version running on the website matches 'master' branch here and auto-deploys with commits.
+
+# Blog posts
+
+* http://www.evilprofessor.co.uk/562-new-demo-system-for-xmpp-ftw/
+** How the demo client works
 
 # Build status
 
