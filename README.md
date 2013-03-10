@@ -11,16 +11,16 @@ I'll attempt to keep this readme up to date as I progress. Currently....
 - <del>Get basic presence working again</del>
 - <del>Roster</del>
 - <del>Hosted for people to experiment</del>
-- Add MUC (xep-0045)   *** Currently adding, not stable ***
-- New demo system (chat client to be retired)
-- More advanced xep-0004 support (e.g. multi-select, etc)
+- <del>Add MUC (xep-0045)</del>
+- <del>New demo system (chat client to be retired)</del>
+- <del>More advanced xep-0004 support (e.g. multi-select, etc)</del>
+- Document xep-0004 
 - Client errors
 - Logout
 - Better chat implementation
 - Rich chat messages (xep-0071)
 - Chat status notifications (xep-0085)
 - Implement pubsub (xep-0060+ )
-
 
 ## ...and back to main readme
 
