@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+        <link rel="stylesheet" href="/style.css" type="text/css" />
+        <meta charset="utf-8" />
+        <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+    </head>
+    <body id="demo">
+    <div id="container">
+        <h1>XMPP For The Web/Win ::: XMPP-FTW</h1>
+        <p class="subtitle">Demo system</p>
+        <p>Messages are loaded from the <a href="/manual" title="XMPP-FTW manual">manual</a> and parsed into 
+        this page. The socket is listening on all incoming messages from the manual. Additionally, all outgoing 
+        messages are known by this demo script along with example payloads.</p>
+        
+        <p>To use this demo start typing in a message at the bottom of the page (autocomplete in place). Once you 
+        have selected a message the payload box will be filled with an example message. Click 'send' to send the 
+        message, the DOM will be updated to reflect your messages.</p>
+        
+        <p class="hint"><span class="bold">Hint:</span> You'll probably want to start with '<i>xmpp.login</i>'.</p>
+        
+        <h2>Messages</h2>
+        
+        <div id="messages"></div>
+        
+        <div class="send payload">
+	        <div class="message ui-widget">
+	            <input type="text" id="message" />
+	        </div>
+	        <div class="data" id="data" contenteditable="true"></div>
+	        <div class="callback" id="callback"></div>
+	        <div class="send"><button id="send">Send</button></div>
+        </div>
+        <script type="text/javascript" src="/scripts/demo.js"></script>
+        <% include ./partials/ga %>
+    </div>
+    </body>
+</html>

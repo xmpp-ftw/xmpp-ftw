@@ -31,17 +31,20 @@ Xmpp.prototype.registerXmppEvents = function() {
 
 Xmpp.prototype.registerSocketEvents = function() {
     var self = this
-    this.socket.on('xmpp.login', function(data) { 
-        self.login(data.jid, data.password, data.resource)
+    this.socket.on('xmpp.login', function(data) {
+    	console.log(data) 
+        self.login(data.jid, data.password, data.resource, data.host)
     })
 }
 
-Xmpp.prototype.login = function(jid, password, resource) {
+Xmpp.prototype.login = function(jid, password, resource, host) {
    console.log("Attempting to connect to " + jid)
+   if (!jid || !password) return
    var self = this
    self.jid = jid
    var credentials = {jid: jid, password: password}
    if (resource) credentials.jid += '/' + resource
+   if (host) credentials.host = host
    this.client = new nodeXmpp.Client(credentials)
    this.listeners.forEach(function(listener) {
 	   listener.init(self)
