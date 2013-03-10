@@ -21,6 +21,7 @@ I'll attempt to keep this readme up to date as I progress. Currently....
 - Rich chat messages (xep-0071)
 - Chat status notifications (xep-0085)
 - Implement pubsub (xep-0060+ )
+- ```Write unit tests, start TDD``` -- all this code is crap without tests!
 
 ## ...and back to main readme
 
