@@ -25,6 +25,8 @@ body {
 h1, h2 {
 	border-bottom: 2px dashed #15b2e7;
     padding-bottom: 15px;
+    clear: both;
+    padding-top: 5px;
 }
 
 h2 {
@@ -36,22 +38,28 @@ h3, h4 {
 }
 
 pre { 
-    border: 1px solid #000;
+    border: 3px dashed #000;
     margin: 5px;
-    background-color: #ddd;
     padding-top: 15px;
 }
 
+pre.example, pre.in, pre.out {
+	width: 870px;
+	margin-bottom: 15px;
+}
+
 pre.example {
-	background-color: rgba(229, 106, 20, 0.4);
+	border-color: rgba(159, 206, 102, 0.4);
+	
+	
 }
 
 pre.out {
-	background-color: rgba(21, 178, 231, 0.4);
+	border-color: rgba(21, 178, 231, 0.4);
 }
 
 pre.in {
-	background-color: rgba(159, 206, 102, 0.4);
+	border-color: rgba(229, 106, 20, 0.4);
 }
 
 .bold {
@@ -105,8 +113,8 @@ a.top {
 #toc.collapse {
 	overflow: hidden;
     height: 20px;
-    background-color: #e56a14;
-    color: #e56a14;
+    background-color: #9fce66;
+    color: #9fce66;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -118,7 +126,7 @@ a.top {
     
 }
 .collapse a, .collapse a:link, .collapse a:visited {
-	color: #e56a14;
+	color: #9fce66;
 }
 
 .collapse div.collapse-toggle {
@@ -149,7 +157,7 @@ a.top {
     overflow: auto;
 }
 
-#demo .payload > div {
+#demo .payload > div, div.example-out, div.example-in, div.example-data, pre {
 	border: 5px dashed #cccccc;
 	border-radius: 5px;
 	margin-left: 10px;
@@ -212,12 +220,16 @@ button#send {
     cursor: pointer;
 }
 
-#messages .message-container.out > div {
+#messages .message-container.out > div, div.example-out {
 	border-color: #15b2e7;
 }
 
-#messages .message-container.in > div {
+#messages .message-container.in > div, div.example-in {
 	border-color: #e56a14;
+}
+
+div.example-data {
+	border-color: #9FCE66;
 }
 
 #messages .message-container.callback-no .data {
