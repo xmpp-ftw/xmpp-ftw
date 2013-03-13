@@ -188,17 +188,13 @@
         <pre class="out callback" message="xmpp.roster.add">
         socket.emit(
             'xmpp.roster.add',
-            {},
+            {
+                jid: 'user@example.com',
+             /* name: 'Example user', */
+             /* group: 'example-users' */
+            },
             function(error, data) { console.log(error, data) }
         )
-        </pre>
-        <p>Example:</p>
-        <pre class="example">
-          {
-              jid: 'user@example.com',
-              name: 'Example user',    // ...optional...
-              group: 'example-users'   // ...optional...
-          }
         </pre>
         
         <h3>Get</h3>
