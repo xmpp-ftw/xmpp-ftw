@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="/style.css" type="text/css" />
-        <meta charset="utf-8" />
-        <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+        <% include ./partials/head %>
     </head>
     <body>
         <div id="container">
@@ -14,7 +12,7 @@
         
         <p>This page covers using XMPP-FTW from the browser. You may also 
         want to check out the <a href="/demo" title="XMPP-FTW Demo">demo</a> and 
-        the (deprecated) <a href="/chat" title="XMPP-FTW Chat client">chat client</a>.</p>
+        the <del title="deprecated"><a href="/chat" title="XMPP-FTW Chat client">chat client</a></del>.</p>
         
         <div id="toc"></div>
         
@@ -32,9 +30,9 @@
         
         <pre class="example">
         { 
-            "node": "user",
+            "user": "me",
             "domain": "example.com",
-            "resource": "lounge"
+            "resource": "laptop"
         }
         </pre>
         
@@ -45,8 +43,8 @@
         <pre class="example">
         {
             type: "auth",
-          [ condition: "forbidden", ]
-          [ description: "Only owners can configure rooms" ]
+         /* condition: "forbidden", */
+         /* description: "Only owners can configure rooms" */
         }
         </pre>
         
@@ -60,8 +58,8 @@
              { 
                  "jid": "test@example.com",
                  "password": "password",
-               [ "resource": "xmpp-ftw", ]
-               [ "host": "127.0.0.1" ]
+              /* "resource": "xmpp-ftw", */
+              /* "host": "127.0.0.1" */
              }
         )
         </pre>
@@ -124,8 +122,8 @@
         socket.on('xmpp.presence', function(data) { 
             console.log(data); 
             /*
-              { show: 'away', status: "I'm going away", priority: 10 }
-              ...each of these are optional...
+             * { show: 'away', status: "I'm going away", priority: 10 }
+             * ...each of these are optional...
              */
         })
         </pre>
@@ -139,7 +137,7 @@
         <h3>Go offline</h3>
         
         <pre class="out" message="xmpp.presence.offline">
-        socket.emit('xmpp.presence.offline' [, {} ] )
+        socket.emit('xmpp.presence.offline' /*, {} */ )
         </pre>
         
         <h3>Subscribe</h3>
@@ -155,9 +153,10 @@
         socket.on('xmpp.presence.subscribe', function(data) {
             console.log(data);
             /* { 
-                   from: 'user@example.com'
-                   nick: 'Example user' // ...optional...
-               } */
+             *     from: 'user@example.com'
+             *     nick: 'Example user' // ...optional...
+             * } 
+             */
         })
         </pre>
         
@@ -209,11 +208,11 @@
         <p>Data returns as array of objects, e.g.</p>
         <pre class="example">
           [ {
-               jid: { node: 'user', domain: 'example.com' },
+               jid: { user: 'user', domain: 'example.com' },
                subscription: 'both',
                name: 'Example user',
                group: 'Buddies',
-               [ ask = 'subscribe' ]
+            /* ask = 'subscribe' */
           } ]
         </pre>
         
@@ -228,11 +227,11 @@
         <p>Example:</p>
         <pre class="example">
           {
-               jid: { node: 'user', domain: 'example.com' },
+               jid: { user: 'user', domain: 'example.com' },
                subscription: 'both',
                name: 'Example user',
                group: 'Buddies',
-               [ ask = 'subscribe' ]
+            /* ask = 'subscribe' */
           }
         </pre>
         
@@ -273,8 +272,8 @@
           {
               room: 'test@conference.evilprofessor.co.uk',
               nick: 'TheirNickname',
-            [ affiliation: 'member', ]
-            [ role: 'member' ]
+           /* affiliation: 'member', */
+           /* role: 'member' */
           }
         </pre>
         
@@ -291,8 +290,8 @@
               room: 'test@conference.evilprofessor.co.uk',
               nick: 'TheirNickname',
               content: 'Hello world!',
-            [ timestamp: '2012-03-03T20:22:00Z', ]
-            [ private: false ]
+           /* timestamp: '2012-03-03T20:22:00Z', */
+           /* private: false */
           }
         </pre>
         
@@ -304,7 +303,7 @@
             {
                 "room": "test@conference.evilprofessor.co.uk",
                 "content": "Hello XMPP people!",
-              [ "to": "TheirNickname" ]
+             /* "to": "TheirNickname" */
             }
         </pre>
         <p>If 'to' is provided then message becomes a private message.</p>
@@ -334,7 +333,7 @@
               type:  'message',
               error: 'SERVICE-UNAVAILABLE',
               room:  'test@conference.evilprofessor.co.uk',
-            [ content: 'Original message content' ]
+           /* content: 'Original message content' */
           }
         </pre>
         <p>Code will attempt to grab the extended reason from the 
@@ -397,7 +396,8 @@
                         value: '',
                         var: 'muc#register_email',
                         required: true,
-                        [ label: 'Email address', ]
+                     /* label: 'Email address' */
+                    }
                 ] 
             }
         }
