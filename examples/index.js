@@ -30,6 +30,7 @@ app.engine('ejs', engine);
 
 var options = { 
 	ga: process.env['GOOGLE_ANALYTICS_ID'] || null,
+        webmasterTools: process.env['GOOGLE_WEBMASTER_TOOLS'] || null,
 	username: process.env['NODE_XMPP_USERNAME'] || null,
 	password: process.env['NODE_XMPP_PASSWORD'] || null
 }
