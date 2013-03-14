@@ -93,11 +93,20 @@
         </pre>
 
         <h3>Receive a chat message</h3>
+
         <pre class="in" message="xmpp.chat.message">
         socket.on('xmpp.chat.message', function(data) {
-            console.log('Got message from ' + data.from)
-            console.log('Content was: ' + data.content)
+            console.log(data)
         })
+        </pre>
+
+        <p>Example:</p>
+
+        <pre class="example">
+        {
+            from: 'user2@example.com',
+            content: 'Hello fine Sir!'
+        }        
         </pre>
 
         <h2>Presence</h2>
@@ -151,13 +160,17 @@
         <p>User requests to subscribe to your presence</p>
         <pre class="in" message="xmpp.presence.subscribe">
         socket.on('xmpp.presence.subscribe', function(data) {
-            console.log(data);
-            /* { 
-             *     from: 'user@example.com'
-             *     nick: 'Example user' // ...optional...
-             * } 
-             */
+            console.log(data)
         })
+        </pre>
+
+        <p>Example:</p>
+
+        <pre class="example">
+        {
+            from: 'user@example.com'
+            nick: 'Example user' // ...optional...
+        }
         </pre>
         
         <p>Respond with subscribed or unsubscribed</p>
@@ -188,9 +201,9 @@
         socket.emit(
             'xmpp.roster.add',
             {
-                jid: 'user@example.com',
-             /* name: 'Example user', */
-             /* group: 'example-users' */
+                "jid": "user@example.com",
+             /* "name": "Example user", */
+             /* "group": "example-users" */
             },
             function(error, data) { console.log(error, data) }
         )
@@ -205,7 +218,9 @@
             function(error, data) { console.log(error, data) }
         )
         </pre>
+
         <p>Data returns as array of objects, e.g.</p>
+
         <pre class="example">
           [ {
                jid: { user: 'user', domain: 'example.com' },
@@ -268,6 +283,7 @@
         </pre>
         
         <p>Example: <i>You may receive many of these messages</i></p>
+
         <pre class="example">
           {
               room: 'test@conference.evilprofessor.co.uk',
