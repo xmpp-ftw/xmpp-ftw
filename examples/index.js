@@ -46,6 +46,11 @@ app.get('/manual', function(req, res) {
 app.get('/demo', function(req, res) {
 	res.render('demo', options)
 })
+
 app.get('/chat', function(req, res) {
-    res.render('chat', options);
+    res.render('chat', options)
+})
+
+app.get('/*', function(req, res) {
+   res.send(404)
 })
