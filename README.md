@@ -26,12 +26,10 @@ The version running on the website matches 'master' branch here and auto-deploys
 [![Build Status](https://secure.travis-ci.org/lloydwatkin/xmpp-ftw.png)](http://travis-ci.org/lloydwatkin/xmpp-ftw)
 
 * npm i xmpp-ftw
-* require('xmpp-ftw')
 * Create your socket.io connection manually and then pass this socket into the constructor
-** new require('xmpp-ftw')()
+** new require('xmpp-ftw').xmpp(socket)
 
 ```javascript
-var io = xmpp.init(server); /* express-type server */
 io.sockets.on('connection', function(socket) {
      new xmpp.Xmpp(socket);       
 });
