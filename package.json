@@ -1,7 +1,7 @@
 {
   "name": "xmpp-ftw",
-  "version": "0.2.0-4",
-  "description": "XMPP-FTW (For the Win/Web) ::: XMPP over websockets using JSON",
+  "version": "0.2.0-17",
+  "description": "XMPP-FTW (For the Win/Web) ::: Powerful XMPP, simple JSON",
   "main": "index.js",
   "dependencies": {
     "socket.io": "~0.9.13",
@@ -28,7 +28,12 @@
     "xmpp",
     "json",
     "websocket",
-    "socket.io"
+    "socket.io",
+    "engine.io",
+    "stanza",
+    "federated",
+    "server",
+    "translate"
   ],
   "author": "Steven Lloyd Watkin <lloyd@evilprofessor.co.uk>",
   "license": "Apache 2.0",
