@@ -92,9 +92,4 @@ Xmpp.prototype.handleStanza = function(stanza) {
     if (!handled) console.log('No listeners for: ' + stanza)
 }
 
-var init = function(server) {
-    return require('socket.io').listen(server)
-}
-
 exports.Xmpp = Xmpp
-exports.init = init

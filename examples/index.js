@@ -1,16 +1,15 @@
-var xmpp = require('../index')
+var xmpp      = require('../index')
     , express = require('express')
-    , app = express()
-    , engine = require('ejs-locals')    
+    , app     = express()
+    , engine  = require('ejs-locals')    
     
 var server = require('http').createServer(app)
 server.listen(3000)
-var io = xmpp.init(server)
-io.sockets.on('connection', function(socket) {
+var io = require('socket.io').listen(server)
 
+io.sockets.on('connection', function(socket) {
      var xmppFtw = new xmpp.Xmpp(socket);
-     xmppFtw.addListener(require('../lib/multi-user-chat'))
-          
+     xmppFtw.addListener(require('../lib/multi-user-chat'))    
 })
 
 app.configure(function(){
@@ -45,6 +44,11 @@ app.get('/manual', function(req, res) {
 app.get('/demo', function(req, res) {
 	res.render('demo', options)
 })
+
 app.get('/chat', function(req, res) {
     res.render('chat', options);
+})
+
+app.get('/*', function(req, res) {
+	res.send(404)
 })
