@@ -2,16 +2,96 @@
     pageTitle = "XEP-0004 Data Forms"
 %>
 <% include ./partials/head %>
-<h2>Information</h2>
 
-<p>Please click on the following links as appropriate:</p>
+<h2>XML to JSON</h2>
 
+<p>Probably the best way to demonstrate the data form XML to JSON translation is through 
+examples, so that's what will happen.</p>
+
+<p>We'll be working with this example from the xmpp.org XEP-0004 specification, i.e.</p>
+
+<pre class="xml">
+&lt;x xmlns='jabber:x:data'
+   type='{form-type}'&gt;
+  &lt;title/&gt;
+  &lt;instructions/&gt;
+  &lt;field var='field-name'
+         type='{field-type}'
+         label='description'&gt;
+    &lt;desc/&gt;
+    &lt;required/&gt;
+    &lt;value&gt;field-value&lt;/value&gt;
+    &lt;option label='option-label'&gt;&lt;value&gt;option-value&lt;/value&gt;&lt;/option&gt;
+    &lt;option label='option-label'&gt;&lt;value&gt;option-value&lt;/value&gt;&lt;/option&gt;
+  &lt;/field&gt;
+&lt;/x&gt;
+</pre>
+
+<h3>Outline</h3>
+
+<p>The general message format of a data form from XMPP rendered to JSON looks like this:</p>
+
+<pre class="example">
+{
+  /* title: "", */
+  /* instructions: "", */
+  form: {
+    title: 'Register with the dev room!',
+    instructions: 'Please fill out all required fields',
+    fields: [ ]
+  }
+}
+</pre>
+
+<p>Note that it caters for an optional 'title' and 'instructions' from outside of the 'x' element as well.</p>
+
+<h3>Data Form Results</h3>
+
+<p>Currently form results are not supported, the status of this feature is being tracked see 
+<a href="https://github.com/lloydwatkin/xmpp-ftw/issues/13">Data form results issue</a>.</p>
+
+<h3>Fields</h3>
+
+<p>The data form fields are held in the 'fields' key of the 'form' section in XMPP-FTW. The fields have a 
+general layout that follows, any differences are outlined following. Fields are stored in an array.</p>
+
+<pre class="example">
+[
+  {
+    var:         'field-name',
+    type:        'field-type',
+    required:    true,
+    value:       'field-value',
+    description: 'field-description',
+    options:     [
+        { label: 'option-label', value: 'option-value' },
+        { label: 'option-label', value: 'option-value' }
+    ]
+  }
+]
+</pre>
+
+<h4>Notes</h4>
 <ul>
-  <li><a href="/manual" title="XMPP-FTW Manual">Manual</a></li>
-  <li><del><a href="/extend" title="Extend XMPP-FTW">Extend</a></del></li>
-  <li><a href="/demo" title="XMPP-FTW Demo">Demo</a></li>
-  <li><del><a href="/chat" title="Example chat client">Example chat client</a></del></li>
-  <li><a href="https://github.com/lloydwatkin/xmpp-ftw">Github repository</a></li>
+    <li>The 'options' key is only defined where appropriate</li>
+    <li>The 'description' key is only defined where appropriate</li>
+    <li>For 'list-multi' the value of the 'value' key is an array of set values</li>
+    <li>The user is never sent the 'FORM_TYPE' field as this is the type of data which is 
+inferred using event names.</li>
 </ul>
-<% include ./partials/cat-finder %>
+
+<h2>JSON to XML</h2>
+
+<p>Data form JSON reply is a much simpler affair. Form data should be sent using a 'form' key with the 
+following general format:</p>
+
+<pre class="example">
+form: [
+  { field: 'field-type', value: 'field-value },
+  { field: 'field-type', value: [ 'field-value1', 'field-value2' ] }
+]
+</pre>
+
+<p>The JSON to XML tranlation uses named events to fill in the FORM_TYPE variable for the user.</p>
+
 <% include ./partials/footer %>

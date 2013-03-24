@@ -49,15 +49,13 @@ pre {
     padding-top: 15px;
 }
 
-pre.example, pre.in, pre.out {
+pre.example, pre.in, pre.out, pre.xml {
 	width: 870px;
 	margin-bottom: 15px;
 }
 
 pre.example {
 	border-color: rgba(159, 206, 102, 0.4);
-	
-	
 }
 
 pre.out {
