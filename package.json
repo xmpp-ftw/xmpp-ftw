@@ -12,7 +12,8 @@
     "MD5": "~1.0.3",
     "node-stringprep": "~0.1.5",
     "express": "*",
-    "ejs-locals": "*"
+    "ejs-locals": "*",
+    "cloneextend": "0.0.3"
   },
   "devDependencies": {
     "ejs-locals": "~1.0.2",

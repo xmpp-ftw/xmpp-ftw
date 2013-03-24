@@ -1,7 +1,8 @@
-var xmpp      = require('../index')
-    , express = require('express')
-    , app     = express()
-    , engine  = require('ejs-locals')    
+var   xmpp        = require('../index')
+    , express     = require('express')
+    , app         = express()
+    , engine      = require('ejs-locals')
+    , cloneextend = require('cloneextend')  
     
 var server = require('http').createServer(app)
 server.listen(3000)
@@ -27,28 +28,38 @@ app.configure(function(){
 
 app.engine('ejs', engine);
 
-var options = { 
+var configuration = { 
 	ga: process.env['GOOGLE_ANALYTICS_ID'] || null,
         webmasterTools: process.env['GOOGLE_WEBMASTER_TOOLS'] || null,
 	username: process.env['NODE_XMPP_USERNAME'] || null,
 	password: process.env['NODE_XMPP_PASSWORD'] || null,
-	bodyId: null
+	body:     {},
+	title:    "XMPP-FTW ⟫ "
 }
 
 app.get('/', function(req, res) {
+	var options = cloneextend.clone(configuration)
     res.render('index', options)
 })
 
 app.get('/manual', function(req, res) {
+	var options = cloneextend.clone(configuration)
 	res.render('manual', options)
 })
 
 app.get('/demo', function(req, res) {
+	var options = cloneextend.clone(configuration)
 	res.render('demo', options)
 })
 
 app.get('/chat', function(req, res) {
-    res.render('chat', options);
+	var options = cloneextend.clone(configuration)
+    res.render('chat', options)
+})
+
+app.get('/data-forms', function(req, res) {
+	var options = cloneextend.clone(configuration)
+	res.render('data-forms', options)
 })
 
 app.get('/*', function(req, res) {

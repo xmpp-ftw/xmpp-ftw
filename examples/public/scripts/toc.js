@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("h2, h3, h4").each(function(i) {
+    $("h2, h3, h4").not('h2.subtitle').each(function(i) {
         var current = $(this);
         current.attr("id", "heading-" + i);
         var indent = ''
