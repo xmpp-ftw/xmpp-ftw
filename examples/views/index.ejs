@@ -1,7 +1,17 @@
 <%
-    pageTitle = "Welcome to XMPP over websockets using JSON"
+    pageTitle = "XMPP using JSON"
 %>
 <% include ./partials/head %>
+
+<h2>Introduction<h2>
+
+<p>The goal of this project is to make XMPP really simple to use for developers. This module takes 
+away all of the XML and works by hooking to events which are passed between client and server 
+using a transport in JSON. In the example code we use socket.io, but there is no reason this 
+can not be replaced with engine.io, or implement your own transport and pass in as a connection.</p>
+
+<p>The examples on this site use <a href="http://socket.io" target="_blank">socket.io</a> to handle 
+data transport and will attempt to use websockets before attempting to use alternative connection types.</p>
 
 <h2>Information</h2>
 

@@ -8,6 +8,15 @@ var server = require('http').createServer(app)
 server.listen(3000)
 var io = require('socket.io').listen(server)
 
+io.configure(function(){
+    io.set('transports', [
+        'websocket',
+        'htmlfile',
+        'xhr-polling',
+        'jsonp-polling'
+    ])
+})
+
 io.sockets.on('connection', function(socket) {
      var xmppFtw = new xmpp.Xmpp(socket);
      xmppFtw.addListener(require('../lib/multi-user-chat'))    
