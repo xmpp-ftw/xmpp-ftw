@@ -16,8 +16,10 @@ for trying xmpp-ftw out an may be slow as we need to go client->nodejitsu->your 
 
 The version running on the website matches 'master' branch here and auto-deploys with commits.
 
-# Blog posts
+# Blog posts/Talks
 
+* http://www.evilprofessor.co.uk/573-talking-at-the-first-xmppuk-event-march-2013/
+ * Talking at the first XMPPUK event (March 2013) 
 * http://www.evilprofessor.co.uk/562-new-demo-system-for-xmpp-ftw/
  * How the demo client works
 
