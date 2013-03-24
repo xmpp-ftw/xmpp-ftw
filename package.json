@@ -1,6 +1,6 @@
 {
   "name": "xmpp-ftw",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "XMPP-FTW (For the Win/Web) ::: Powerful XMPP, simple JSON",
   "main": "index.js",
   "dependencies": {
@@ -14,7 +14,7 @@
     "express": "*",
     "ejs-locals": "*",
     "cloneextend": "0.0.3",
-    "express-middleware-readme.md": "~0.2.0"
+    "express-middleware-readme.md": "~0.3.0"
   },
   "devDependencies": {
     "ejs-locals": "~1.0.2",
