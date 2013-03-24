@@ -22,6 +22,8 @@ The version running on the website matches 'master' branch here and auto-deploys
  * Talking at the first XMPPUK event (March 2013) 
 * http://www.evilprofessor.co.uk/562-new-demo-system-for-xmpp-ftw/
  * How the demo client works
+* http://www.evilprofessor.co.uk/579-xmpp-for-the-web-xmpp-ftw/
+ * Introduction to XMPP-FTW
 
 # Build status
 
