@@ -18,7 +18,7 @@ body {
 #container {
     width: 900px;
     background-color: #fff;
-    padding: 15px 15px 150px 15px;
+    padding: 15px;
     margin: 0 auto;
     border-radius: 5px;
 }
@@ -28,6 +28,11 @@ h1, h2 {
     padding-bottom: 15px;
     clear: both;
     padding-top: 5px;
+}
+
+h1 a:link, h1 a:visited {
+	color: #000;
+	text-decoration: none;
 }
 
 h2 {
@@ -251,4 +256,15 @@ div.example-data {
 #messages .message-container > div {
 	max-height: 300px;
 	overflow: auto;
+}
+
+.pages {
+	overflow: visible;
+}
+
+.pages ul li {
+	list-style-type: none;
+	display: inline-block;
+	padding: 5px;
+	width: 200px;
 }

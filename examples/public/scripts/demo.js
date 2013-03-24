@@ -1,8 +1,10 @@
 var messageCount = 1;
 
 var parsePage = function(data) {
-    var data = $(data)
 
+    var data             = $(data.replace(/^\n/, ""))
+    var outgoingMessages = []
+    
     data.each(function(i, ele) {
 
     	if (!'container' == $(ele).attr('id')) return
@@ -23,10 +25,11 @@ var parsePage = function(data) {
     			example: (example || "{}").replace(/\n/g, "<br/>")
     		}
     		outgoing.push(out)
+    		outgoingMessages.push(out.value)
     	})
     })
     console.log('Listening for the following messages', incoming)
-    console.log('Logged the following outgoing messages', outgoing)
+    console.log('Logged the following outgoing messages', outgoingMessages)
     setupListener()
     setupAutocomplete()
 }
