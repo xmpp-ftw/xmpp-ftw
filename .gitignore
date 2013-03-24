@@ -3,3 +3,4 @@ node_modules
 .project
 .classpath
 npm-debug.log
+examples/public/google
