@@ -22,12 +22,23 @@ io.sockets.on('connection', function(socket) {
      xmppFtw.addListener(require('../lib/multi-user-chat'))    
 })
 
+var readme = require('express-middleware-readme.md')
+readme.setOptions({
+    htmlWrap: {
+        meta: [
+            { charset: 'utf-8' }
+        ],
+        title: 'XMPP-FTW Github README.md'
+    }
+})
+
 app.configure(function(){
 	app.use(express.static(__dirname + '/public'))
 	app.set('views', __dirname + '/views')
 	app.set('view engine', 'ejs')
 	app.use(express.bodyParser())
 	app.use(express.methodOverride())
+	app.use(readme.run)
 	app.use(app.router)
 	app.use(express.logger);
 	app.use(express.errorHandler({
