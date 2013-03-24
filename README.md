@@ -50,3 +50,7 @@ Alternatively have a look at the demo client:
 * Go to ```http://localhost:3000/demo```
 
 To work on the code in 'development mode' (where process restarts as files change) run `npm run-script develop`.
+
+# License
+
+License is Apache 2.0, please let me know if this doesn't suit.
