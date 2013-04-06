@@ -337,6 +337,7 @@
         </pre>
         
         <p>Example:</p>
+        
         <pre class="example">
           {
               type:  'message',
@@ -542,6 +543,37 @@
             { "kind": "feature", "var": "jabber:iq:roster" }
         ]
         </pre>
+        
+        <h3>Tell entities what features your client supports</h3>
+        
+        <p>
+        <pre class="in callback" message="xmpp.discover.info">
+        socket.on('xmpp.discover.info', function(data, callback) {
+            console.log(data)
+            callback({})
+        })
+        </pre>
+        
+        <p>Example data sent:</p>
+        
+        <pre class="example">
+        {
+            from: 'lloyd@evilprofessor.co.uk/laptop'
+        }
+        </pre>
+        
+        <p>Example reply data:</p>
+        
+        <pre class="example">
+        [
+            { "kind": "identity", "type": "pc", "name": "xmpp-ftw", "category": "client" },
+            { "kind": "feature", "var": "http://jabber.org/protocol/disco#info" },
+            { "kind": "feature", "var": "http://jabber.org/protocol/muc" }
+        ]
+        <pre>
+        
+        <p>The 'id' key is important here as we'll need to respond with the same ID in order for 
+        the requestor to receive the response.</p>
         
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
