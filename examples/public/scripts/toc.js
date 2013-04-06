@@ -1,12 +1,24 @@
 $(document).ready(function() {
+	var headings = []
     $("h2, h3, h4").not('.not-toc').each(function(i) {
         var current = $(this);
-        current.attr("id", "heading-" + i);
+        var header  = current.text()
+            .toLowerCase()
+            .replace(/[^A-Z\ ]/gi, '')
+            .replace(/\ /g, '-')
+        var index   = ""
+        while (-1 !== headings.indexOf(header)) {
+        	header = header.substr(0, header.length - index.length)
+        	++index
+        	header += index
+        }
+        headings.push(header)
+        current.attr("id", header);
         var indent = ''
         if (current[0].nodeName == 'H3') indent = '&nbsp;&nbsp;&nbsp;&nbsp;'
         if (current[0].nodeName == 'H4') indent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-        $("#toc").append(indent + "<a id='link" + i + "' href='#heading-" +
-            i + "' title='" + current.html() + "'>" + 
+        $("#toc").append(indent + "<a id='link" + i + "' href='#" +
+            header + "' title='" + current.html() + "'>" + 
             current.html() + "</a><br/>")
         current.append(' <a href="#top" class="top">▲</a>')
     });
