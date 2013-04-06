@@ -34,55 +34,55 @@ readme.setOptions({
 })
 
 app.configure(function(){
-	app.use(express.static(__dirname + '/public'))
-	app.set('views', __dirname + '/views')
-	app.set('view engine', 'ejs')
-	app.use(express.bodyParser())
-	app.use(express.methodOverride())
-	app.use(readme.run)
-	app.use(app.router)
-	app.use(express.logger);
-	app.use(express.errorHandler({
-		dumpExceptions: true, showStack: true
-	}))
+    app.use(express.static(__dirname + '/public'))
+    app.set('views', __dirname + '/views')
+    app.set('view engine', 'ejs')
+    app.use(express.bodyParser())
+    app.use(express.methodOverride())
+    app.use(readme.run)
+    app.use(app.router)
+    app.use(express.logger);
+    app.use(express.errorHandler({
+        dumpExceptions: true, showStack: true
+    }))
 })
 
 app.engine('ejs', engine);
 
 var configuration = { 
-	ga: process.env['GOOGLE_ANALYTICS_ID'] || null,
+    ga: process.env['GOOGLE_ANALYTICS_ID'] || null,
         webmasterTools: process.env['GOOGLE_WEBMASTER_TOOLS'] || null,
-	username: process.env['NODE_XMPP_USERNAME'] || null,
-	password: process.env['NODE_XMPP_PASSWORD'] || null,
-	body:     {},
-	title:    "XMPP-FTW ⟫ "
+    username: process.env['NODE_XMPP_USERNAME'] || null,
+    password: process.env['NODE_XMPP_PASSWORD'] || null,
+    body:     {},
+    title:    "XMPP-FTW ⟫ "
 }
 
 app.get('/', function(req, res) {
-	var options = cloneextend.clone(configuration)
+    var options = cloneextend.clone(configuration)
     res.render('index', options)
 })
 
 app.get('/manual', function(req, res) {
-	var options = cloneextend.clone(configuration)
-	res.render('manual', options)
+    var options = cloneextend.clone(configuration)
+    res.render('manual', options)
 })
 
 app.get('/demo', function(req, res) {
-	var options = cloneextend.clone(configuration)
-	res.render('demo', options)
+    var options = cloneextend.clone(configuration)
+    res.render('demo', options)
 })
 
 app.get('/chat', function(req, res) {
-	var options = cloneextend.clone(configuration)
+    var options = cloneextend.clone(configuration)
     res.render('chat', options)
 })
 
 app.get('/data-forms', function(req, res) {
-	var options = cloneextend.clone(configuration)
-	res.render('data-forms', options)
+    var options = cloneextend.clone(configuration)
+    res.render('data-forms', options)
 })
 
 app.get('/*', function(req, res) {
-	res.send(404)
+    res.send(404)
 })

@@ -14,12 +14,12 @@ var Xmpp = function(socket) {
 }
 
 Xmpp.prototype.clearListeners = function() {
-	this.listeners = []
+    this.listeners = []
 }
 
 Xmpp.prototype.addListener = function(listener) {
-	if (this.client) listener.init(this)
-	this.listeners.unshift(listener)
+    if (this.client) listener.init(this)
+    this.listeners.unshift(listener)
 }
 
 Xmpp.prototype.registerXmppEvents = function() {
@@ -32,7 +32,7 @@ Xmpp.prototype.registerXmppEvents = function() {
 Xmpp.prototype.registerSocketEvents = function() {
     var self = this
     this.socket.on('xmpp.login', function(data) {
-    	console.log(data) 
+        console.log(data) 
         self.login(data.jid, data.password, data.resource, data.host)
     })
 }
@@ -47,7 +47,7 @@ Xmpp.prototype.login = function(jid, password, resource, host) {
    if (host) credentials.host = host
    this.client = new nodeXmpp.Client(credentials)
    this.listeners.forEach(function(listener) {
-	   listener.init(self)
+       listener.init(self)
    })
    this.registerXmppEvents()
 }
@@ -58,11 +58,11 @@ Xmpp.prototype.online = function() {
 }
 
 Xmpp.prototype.error = function(error) {
-	var message = JSON.stringify(error, function(key, value) {
-		console.log(key, value)
+    var message = JSON.stringify(error, function(key, value) {
+        console.log(key, value)
         if (key == 'parent') {
-        	if (!value) return value
-        	return value.id
+            if (!value) return value
+            return value.id
         }
         return value
     })
@@ -70,13 +70,13 @@ Xmpp.prototype.error = function(error) {
 }
 
 Xmpp.prototype.trackId = function(id, callback) {
-	this.tracking[id] = callback
+    this.tracking[id] = callback
 }
 
 Xmpp.prototype.catchTracked = function(stanza) {
-	if (!stanza.attr('id') || !this.tracking[stanza.attr('id')]) return false;
-	this.tracking[stanza.attr('id')](stanza)
-	return true
+    if (!stanza.attr('id') || !this.tracking[stanza.attr('id')]) return false;
+    this.tracking[stanza.attr('id')](stanza)
+    return true
 }
 
 Xmpp.prototype.handleStanza = function(stanza) {
@@ -84,10 +84,10 @@ Xmpp.prototype.handleStanza = function(stanza) {
     if (this.catchTracked(stanza)) return;
     var handled = false
     this.listeners.some(function(listener) {
-    	if (true == listener.handles(stanza)) {
-    		handled = true
-    		if (true == listener.handle(stanza)) return true
-    	}
+        if (true == listener.handles(stanza)) {
+            handled = true
+            if (true == listener.handle(stanza)) return true
+        }
     })
     if (!handled) console.log('No listeners for: ' + stanza)
 }

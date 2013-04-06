@@ -1,5 +1,5 @@
 /**
- * 	Colours:
+ *     Colours:
  * 
  *   #9fce66 ::: rgba(159, 206, 102, 1) ::: Green
  *   #419539: Dark green
@@ -10,7 +10,7 @@
  */
 
 body {
-	font-family: Verdana,Arial,sans-serif/*{ffDefault}*/;
+    font-family: Verdana,Arial,sans-serif/*{ffDefault}*/;
     font-size: 1em;
     background-color: #ccc;
 }
@@ -24,23 +24,23 @@ body {
 }
 
 h1, h2 {
-	border-bottom: 2px dashed #15b2e7;
+    border-bottom: 2px dashed #15b2e7;
     padding-bottom: 15px;
     clear: both;
     padding-top: 5px;
 }
 
 h1 a:link, h1 a:visited {
-	color: #000;
-	text-decoration: none;
+    color: #000;
+    text-decoration: none;
 }
 
 h2 {
-	padding-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 h3, h4 {
-	padding-left: 40px;
+    padding-left: 40px;
 }
 
 pre { 
@@ -50,24 +50,24 @@ pre {
 }
 
 pre.example, pre.in, pre.out, pre.xml {
-	width: 870px;
-	margin-bottom: 15px;
+    width: 870px;
+    margin-bottom: 15px;
 }
 
 pre.example {
-	border-color: rgba(159, 206, 102, 0.4);
+    border-color: rgba(159, 206, 102, 0.4);
 }
 
 pre.out {
-	border-color: rgba(21, 178, 231, 0.4);
+    border-color: rgba(21, 178, 231, 0.4);
 }
 
 pre.in {
-	border-color: rgba(229, 106, 20, 0.4);
+    border-color: rgba(229, 106, 20, 0.4);
 }
 
 .bold {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .fixed {
@@ -76,8 +76,8 @@ pre.in {
 }
 
 #toc {
-	position: relative
-	-moz-column-count: 2;
+    position: relative
+    -moz-column-count: 2;
     -webkit-column-count: 2;
     column-count: 2;
     position: -webkit-sticky;
@@ -115,7 +115,7 @@ a.top {
 }
 
 #toc.collapse {
-	overflow: hidden;
+    overflow: hidden;
     height: 20px;
     background-color: #9fce66;
     color: #9fce66;
@@ -130,11 +130,11 @@ a.top {
     
 }
 .collapse a, .collapse a:link, .collapse a:visited {
-	color: #9fce66;
+    color: #9fce66;
 }
 
 .collapse div.collapse-toggle {
-	bottom: 1px;
+    bottom: 1px;
 }
 
 .collapse-toggle {
@@ -151,9 +151,9 @@ a.top {
 }
 
 #demo > .send {
-	overflow: visible;
-	padding: 5px;
-	margin-top: 10px;
+    overflow: visible;
+    padding: 5px;
+    margin-top: 10px;
 }
 
 .payload {
@@ -162,13 +162,13 @@ a.top {
 }
 
 #demo .payload > div, div.example-out, div.example-in, div.example-data, pre {
-	border: 5px dashed #cccccc;
-	border-radius: 5px;
-	margin-left: 10px;
-	padding: 5px;
-	float: left;
-	min-height: 32px;
-	display: -moz-box;
+    border: 5px dashed #cccccc;
+    border-radius: 5px;
+    margin-left: 10px;
+    padding: 5px;
+    float: left;
+    min-height: 32px;
+    display: -moz-box;
     display: -webkit-box;
     display: box;
     -webkit-box-align: center;
@@ -177,12 +177,12 @@ a.top {
 }
 
 #demo .message, #messages .message {
-	width: 300px;
+    width: 300px;
 }
 
 #demo .message input, .message input:focus {
-	border: 0;
-	width: 300px;
+    border: 0;
+    width: 300px;
 }
 
 #demo .send .data { 
@@ -191,31 +191,31 @@ a.top {
 }
 
 #demo .data {
-	width: 35%;
+    width: 35%;
 }
 
 #demo .send .callback {
-	width: 50px;
-	-webkit-box-pack: center;
+    width: 50px;
+    -webkit-box-pack: center;
     -moz-box-pack: center;
     box-pack: center;
 }
 #demo .callback {
-	width: 35%;
+    width: 35%;
 }
 
 #demo .payload .callback-yes {
-	border-color: #9fce66;
-	color: #9fce66;
+    border-color: #9fce66;
+    color: #9fce66;
 }
 
 #demo .payload .callback-no {
-	border-color: #cf5829;
-	color: #cf5829;
+    border-color: #cf5829;
+    color: #cf5829;
 }
 
 button#send {
-	color: #fff;
+    color: #fff;
     background-color: #0000ff;
     border: 1px solid #0000ff;
     font-weight: bold;
@@ -225,44 +225,44 @@ button#send {
 }
 
 #messages .message-container.out > div, div.example-out {
-	border-color: #15b2e7;
+    border-color: #15b2e7;
 }
 
 #messages .message-container.in > div, div.example-in {
-	border-color: #e56a14;
+    border-color: #e56a14;
 }
 
 div.example-data {
-	border-color: #9FCE66;
+    border-color: #9FCE66;
 }
 
 #messages .message-container.callback-no .data {
-	width: 530px;
+    width: 530px;
 }
 
 #messages .message-container .callback.success {
-	border-color: #9fce66;
+    border-color: #9fce66;
 }
 #messages .message-container .callback.error {
-	border-color: #cf5829;
+    border-color: #cf5829;
 }
 #messages .message-container.callback-yes .callback,
   #messages .message-container.callback-yes .data {
-	width: 250px;
+    width: 250px;
 }
 
 #messages .message-container > div {
-	max-height: 300px;
-	overflow: auto;
+    max-height: 300px;
+    overflow: auto;
 }
 
 .pages {
-	overflow: visible;
+    overflow: visible;
 }
 
 .pages ul li {
-	list-style-type: none;
-	display: inline-block;
-	padding: 5px;
-	width: 200px;
+    list-style-type: none;
+    display: inline-block;
+    padding: 5px;
+    width: 200px;
 }

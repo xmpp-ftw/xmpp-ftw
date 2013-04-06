@@ -19,47 +19,47 @@ $(document).ready(function() {
     var tocCollapseHeight = 10;
     
     var makeTocFixed = function() {
-    	sticky.addClass('fixed')
-    	sticky.find('.collapse-toggle').css('display', 'inline')
-    	collapseToc()
+        sticky.addClass('fixed')
+        sticky.find('.collapse-toggle').css('display', 'inline')
+        collapseToc()
     }
     var unfixToc = function() {
-    	sticky.removeClass('fixed')
-    	    .removeClass('collapse')
-    	sticky.find('.collapse-toggle').css('display', 'none')
-    	expandToc()
+        sticky.removeClass('fixed')
+            .removeClass('collapse')
+        sticky.find('.collapse-toggle').css('display', 'none')
+        expandToc()
     }
     
     $('#toc.collapse').mouseover(function() {
-    	console.log('mouseover')
-    	collapseToggle()
+        console.log('mouseover')
+        collapseToggle()
     })
     
     $('#toc.collapse').mouseout('mouseover', function() {
-    	console.log('mouseout')
-    	collapseToggle()
+        console.log('mouseout')
+        collapseToggle()
     })
     
     var expandToc = function() {
-    	sticky.removeClass('collapse')
+        sticky.removeClass('collapse')
         sticky.css('height', originalTocHeight)
     }
     
     var collapseToc = function() {
-    	sticky.addClass('collapse')
-    	sticky.css('height', tocCollapseHeight + 'px')
+        sticky.addClass('collapse')
+        sticky.css('height', tocCollapseHeight + 'px')
     }
     
     var collapseToggle = function(collapse) {
-    	console.log(sticky.hasClass('collapse'))
-    	if (true == sticky.hasClass('collapse'))
-    	    expandToc()
-    	else 
-    	    collapseToc()
+        console.log(sticky.hasClass('collapse'))
+        if (true == sticky.hasClass('collapse'))
+            expandToc()
+        else 
+            collapseToc()
     }
     
     $('.collapse-toggle').click(function() {
-    	collapseToggle()
+        collapseToggle()
     })
     
     document.addEventListener('scroll', function(e) {

@@ -1,22 +1,22 @@
 window.onload = function() {
-	
-	var chats = new Array();
-	var me;
-	var presence = new Array();
-	
-	getJid = function(jid) {
-	    if (typeof jid != 'string') return jid;
-	    var resource = jid.split('/')[1];
-	    if (jid.indexOf('@') == -1) {
-	    	var domain = jid.split('/')[0];
-	    	var node = null;
-	    } else {
-	    	var node = jid.split('/')[0].split('@')[0];
-	    	var domain = jid.split('/')[0].split('@')[1];
-	    }
-	    return { node: node, domain: domain, resource: resource }
-	}
-	
+    
+    var chats = new Array();
+    var me;
+    var presence = new Array();
+    
+    getJid = function(jid) {
+        if (typeof jid != 'string') return jid;
+        var resource = jid.split('/')[1];
+        if (jid.indexOf('@') == -1) {
+            var domain = jid.split('/')[0];
+            var node = null;
+        } else {
+            var node = jid.split('/')[0].split('@')[0];
+            var domain = jid.split('/')[0].split('@')[1];
+        }
+        return { node: node, domain: domain, resource: resource }
+    }
+    
     socket = io.connect('//' + window.document.location.host);
 
     socket.on('error', function(error) { console.log(error); } );
@@ -41,21 +41,21 @@ window.onload = function() {
         console.log("Connection status is: " + status);
         $('.connection').addClass(status).find('span.status').text(status);
         if (status == 'online') {
-        	socket.emit('xmpp.presence', {status: 'online', priority: 1});
-        	socket.emit('xmpp.roster.get', {}, handleRoster);
-        	$('div.presence select').val('online');
+            socket.emit('xmpp.presence', {status: 'online', priority: 1});
+            socket.emit('xmpp.roster.get', {}, handleRoster);
+            $('div.presence select').val('online');
         }
     });
     
     socket.on('xmpp.error', function(error) {
-    	console.log('ERROR: ' + error)
+        console.log('ERROR: ' + error)
     })
     socket.on('xmpp.presence.error', function(error) {
-    	console.log('PRESENCE ERROR: ' + error)
+        console.log('PRESENCE ERROR: ' + error)
     })
     
     window.onunload = function() {
-    	socket.emit('xmpp.logout')
+        socket.emit('xmpp.logout')
     }
 
     /*---------------- CHAT ----------------*/
@@ -75,7 +75,7 @@ window.onload = function() {
     });
 
     var createChatEntry = function(jid) {
-    	var jidId = jid.node + '-at-' + jid.domain;
+        var jidId = jid.node + '-at-' + jid.domain;
         if (chats[jidId]) return;
         chats[jidId] = $(document.createElement('div'))
             .attr('id', jidId)
@@ -86,7 +86,7 @@ window.onload = function() {
     }
 
     var addChatEntry = function(to, message, direction) {
-    	var jid = getJid(to);
+        var jid = getJid(to);
         createChatEntry(jid);
         var toId = jid.node + '-at-' + jid.domain;
         $(chats[toId]).append(
@@ -110,23 +110,23 @@ window.onload = function() {
     });
     
     $('.set-presence').on('click', function() {
-    	var presence      = {}
-    	presence.show = $('.presence select').val();
-    	if ($('.presence input').val() != '') presence.status = $('.presence input').val();
-    	console.log("Setting presence", presence);
+        var presence      = {}
+        presence.show = $('.presence select').val();
+        if ($('.presence input').val() != '') presence.status = $('.presence input').val();
+        console.log("Setting presence", presence);
         socket.emit('xmpp.presence', presence)
     });
     
     socket.on('xmpp.presence.subscribe', function(data) {
-    	var jid = data.from.node + '@' + data.from.domain;
-    	var msg = jid + ' ';
-    	if (data.nick) {
-    		msg = msg + '(' + data.nick + ') ';
-    	}
-    	msg = msg + 'would like to subscribe to your presence. Allow?';
-    	if (window.confirm(msg)) {
-    		socket.emit('xmpp.presence.subscribed', { to: jid });
-    	}
+        var jid = data.from.node + '@' + data.from.domain;
+        var msg = jid + ' ';
+        if (data.nick) {
+            msg = msg + '(' + data.nick + ') ';
+        }
+        msg = msg + 'would like to subscribe to your presence. Allow?';
+        if (window.confirm(msg)) {
+            socket.emit('xmpp.presence.subscribed', { to: jid });
+        }
     });
     
     /*---------------- ROSTER ----------------*/
@@ -153,8 +153,8 @@ window.onload = function() {
    });
    
    var handleRoster = function(error, roster) {
-   	   if (error != null) return alert('Error getting roster: ' + error)
-   	   $('.roster-items').find('*').remove()
+          if (error != null) return alert('Error getting roster: ' + error)
+          $('.roster-items').find('*').remove()
        $(roster).each(function(index, item) {
            addRosterItem(item);
        });
@@ -179,13 +179,13 @@ window.onload = function() {
            );
        }
        if (item.ask && (item.ask == 'subscribe')) {
-       	   var request = $(document.createElement('div'));
-       	   request.append(
-       	       $(document.createElement('button')).attr(
-       	           'onclick',
-       	           "subscribeAndAdd(this, '" + item.jid.node + '@' + item.jid.domain + "');"
-       	       ).text('Allow and add')
-       	   );
+              var request = $(document.createElement('div'));
+              request.append(
+                  $(document.createElement('button')).attr(
+                      'onclick',
+                      "subscribeAndAdd(this, '" + item.jid.node + '@' + item.jid.domain + "');"
+                  ).text('Allow and add')
+              );
            request.append(
                $(document.createElement('button')).attr(
                    'onclick',
@@ -203,16 +203,16 @@ window.onload = function() {
        rosterItem.appendTo($('.roster-items'));
    }
    subscribeAndAdd = function(element, jid) {
-   	   socket.emit('xmpp.presence.subscribe', {to: jid });
-       subscribe(element, jid);	
+          socket.emit('xmpp.presence.subscribe', {to: jid });
+       subscribe(element, jid);    
    }
    subscribe = function(element, jid) {
-   	   console.log("Allowing subscription from " + jid);
+          console.log("Allowing subscription from " + jid);
        socket.emit("xmpp.presence.subscribed", { to: jid });
        $(element).parent().remove();
    }
    unsubscribe = function(element, jid) {
-   	   console.log("Ignoring subscription from " + jid);
+          console.log("Ignoring subscription from " + jid);
        socket.emit("xmpp.presence.unsubscribed", { to: jid });
        $(element).parent().remove();
    }
