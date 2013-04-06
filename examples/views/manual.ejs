@@ -550,11 +550,11 @@
         <pre class="in callback" message="xmpp.discover.info">
         socket.on('xmpp.discover.info', function(data, callback) {
             console.log(data)
-            callback({})
+            callback(/*...see example below...*/)
         })
         </pre>
         
-        <p>Example data sent:</p>
+        <p>Example data sent from server:</p>
         
         <pre class="example">
         {
@@ -562,7 +562,7 @@
         }
         </pre>
         
-        <p>Example reply data:</p>
+        <p>Example reply data (pass as argument to callback):</p>
         
         <pre class="example">
         [
@@ -571,9 +571,6 @@
             { "kind": "feature", "var": "http://jabber.org/protocol/muc" }
         ]
         <pre>
-        
-        <p>The 'id' key is important here as we'll need to respond with the same ID in order for 
-        the requestor to receive the response.</p>
-        
+
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
