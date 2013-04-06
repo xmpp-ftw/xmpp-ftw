@@ -62,7 +62,7 @@ var setupListener = function() {
 }
 
 var addMessage = function(message, direction, data, callback) {
-    console.log('incoming message', message, direction, data, callback)
+    console.log('IN: ', message, direction, data, callback)
     if (callback)
         var html = $('<div class="message-container payload callback-yes">'
             + '<div class="message"></div>'
@@ -112,7 +112,7 @@ $('#send').on('click', function() {
         return alert("You must enter valid JSON:\n\n" + e.toString())
     } 
     var id = addMessage(message, 'out', parsed, callback)
-    console.debug('OUT', message, parsed)
+    console.debug('OUT: ', message, parsed)
     if (true == callback) {
         socket.emit(message, parsed, function(error, data) {
             var callback = $('#' + id).find('.callback')
