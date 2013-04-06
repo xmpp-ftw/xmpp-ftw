@@ -214,7 +214,7 @@ a.top {
     color: #cf5829;
 }
 
-button#send {
+button#send, .in-callback-submit button {
     color: #fff;
     background-color: #0000ff;
     border: 1px solid #0000ff;
@@ -265,4 +265,18 @@ div.example-data {
     display: inline-block;
     padding: 5px;
     width: 200px;
+}
+
+#demo .payload > div.in-callback-submit {
+	position: absolute;
+    right: 52px;
+    background-color: #fff;
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-color: #15b2e7;
+}
+
+#demo .payload > div.callback.out {
+	border-color: #15b2e7;
 }

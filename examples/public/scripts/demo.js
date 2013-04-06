@@ -55,8 +55,8 @@ var setupAutocomplete = function() {
 
 var setupListener = function() {
     incoming.forEach(function(message) {
-        socket.on(message, function(data) {
-            addMessage(message, 'in', data, false)
+        socket.on(message, function(data, callback) {
+            addMessage(message, 'in', data, callback)
         })    
     })
 }
@@ -81,6 +81,32 @@ var addMessage = function(message, direction, data, callback) {
     var id = messageCount
     html.attr('id', id)
     ++messageCount
+    console.log(direction, callback)
+    if ('in' == direction && callback) {
+    	
+    	var callbackDiv = html.find('.callback')
+    	callbackDiv.attr('contenteditable', 'true')
+    	    .text('{...Write JSON callback data here...}')
+    	callbackDiv.addClass("out")
+    	var callbackButtonDiv = $('<div class="in-callback-submit"></div>')
+    	var callbackButton = $('<button>Send callback</button>')
+    	callbackButtonDiv.append(callbackButton)
+    	html.append(callbackButtonDiv)
+    	setTimeout(function() {
+    		$(callbackButtonDiv).css('height', $(callbackDiv).css('height'))
+        }, 100)
+    	callbackButton.click(function() {
+		    try {
+		        var parsed = JSON.parse(callbackDiv.text())
+		    } catch (e) {
+		        console.error(e)
+		        return alert("You must enter valid JSON:\n\n" + e.toString())
+		    }
+		    callback(parsed)
+		    callbackButtonDiv.remove()
+    	})
+    	callbackDiv.append()
+    }
     $('#messages').append(html)
     return id
 }
