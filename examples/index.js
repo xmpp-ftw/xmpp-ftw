@@ -19,7 +19,8 @@ io.configure(function(){
 
 io.sockets.on('connection', function(socket) {
      var xmppFtw = new xmpp.Xmpp(socket);
-     xmppFtw.addListener(require('../lib/multi-user-chat'))    
+     xmppFtw.addListener(require('../lib/multi-user-chat'))
+     xmppFtw.addListener(require('../lib/disco'))
 })
 
 var readme = require('express-middleware-readme.md')
