@@ -502,7 +502,7 @@
         
         <h2>Service Discovery (XEP-0030)</h2>
         
-        <h3>Discover entities <em>disco#items</em></h3>
+        <h3>Discover Entities <em>disco#items</em></h3>
         
         <pre class="out callback" message="xmpp.discover.items">
         socket.emit(
@@ -514,9 +514,34 @@
         
         <p>Example response:</p>
         
-        <pre class="example>
-        
+        <pre class="example">
+        [
+            "conference.evilprofessor.co.uk"
+        ]
         </pre>
 
+        <h3>Discover Features <em>disco#info</em></h3>
+        
+        <pre class="out callback" message="xmpp.discover.info">
+        socket.emit(
+            'xmpp.discover.info',
+            { "of": "evilprofessor.co.uk" },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>Example response:</p>
+        
+        <pre class="example">
+        [
+            { "kind": "identity", "type": "pep", "name": "Prosody", "category": "pubsub" },
+            { "kind": "identity", "type": "im", "name": "Prosody", "category": "server" },
+            { "kind": "feature", "var": "jabber:iq:register" },
+            { "kind": "feature", "var": "vcard-temp" },
+            { "kind": "feature", "var": "http://jabber.org/protocol/commands" },
+            { "kind": "feature", "var": "jabber:iq:roster" }
+        ]
+        </pre>
+        
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
