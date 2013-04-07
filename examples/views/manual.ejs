@@ -597,6 +597,18 @@
 
         <p>In order to maintain simplicity create-and-configure a node is not currently supported.</p>
         
+        <h3>Delete a node</h3>
+        
+        <pre class="out callback" message="xmpp.pubsub.delete">
+        socket.emit(
+            'xmpp.pubsub.delete',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates"
+            },
+            function(error, data) { console.log(error, data) }
+        </pre>
+        
         <h3>Subscribe to a node</h3>
         
         <pre class="out callback" message="xmpp.pubsub.subscribe">
