@@ -40,8 +40,15 @@ Xmpp.prototype.registerSocketEvents = function() {
 Xmpp.prototype.login = function(jid, password, resource, host) {
    console.log("Attempting to connect to " + jid)
    if (!jid || !password) return
+   if (-1 === jid.indexOf('@')) 
+       jid += '@' + host
+   if (-1 !== jid.indexOf('/')) {
+       resource = jid.split('/')[1]
+       jid      = jid.split('/')[0]
+   }
    var self = this
    self.jid = jid
+   self.domain = jid.split('@')[1]
    var credentials = {jid: jid, password: password}
    if (resource) credentials.jid += '/' + resource
    if (host) credentials.host = host
@@ -53,7 +60,7 @@ Xmpp.prototype.login = function(jid, password, resource, host) {
 }
 
 Xmpp.prototype.online = function() {
-    console.log("Connection status is online")
+    console.log("Connection status is 'online'")
     this.socket.emit('xmpp.connection', 'online')
 }
 
