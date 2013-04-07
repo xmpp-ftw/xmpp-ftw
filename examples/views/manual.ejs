@@ -595,14 +595,16 @@
         <p>If the node is successfully created `<em>error</em>` will be <b>null</b> and 
         `<em>data</em>` will be <b>true</b>.</p>
 
+        <p>In order to maintain simplicity create-and-configure a node is not currently supported.</p>
+        
         <h3>Subscribe to a node</h3>
         
         <pre class="out callback" message="xmpp.pubsub.subscribe">
         socket.emit(
             'xmpp.pubsub.subscribe',
             {
-                "to": "pubsub.evilprofessor.co.uk",
                 "node": "xmpp-ftw updates",
+                "to": "pubsub.evilprofessor.co.uk",
              /* "jid": "lloyd@evilprofessor.co.uk/sky" */
             },
             function(error, data) { console.log(error, data) }
@@ -626,7 +628,51 @@
         {
             "subscription": "unconfigured",
             "configuration": "required"
+        }
         </pre>
+        
+        <h4>Get subscription options</h4>
+        
+        <pre class="out callback" message="xmpp.pubsub.subscription.config.get">
+        socket.emit(
+            'xmpp.pubsub.subscription.config.get',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+             /* "jid": "lloyd@evilprofessor.co.uk/sky" */
+            },
+            function(error, data) { console.log(error, data) }
+        </pre>
+        
+        <p>The response should then contain a 
+        <a href="/data-form" title="XEP-0004 Data Forms">data form</a>.</p>
+        
+        <pre class="example">
+        {
+            "fields": []
+        }
+        </pre>
+        
+        <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
+        Once supported I will return and test.</p>
+        
+        <h4>Update subscription options</h4>
+        
+        <pre class="out callback" message="xmpp.pubsub.subscription.config.set">
+        socket.emit(
+            'xmpp.pubsub.subscription.config.set',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+                "form": []
+             /* "jid": "lloyd@evilprofessor.co.uk/sky" */
+        </pre>
+        
+        <p>See <a href="/data-forms" title="XEP-0004 Data Forms">data forms</a> for details about 
+        formatting the outgoing message.</p>
+        
+        <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
+        Once supported I will return and test.</p>
         
         <h3>Unsubscribe from a node</h3>
         
