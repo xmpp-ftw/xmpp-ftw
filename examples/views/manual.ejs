@@ -622,12 +622,13 @@
         }
         </pre>
         
-        <p>Alternatively if configuration is required then the response may look like:</p>
+        <p>Alternatively if configuration options are available the `<em>configuration</em>` key will be present. 
+        If configuration is required then the `<em>required</em>` sub-key will be <b>true</b>:</p>
         
         <pre class="example">
         {
             "subscription": "unconfigured",
-            "configuration": "required"
+            "configuration": { "required": true }
         }
         </pre>
         
