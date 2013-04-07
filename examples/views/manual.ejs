@@ -691,5 +691,66 @@
         
         <p>If there is no error `<em>data</em>` will simply be <b>true</b>.
 
+        <h2>Publishing</h2>
+        
+        <p>At present only a simple line of text is supported. This is wrapped in a `<em>body</em>` element. 
+        Obviously this will be extended in future, the initial goal will be to support 
+        <a href="http://en.wikipedia.org/wiki/Atom_(standard)" target="_blank">ATOM</a> style posts. Beyond this 
+        users will probably need to start implementing their own listeners.</p>
+        
+        <pre class="out callback" message="xmpp.pubsub.publish">
+        socket.emit(
+            'xmpp.pubsub.publish',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+                "body": "We can now post to a pub-sub node!"
+            },
+            function(error, data) { console.log(error, data) }
+        </pre>
+        
+        <p>A successful post will result in the following response:</p>
+        
+        <pre class="example">
+        {
+            "id": "1"
+        }
+        </pre>
+        
+        <h2>Node Configuration</h2>
+        
+        <h3>Get node configuration</h3>
+        
+        <pre class="out callback" message="xmpp.pubsub.config.get">
+        socket.emit(
+            'xmpp.pubsub.config.get',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates"
+            },
+            function(error, data) { console.log(error, data) }
+        </pre>
+        
+        <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
+        Once supported I will return and test.</p>
+        
+        <h3>Set node configuration</h3>
+        
+        <pre class="out callback" message="xmpp.pubsub.config.set">
+        socket.emit(
+            'xmpp.pubsub.config.set',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+                "form": []
+            },
+            function(error, data) { console.log(error, data) }
+        </pre>
+        
+        <p>If configuration update is sucessful then `<em>data</em>` will simply be <b>true</b>.</p>
+        
+        <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
+        Once supported I will return and test.</p>
+        
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
