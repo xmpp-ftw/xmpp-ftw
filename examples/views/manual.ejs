@@ -576,6 +576,73 @@
             { "kind": "feature", "var": "http://jabber.org/protocol/muc" }
         ]
         </pre>
+        
+        <h2>Publish-Subscribe (XEP-0060)</h2>
+        
+        <h3>Create a node</h3>
+        
+        <pre class="out callback" message="xmpp.pubsub.create">
+        socket.emit(
+            'xmpp.pubsub.create',
+            { 
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>If the node is successfully created `<em>error</em>` will be <b>null</b> and 
+        `<em>data</em>` will be <b>true</b>.</p>
+
+        <h3>Subscribe to a node</h3>
+        
+        <pre class="out callback" message="xmpp.pubsub.subscribe">
+        socket.emit(
+            'xmpp.pubsub.subscribe',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+             /* "jid": "lloyd@evilprofessor.co.uk/sky" */
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>If no JID is provided this defaults to the jid used to log in to the 
+        server with.</p>
+        
+        <p>If a subscription is successful then the response will look like the following:</p>
+        
+        <pre class="example">
+        {
+            "subscription": "subscribed"
+        }
+        </pre>
+        
+        <p>Alternatively if configuration is required then the response may look like:</p>
+        
+        <pre class="example">
+        {
+            "subscription": "unconfigured",
+            "configuration": "required"
+        </pre>
+        
+        <h3>Unsubscribe from a node</h3>
+        
+        <pre class="out callback" message="xmpp.pubsub.unsubscribe">
+        socket.emit(
+            'xmpp.pubsub.unsubscribe',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+             /* "jid": "lloyd@evilprofessor.co.uk/sky" */
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>If there is no error `<em>data</em>` will simply be <b>true</b>.
 
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
