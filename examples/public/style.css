@@ -21,6 +21,7 @@ body {
     padding: 15px;
     margin: 0 auto;
     border-radius: 5px;
+    position: relative;
 }
 
 h1, h2 {
