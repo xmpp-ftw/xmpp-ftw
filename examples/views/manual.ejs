@@ -23,8 +23,8 @@
         
         <pre class="example">
         { 
-            "user": "me",
-            "domain": "example.com",
+            "user": "lloyd",
+            "domain": "evilprofessor.co.uk",
             "resource": "laptop"
         }
         </pre>
@@ -53,7 +53,7 @@
         socket.emit(
              'xmpp.login',
              { 
-                 "jid": "test@example.com",
+                 "jid": "test@evilprofessor.co.uk",
                  "password": "password",
               /* "resource": "xmpp-ftw", */
               /* "host": "127.0.0.1" */
@@ -83,7 +83,7 @@
         socket.emit(
             'xmpp.chat.message',
             {
-                "to": "other@example.com",
+                "to": "other@evilprofessor.co.uk",
                 "message": "Hello world"
             }
         )
@@ -101,7 +101,7 @@
 
         <pre class="example">
         {
-            from: 'user2@example.com',
+            from: 'user2@evilprofessor.co.uk',
             content: 'Hello fine Sir!'
         }        
         </pre>
@@ -137,7 +137,7 @@
         <h3>Directed presence</h3>
         
         <pre class="out" message="xmpp.presence.get">
-        socket.emit('xmpp.presence.get', { "to": "user@example.com" })
+        socket.emit('xmpp.presence.get', { "to": "user@evilprofessor.co.uk" })
         </pre>
 
         <h3>Go offline</h3>
@@ -151,7 +151,7 @@
         <p>Request to subsribe to a user</p>
         
         <pre class="out" message="xmpp.presence.subscribe">
-        socket.emit('xmpp.presence.subscribe', { "to": "user@example.com" })
+        socket.emit('xmpp.presence.subscribe', { "to": "user@evilprofessor.co.uk" })
         </pre>
         
         <p>User requests to subscribe to your presence</p>
@@ -165,7 +165,7 @@
 
         <pre class="example">
         {
-            from: 'user@example.com'
+            from: 'user@evilprofessor.co.uk'
             nick: 'Example user' // ...optional...
         }
         </pre>
@@ -176,7 +176,7 @@
         socket.emit(
             'xmpp.presence.subscribed',
             {
-                "to": "user@example.com"
+                "to": "user@evilprofessor.co.uk"
             }
         )
         </pre>
@@ -185,7 +185,7 @@
         socket.emit(
             'xmpp.presence.unsubscribed',
             {
-                "to": "user@example.com"
+                "to": "user@evilprofessor.co.uk"
             }
         )
         </pre>
@@ -198,7 +198,7 @@
         socket.emit(
             'xmpp.roster.add',
             {
-                "jid": "user@example.com",
+                "jid": "user@evilprofessor.co.uk",
              /* "name": "Example user", */
              /* "group": "example-users" */
             },
@@ -220,7 +220,7 @@
 
         <pre class="example">
           [ {
-               jid: { user: 'user', domain: 'example.com' },
+               jid: { user: 'user', domain: 'evilprofessor.co.uk' },
                subscription: 'both',
                name: 'Example user',
                group: 'Buddies',
@@ -239,7 +239,7 @@
         <p>Example:</p>
         <pre class="example">
           {
-               jid: { user: 'user', domain: 'example.com' },
+               jid: { user: 'user', domain: 'evilprofessor.co.uk' },
                subscription: 'both',
                name: 'Example user',
                group: 'Buddies',
@@ -253,7 +253,7 @@
         socket.emit(
             'xmpp.roster.group',
             {
-                "jid": "user@example.com",
+                "jid": "user@evilprofessor.co.uk",
                 "group": "buddies"
             }
         )
@@ -377,7 +377,7 @@
             'xmpp.muc.role',
             {
                 "room": "test@conference.evilprofessor.co.uk",
-                "jid": "user@example.com",
+                "jid": "user@evilprofessor.co.uk",
                 "affiliation": "outcast"
             }
             function(error, data) { console.log(error, data) }
