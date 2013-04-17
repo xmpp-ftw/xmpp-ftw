@@ -318,6 +318,7 @@
                 "content": "Hello XMPP people!",
              /* "to": "TheirNickname" */
             }
+        )
         </pre>
         <p>If 'to' is provided then message becomes a private message.</p>
         
@@ -607,6 +608,7 @@
                 "node": "xmpp-ftw updates"
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <h3>Subscribe to a node</h3>
@@ -655,6 +657,7 @@
              /* "jid": "lloyd@evilprofessor.co.uk/sky" */
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <p>The response should then contain a 
@@ -679,6 +682,7 @@
                 "node": "xmpp-ftw updates",
                 "form": []
              /* "jid": "lloyd@evilprofessor.co.uk/sky" */
+        )
         </pre>
         
         <p>See <a href="/data-forms" title="XEP-0004 Data Forms">data forms</a> for details about 
@@ -720,6 +724,7 @@
              /* "id": "1" */
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <p>Providing a '<em>id</em>' attribute will allow you to set post ID# rather than 
@@ -745,6 +750,7 @@
                 "node": "xmpp-ftw updates"
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
@@ -761,6 +767,7 @@
                 "form": []
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <p>If configuration update is sucessful then `<em>data</em>` will simply be <b>true</b>.</p>
