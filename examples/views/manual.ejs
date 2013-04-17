@@ -788,11 +788,45 @@
              /* "id": "1" ...OR... [ "1", "3", "5" ] */
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <p>If a single item is required then the '<em>id</em>' attribute should be populated.</p>
         
+        <h3>Affiliations</h3>
         
+        <h4>Get node affiliations</h4>
+        
+        <pre class="out callback" message="xmpp.pubsub.affiliations.get">
+        socket.emit(
+            'xmpp.pubsub.affiliations.get',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>A successful response will then be as follows:</p>
+        
+        <pre class="example">
+        {
+            affiliations: [
+                { 
+                    jid: { user: "lloyd", domain: "evilprofessor.co.uk", resource: "laptop" },
+                    affiliation: 'owner'
+                },
+                {
+                    jid: { user: "dev-kitty-1", domain: "evilprofessor.co.uk", resource: "lap" },
+                    affiliation: 'member'
+                }
+            ]
+        }
+        </pre>
+        
+        <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
+        Once supported I will return and test.</p>
         
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
