@@ -797,9 +797,9 @@
         
         <h4>Get node affiliations</h4>
         
-        <pre class="out callback" message="xmpp.pubsub.affiliations.get">
+        <pre class="out callback" message="xmpp.pubsub.affiliations">
         socket.emit(
-            'xmpp.pubsub.affiliations.get',
+            'xmpp.pubsub.affiliations',
             {
                 "to": "pubsub.evilprofessor.co.uk",
                 "node": "xmpp-ftw updates"
@@ -827,6 +827,28 @@
         
         <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
         Once supported I will return and test.</p>
+        
+        <h4>Set node affiliation</h4>
+      
+        <pre class="out callback" message="xmpp.pubsub.affiliation">
+        socket.emit(
+            'xmpp.pubsub.affiliation',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+                "jid": "troll@underthebrid.ge",
+                "affiliation": "outcast"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>If the node is successfully created `<em>error</em>` will be <b>null</b> and 
+        `<em>data</em>` will be <b>true</b>.</p>
+        
+        <p><b>Note:</b> Whilst specification allows user to update several affiliation 
+        changes at once, only on per message is supported here. If required it can be 
+        added later.</p>
         
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
