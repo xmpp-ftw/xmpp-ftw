@@ -703,7 +703,7 @@
         
         <p>If there is no error `<em>data</em>` will simply be <b>true</b>.
 
-        <h2>Publishing</h2>
+        <h3>Publishing</h3>
         
         <p>At present only a simple line of text is supported. This is wrapped in a `<em>body</em>` element. 
         Obviously this will be extended in future, the initial goal will be to support 
@@ -716,10 +716,14 @@
             {
                 "to": "pubsub.evilprofessor.co.uk",
                 "node": "xmpp-ftw updates",
-                "body": "We can now post to a pub-sub node!"
+                "content": "We can now post to a pub-sub node!",
+             /* "id": "1" */
             },
             function(error, data) { console.log(error, data) }
         </pre>
+        
+        <p>Providing a '<em>id</em>' attribute will allow you to set post ID# rather than 
+        accept a server auto-generated value.</p>
         
         <p>A successful post will result in the following response:</p>
         
@@ -729,9 +733,9 @@
         }
         </pre>
         
-        <h2>Node Configuration</h2>
+        <h3>Node Configuration</h3>
         
-        <h3>Get node configuration</h3>
+        <h4>Get node configuration</h4>
         
         <pre class="out callback" message="xmpp.pubsub.config.get">
         socket.emit(
@@ -746,7 +750,7 @@
         <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
         Once supported I will return and test.</p>
         
-        <h3>Set node configuration</h3>
+        <h4>Set node configuration</h4>
         
         <pre class="out callback" message="xmpp.pubsub.config.set">
         socket.emit(
@@ -763,6 +767,25 @@
         
         <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
         Once supported I will return and test.</p>
+        
+        <h3>Item Retrieval</h3>
+        
+        <h4>Get item(s)</h4>
+        
+        <pre class="out callback" message="xmpp.pubsub.retrieve">
+        socket.emit(
+            'xmpp.pubsub.retrieve',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+             /* "id": "1" ...OR... [ "1", "3", "5" ] */
+            },
+            function(error, data) { console.log(error, data) }
+        </pre>
+        
+        <p>If a single item is required then the '<em>id</em>' attribute should be populated.</p>
+        
+        
         
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
