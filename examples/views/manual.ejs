@@ -738,6 +738,22 @@
         }
         </pre>
         
+        <h4>Delete an item</h4>
+        
+        <pre class="out callback" message="xmpp.pubsub.item.delete">
+        socket.emit(
+            'xmpp.pubsub.item.delete',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+                "id": "1"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>If deletion is sucessful then `<em>data</em>` will simply be <b>true</b>.</p>
+        
         <h3>Node Configuration</h3>
         
         <h4>Get node configuration</h4>
