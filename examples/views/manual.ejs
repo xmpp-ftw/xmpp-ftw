@@ -23,8 +23,8 @@
         
         <pre class="example">
         { 
-            "user": "me",
-            "domain": "example.com",
+            "user": "lloyd",
+            "domain": "evilprofessor.co.uk",
             "resource": "laptop"
         }
         </pre>
@@ -53,7 +53,7 @@
         socket.emit(
              'xmpp.login',
              { 
-                 "jid": "test@example.com",
+                 "jid": "test@evilprofessor.co.uk",
                  "password": "password",
               /* "resource": "xmpp-ftw", */
               /* "host": "127.0.0.1" */
@@ -83,7 +83,7 @@
         socket.emit(
             'xmpp.chat.message',
             {
-                "to": "other@example.com",
+                "to": "other@evilprofessor.co.uk",
                 "message": "Hello world"
             }
         )
@@ -101,7 +101,7 @@
 
         <pre class="example">
         {
-            from: 'user2@example.com',
+            from: 'user2@evilprofessor.co.uk',
             content: 'Hello fine Sir!'
         }        
         </pre>
@@ -137,7 +137,7 @@
         <h3>Directed presence</h3>
         
         <pre class="out" message="xmpp.presence.get">
-        socket.emit('xmpp.presence.get', { "to": "user@example.com" })
+        socket.emit('xmpp.presence.get', { "to": "user@evilprofessor.co.uk" })
         </pre>
 
         <h3>Go offline</h3>
@@ -151,7 +151,7 @@
         <p>Request to subsribe to a user</p>
         
         <pre class="out" message="xmpp.presence.subscribe">
-        socket.emit('xmpp.presence.subscribe', { "to": "user@example.com" })
+        socket.emit('xmpp.presence.subscribe', { "to": "user@evilprofessor.co.uk" })
         </pre>
         
         <p>User requests to subscribe to your presence</p>
@@ -165,7 +165,7 @@
 
         <pre class="example">
         {
-            from: 'user@example.com'
+            from: 'user@evilprofessor.co.uk'
             nick: 'Example user' // ...optional...
         }
         </pre>
@@ -176,7 +176,7 @@
         socket.emit(
             'xmpp.presence.subscribed',
             {
-                "to": "user@example.com"
+                "to": "user@evilprofessor.co.uk"
             }
         )
         </pre>
@@ -185,7 +185,7 @@
         socket.emit(
             'xmpp.presence.unsubscribed',
             {
-                "to": "user@example.com"
+                "to": "user@evilprofessor.co.uk"
             }
         )
         </pre>
@@ -198,7 +198,7 @@
         socket.emit(
             'xmpp.roster.add',
             {
-                "jid": "user@example.com",
+                "jid": "user@evilprofessor.co.uk",
              /* "name": "Example user", */
              /* "group": "example-users" */
             },
@@ -220,7 +220,7 @@
 
         <pre class="example">
           [ {
-               jid: { user: 'user', domain: 'example.com' },
+               jid: { user: 'user', domain: 'evilprofessor.co.uk' },
                subscription: 'both',
                name: 'Example user',
                group: 'Buddies',
@@ -239,7 +239,7 @@
         <p>Example:</p>
         <pre class="example">
           {
-               jid: { user: 'user', domain: 'example.com' },
+               jid: { user: 'user', domain: 'evilprofessor.co.uk' },
                subscription: 'both',
                name: 'Example user',
                group: 'Buddies',
@@ -253,7 +253,7 @@
         socket.emit(
             'xmpp.roster.group',
             {
-                "jid": "user@example.com",
+                "jid": "user@evilprofessor.co.uk",
                 "group": "buddies"
             }
         )
@@ -318,6 +318,7 @@
                 "content": "Hello XMPP people!",
              /* "to": "TheirNickname" */
             }
+        )
         </pre>
         <p>If 'to' is provided then message becomes a private message.</p>
         
@@ -376,7 +377,7 @@
             'xmpp.muc.role',
             {
                 "room": "test@conference.evilprofessor.co.uk",
-                "jid": "user@example.com",
+                "jid": "user@evilprofessor.co.uk",
                 "affiliation": "outcast"
             }
             function(error, data) { console.log(error, data) }
@@ -607,6 +608,7 @@
                 "node": "xmpp-ftw updates"
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <h3>Subscribe to a node</h3>
@@ -655,6 +657,7 @@
              /* "jid": "lloyd@evilprofessor.co.uk/sky" */
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <p>The response should then contain a 
@@ -679,6 +682,7 @@
                 "node": "xmpp-ftw updates",
                 "form": []
              /* "jid": "lloyd@evilprofessor.co.uk/sky" */
+        )
         </pre>
         
         <p>See <a href="/data-forms" title="XEP-0004 Data Forms">data forms</a> for details about 
@@ -703,7 +707,7 @@
         
         <p>If there is no error `<em>data</em>` will simply be <b>true</b>.
 
-        <h2>Publishing</h2>
+        <h3>Publishing</h3>
         
         <p>At present only a simple line of text is supported. This is wrapped in a `<em>body</em>` element. 
         Obviously this will be extended in future, the initial goal will be to support 
@@ -716,10 +720,15 @@
             {
                 "to": "pubsub.evilprofessor.co.uk",
                 "node": "xmpp-ftw updates",
-                "body": "We can now post to a pub-sub node!"
+                "content": "We can now post to a pub-sub node!",
+             /* "id": "1" */
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
+        
+        <p>Providing a '<em>id</em>' attribute will allow you to set post ID# rather than 
+        accept a server auto-generated value.</p>
         
         <p>A successful post will result in the following response:</p>
         
@@ -729,9 +738,25 @@
         }
         </pre>
         
-        <h2>Node Configuration</h2>
+        <h4>Delete an item</h4>
         
-        <h3>Get node configuration</h3>
+        <pre class="out callback" message="xmpp.pubsub.item.delete">
+        socket.emit(
+            'xmpp.pubsub.item.delete',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+                "id": "1"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>If deletion is sucessful then `<em>data</em>` will simply be <b>true</b>.</p>
+        
+        <h3>Node Configuration</h3>
+        
+        <h4>Get node configuration</h4>
         
         <pre class="out callback" message="xmpp.pubsub.config.get">
         socket.emit(
@@ -741,12 +766,13 @@
                 "node": "xmpp-ftw updates"
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
         Once supported I will return and test.</p>
         
-        <h3>Set node configuration</h3>
+        <h4>Set node configuration</h4>
         
         <pre class="out callback" message="xmpp.pubsub.config.set">
         socket.emit(
@@ -757,12 +783,88 @@
                 "form": []
             },
             function(error, data) { console.log(error, data) }
+        )
         </pre>
         
         <p>If configuration update is sucessful then `<em>data</em>` will simply be <b>true</b>.</p>
         
         <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
         Once supported I will return and test.</p>
+        
+        <h3>Item Retrieval</h3>
+        
+        <h4>Get item(s)</h4>
+        
+        <pre class="out callback" message="xmpp.pubsub.retrieve">
+        socket.emit(
+            'xmpp.pubsub.retrieve',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+             /* "id": "1" ...OR... [ "1", "3", "5" ] */
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>If a single item is required then the '<em>id</em>' attribute should be populated.</p>
+        
+        <h3>Affiliations</h3>
+        
+        <h4>Get node affiliations</h4>
+        
+        <pre class="out callback" message="xmpp.pubsub.affiliations">
+        socket.emit(
+            'xmpp.pubsub.affiliations',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>A successful response will then be as follows:</p>
+        
+        <pre class="example">
+        {
+            affiliations: [
+                { 
+                    jid: { user: "lloyd", domain: "evilprofessor.co.uk", resource: "laptop" },
+                    affiliation: 'owner'
+                },
+                {
+                    jid: { user: "dev-kitty-1", domain: "evilprofessor.co.uk", resource: "lap" },
+                    affiliation: 'member'
+                }
+            ]
+        }
+        </pre>
+        
+        <p>Note: I <strong>can not currently test this</strong> as Prosody 0.9 does not support it. 
+        Once supported I will return and test.</p>
+        
+        <h4>Set node affiliation</h4>
+      
+        <pre class="out callback" message="xmpp.pubsub.affiliation">
+        socket.emit(
+            'xmpp.pubsub.affiliation',
+            {
+                "to": "pubsub.evilprofessor.co.uk",
+                "node": "xmpp-ftw updates",
+                "jid": "troll@underthebrid.ge",
+                "affiliation": "outcast"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+        
+        <p>If the node is successfully created `<em>error</em>` will be <b>null</b> and 
+        `<em>data</em>` will be <b>true</b>.</p>
+        
+        <p><b>Note:</b> Whilst specification allows user to update several affiliation 
+        changes at once, only on per message is supported here. If required it can be 
+        added later.</p>
         
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
