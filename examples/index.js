@@ -17,11 +17,15 @@ io.configure(function(){
     ])
 })
 
+var muc = require('../lib/multi-user-chat')
+var disco = require('../lib/disco')
+var pubsub = require('../lib/pubsub')
+
 io.sockets.on('connection', function(socket) {
      var xmppFtw = new xmpp.Xmpp(socket);
-     xmppFtw.addListener(require('../lib/multi-user-chat'))
-     xmppFtw.addListener(require('../lib/disco'))
-     xmppFtw.addListener(require('../lib/pubsub'))
+     xmppFtw.addListener(new muc())
+     xmppFtw.addListener(new disco())
+     xmppFtw.addListener(new pubsub())
 })
 
 var readme = require('express-middleware-readme.md')

@@ -1,17 +1,23 @@
 var nodeXmpp = require('node-xmpp'),
     events = require('events')
 
+var chat = require('./lib/chat')
+var presence = require('./lib/presence')
+var roster = require('./lib/roster')
+    
 var Xmpp = function(socket) {
     this.prototype = new events.EventEmitter
     this.socket    = socket
     this.tracking  = new Array()
+    
     this.listeners = [
-       require('./lib/roster'),
-       require('./lib/presence'),
-       require('./lib/chat')
+       new roster(),
+       new presence(),
+       new chat()
     ]
+    this.client = false
     this.registerSocketEvents()
-}
+} 
 
 Xmpp.prototype.clearListeners = function() {
     this.listeners = []
@@ -31,8 +37,7 @@ Xmpp.prototype.registerXmppEvents = function() {
 
 Xmpp.prototype.registerSocketEvents = function() {
     var self = this
-    this.socket.on('xmpp.login', function(data) {
-        console.log(data) 
+    this.socket.on('xmpp.login', function(data) { 
         self.login(data.jid, data.password, data.resource, data.host)
     })
 }
@@ -66,7 +71,6 @@ Xmpp.prototype.online = function() {
 
 Xmpp.prototype.error = function(error) {
     var message = JSON.stringify(error, function(key, value) {
-        console.log(key, value)
         if (key == 'parent') {
             if (!value) return value
             return value.id
@@ -88,7 +92,7 @@ Xmpp.prototype.catchTracked = function(stanza) {
 
 Xmpp.prototype.handleStanza = function(stanza) {
     console.log("Stanza received: " + stanza)
-    if (this.catchTracked(stanza)) return;
+    if (this.catchTracked(stanza)) return
     var handled = false
     this.listeners.some(function(listener) {
         if (true == listener.handles(stanza)) {
