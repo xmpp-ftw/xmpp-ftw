@@ -6,11 +6,8 @@
   "dependencies": {
     "socket.io": "~0.9.13",
     "node-xmpp": "~0.3.2",
-    "jQuery": "~1.7.4",
     "MD5": "~1.0.3",
     "cloneextend": "0.0.3",
-    "jsdom": "~0.5.5",
-    "xmlhttprequest": "~1.5.0",
     "express-middleware-readme.md": "~0.3.0",
     "ejs-locals": "~1.0.2",
     "express": "~3.0.3"
