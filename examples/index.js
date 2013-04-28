@@ -8,6 +8,8 @@ var server = require('http').createServer(app)
 server.listen(3000)
 var io = require('socket.io').listen(server)
 
+version = require('../package.json').version
+
 io.configure(function(){
     io.set('transports', [
         'websocket',
@@ -60,7 +62,8 @@ var configuration = {
     username: process.env['NODE_XMPP_USERNAME'] || null,
     password: process.env['NODE_XMPP_PASSWORD'] || null,
     body:     {},
-    title:    "XMPP-FTW ⟫ "
+    title:    "XMPP-FTW ⟫ ",
+    version:  version
 }
 
 app.get('/', function(req, res) {
