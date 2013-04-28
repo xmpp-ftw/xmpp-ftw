@@ -36,6 +36,10 @@ h1 a:link, h1 a:visited {
     text-decoration: none;
 }
 
+h1 img {
+    margin-left: 10px;
+}
+
 h2 {
     padding-bottom: 10px;
 }
