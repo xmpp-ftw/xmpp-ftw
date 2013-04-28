@@ -40,6 +40,17 @@ Xmpp.prototype.registerSocketEvents = function() {
     this.socket.on('xmpp.login', function(data) { 
         self.login(data.jid, data.password, data.resource, data.host)
     })
+    this.socket.on('xmpp.logout', function(data, callback) {
+        self.logout(callback)
+    })
+}
+
+Xmpp.prototype.logout = function(callback) {
+   if (!this.client) return
+   this.client.emit('end')
+   delete this.client
+   if (callback) callback(null, true)
+   this.socket.disconnect()
 }
 
 Xmpp.prototype.login = function(jid, password, resource, host) {
@@ -65,7 +76,6 @@ Xmpp.prototype.login = function(jid, password, resource, host) {
 }
 
 Xmpp.prototype.online = function() {
-    console.log("Connection status is 'online'")
     this.socket.emit('xmpp.connection', 'online')
 }
 

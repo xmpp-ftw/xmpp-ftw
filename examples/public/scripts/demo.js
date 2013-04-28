@@ -180,4 +180,9 @@ $(document).ready(function() {
     socket.on('connect.fail', function(reason) {
         console.log("Connection failed: " + reason)
     })
+  
+    socket.on('disconnect', function() {
+        addMessage('exit(0)', 'in', 'SOCKET CONNECTION CLOSED', false)
+        socket = null
+    })
 })

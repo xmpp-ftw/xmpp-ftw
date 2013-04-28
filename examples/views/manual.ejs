@@ -90,13 +90,25 @@
         
         <pre class="in" message="xmpp.connection">
         socket.on('xmpp.connection', function(data) { 
-            console.log(data);
+            console.log(data)
             /*
              * 'online'
              */
         })
         </pre>
-        
+
+        <h3>Logout</h3>
+
+        <p>Logout is performed with the following call:</p>
+
+        <pre class="out callback" message="xmpp.logout">
+        socket.emit(
+            'xmpp.logout',
+            {},
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+
         <h2>Messaging</h2>
 
         <h3>Send a message</h3>
