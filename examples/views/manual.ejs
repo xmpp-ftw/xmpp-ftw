@@ -41,6 +41,28 @@
         }
         </pre>
         
+        <h3>Client errors</h3>
+
+        <p>Client errors follow a similar format to standard XMPP error responses. An example error looks like this:</p>
+
+        <pre class="example">
+        {
+            type: "modify",
+            condition: "client-error",
+            description: "Missing JID parameter",
+            request: { message: "Hello you!" }
+        }
+        </pre>
+
+        <p>If the request included a callback this will be sent back as the 
+        first argument (i.e. '<em>error</em>' variable), otherwise the 
+        message will come back as a <strong>xmpp.error.client</strong> event.
+        </p>
+
+        <p><strong>Note:</strong> use of '<em>bad-request</em>' was avoided 
+        to ensure that a client → XMPP-FTW was discernible from a pure 
+        client → XMPP error.</p>
+
         <h2>Data Forms</h2>
         
         <p>Data forms get their own special page, see <a href="/data-forms">XEP-0040</a>.</p>
