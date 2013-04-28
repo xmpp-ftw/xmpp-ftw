@@ -1,6 +1,7 @@
 {
   "name": "xmpp-ftw",
-  "version": "0.6.333description": "XMPP-FTW (For the Web/Win) ::: Powerful XMPP, simple JSON",
+  "version": "0.6.3",
+  "description": "XMPP-FTW (For the Web/Win) ::: Powerful XMPP, simple JSON",
   "main": "index.js",
   "dependencies": {
     "socket.io": "~0.9.13",
