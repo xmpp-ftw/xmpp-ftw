@@ -77,7 +77,11 @@ Xmpp.prototype.error = function(error) {
         }
         return value
     })
-    this.socket.emit('xmpp.error', message)
+    this.socket.emit('xmpp.error', {
+        type: 'cancel',
+        condition: 'unknown',
+        description: message
+    })
 }
 
 Xmpp.prototype.trackId = function(id, callback) {
