@@ -10,7 +10,8 @@
     "cloneextend": "0.0.3",
     "express-middleware-readme.md": "~0.3.0",
     "ejs-locals": "~1.0.2",
-    "express": "~3.0.3"
+    "express": "~3.0.3",
+    "ltx": "~0.2.2"
   },
   "devDependencies": {
     "mocha": "~1.8.1",
