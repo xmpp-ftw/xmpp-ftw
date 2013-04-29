@@ -8,8 +8,7 @@ and pass in as a connection.
 # Try it out...
 
 The code is now up and running at https://xmpp-ftw.jit.su so you can try it out. Be aware that this 
-setup is only for trying xmpp-ftw out and may be slow as we need to go client->nodejitsu->your 
-XMPP server and back each time.
+setup is only for trying xmpp-ftw out and may be slow as we need to go client ↔ nodejitsu (east coast US) ↔  your XMPP server and back each time.
 
 * https://xmpp-ftw.jit.su/manual -- XMPP-FTW manual
 * https://xmpp-ftw.jit.su/demo -- Awesome new demo, generated from manual
