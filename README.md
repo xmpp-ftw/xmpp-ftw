@@ -57,3 +57,8 @@ To work on the code in 'development mode' (where process restarts as files chang
 # License
 
 License is Apache 2.0, please let me know if this doesn't suit.
+
+# See also...
+
+* Strophe http://strophe.im/
+* Stanza.io https://github.com/legastero/stanza.io
