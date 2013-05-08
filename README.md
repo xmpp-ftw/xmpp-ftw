@@ -11,7 +11,7 @@ The code is now up and running at https://xmpp-ftw.jit.su so you can try it out.
 setup is only for trying xmpp-ftw out and may be slow as we need to go client ↔ nodejitsu (east coast US) ↔  your XMPP server and back each time.
 
 * https://xmpp-ftw.jit.su/manual -- XMPP-FTW manual
-* https://xmpp-ftw.jit.su/demo -- Awesome new demo, generated from manual
+* https://xmpp-ftw.jit.su/demo -- Awesome demo tool, generated from manual
 * <del>https://xmpp-ftw.jit.su/chat</del> -- Old chat client, no longer updated
 
 The version running on the website matches 'master' branch here and auto-deploys with commits.
