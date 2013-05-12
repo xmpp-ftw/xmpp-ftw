@@ -114,25 +114,89 @@
         ]
         </pre>
 
-        <h3>New Item Notifications</h3>
+        <h3>Items</h3>
 
-        <h3>Item Retrieval</h3>
+        <p>An example of an item is as follows:</p>
+
+        <pre class="example">
+        {
+            "title": "Hello world",
+            "id": "http://push-pub.appspot.com/feed/793002",
+            "updated": "2013-05-12T15:34:15Z",
+            "published": "2013-05-12T15:34:15Z",
+            "content": { 
+                "type": "text",
+                "content": "Get a notification"
+            },  
+            "links": [
+                {
+                    "title": "Hello world",
+                    "rel": "alternate",
+                    "href": "http://push-pub.appspot.com/entry/793002",
+                    "type": "text/html"
+                }   
+            ]   
+        }
+        </pre>
+
+        <h4>New Item Notifications</h4>
+
+        <pre class="in" message="xmpp.superfeedr.push">
+        {
+            meta: {
+                "response": 200,
+                "fetch": {
+                    "last": "1955-11-05T06:30:11-08:00",
+                    "next": "1985-10-27T01:22:38-08:00",
+                    "period": "3600"
+                },
+                "parsed": "1985-10-27T10:30:00-08:00",
+                "maintenance": "1985-10-27T09:59:00-08:00",
+                "message": "9718 bytes fetched in 1.462708s : 2 new entries."
+             },
+             items: "items": [
+                 { ... }
+             ]
+        }
+        </pre>
+
+        <h4>Item Retrieval</h4>
         
-        <h4>Get item(s)</h4>
+ 
+        <p><strong>Note:</strong> Superfeedr inform me that this is currently being 
+        rewritten and suggest in the short term you use the HTTP API in order to 
+        retrieve posts. <strong>Not functional and therefore not complete.</strong></p>
         
-        <pre class="out callback" message="xmpp.pubsub.retrieve">
+        <pre class="out callback" message="xmpp.superfeedr.retrieve">
         socket.emit(
-            'xmpp.pubsub.retrieve',
+            'xmpp.superfeedr.retrieve',
             {
-                "to": "pubsub.evilprofessor.co.uk",
-                "node": "xmpp-ftw updates",
-             /* "id": "1" ...OR... [ "1", "3", "5" ] */
+                "feed": "http://www.evilprofessor.co.uk/feed"
             },
             function(error, data) { console.log(error, data) }
         )
         </pre>
         
-        <p>If a single item is required then the '<em>id</em>' attribute should be populated.</p>
-         
+        <p>Example response:</p>
+
+        <pre class="example">
+        {
+            meta: {
+                "response": 200,
+                "fetch": {
+                    "last": "1955-11-05T06:30:11-08:00",
+                    "next": "1985-10-27T01:22:38-08:00",
+                    "period": "3600"
+                },  
+                "parsed": "1985-10-27T10:30:00-08:00",
+                "maintenance": "1985-10-27T09:59:00-08:00",
+                "message": "9718 bytes fetched in 1.462708s : 2 new entries."
+             },
+             items: [
+                { ... }
+             ]
+        }
+        </pre>
+ 
         <script type="text/javascript" src="/scripts/toc.js"></script>
 <% include ./partials/footer %>
