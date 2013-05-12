@@ -22,12 +22,14 @@ io.configure(function(){
 var muc = require('../lib/multi-user-chat')
 var disco = require('../lib/disco')
 var pubsub = require('../lib/pubsub')
+var superfeedr = require('../lib/extensions/superfeedr')
 
 io.sockets.on('connection', function(socket) {
      var xmppFtw = new xmpp.Xmpp(socket);
      xmppFtw.addListener(new muc())
      xmppFtw.addListener(new disco())
      xmppFtw.addListener(new pubsub())
+     xmppFtw.addListener(new superfeedr())
 })
 
 var readme = require('express-middleware-readme.md')
@@ -90,6 +92,12 @@ app.get('/data-forms', function(req, res) {
     var options = cloneextend.clone(configuration)
     res.render('data-forms', options)
 })
+
+app.get('/extensions', function(req, res) {
+    var options = cloneextend.clone(configuration)
+    res.render('extensions', options)
+})
+
 
 app.get('/*', function(req, res) {
     res.send(404)
