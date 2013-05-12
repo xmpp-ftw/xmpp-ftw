@@ -1,4 +1,5 @@
-var messageCount = 1;
+var messageCount = 1
+var manualPageRetrievalQueue = 0
 
 var parsePage = function(data) {
 
@@ -29,9 +30,8 @@ var parsePage = function(data) {
         })
     })
     console.log('Listening for the following messages', incoming)
-    console.log('Logged the following outgoing messages', outgoingMessages)
-    setupListener()
-    setupAutocomplete()
+    console.log('Logging the following outgoing messages', outgoingMessages)
+    decreaseQueue()
 }
 
 var setupAutocomplete = function() {
@@ -111,16 +111,34 @@ var addMessage = function(message, direction, data, callback) {
     return id
 }
     
-var getMessages = function() {
-    $.ajax({
-        url: '/manual',
-        type: 'get',
-        dataType: 'html',
-        success: parsePage,
-        error: function(error) {
-            alert('Failed to start: ' + error)
-        }
-    })
+var getMessages = function(path, delay) {
+    if (!delay) delay = 0
+    setTimeout(function() {
+        increaseQueue()
+        $.ajax({
+            url: path || '/manual',
+            type: 'get',
+            dataType: 'html',
+            success: parsePage,
+            error: function(error) {
+                console.log(error)
+                alert('Failed to start: ' + error.statusText)
+            }
+        })
+    }, delay)
+}
+
+var increaseQueue = function() {
+    ++manualPageRetrievalQueue
+}
+
+var decreaseQueue = function() {
+    --manualPageRetrievalQueue
+    if (manualPageRetrievalQueue > 0) return
+    setupListener()
+    setupAutocomplete()
+
+    
 }
 
 $('#send').on('click', function() {
@@ -169,12 +187,15 @@ var outgoing = []
 
 $(document).ready(function() {
     console.log("Page loaded...")
+
+    getMessages('/extensions', 2000)
+    getMessages()
+
     socket = io.connect('//' + window.document.location.host);
     socket.on('error', function(error) { console.log(error); })
 
     socket.on('connect', function(data) {
         console.log('Connected')
-        getMessages()
     })
     
     socket.on('connect.fail', function(reason) {
