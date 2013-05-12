@@ -111,18 +111,21 @@ var addMessage = function(message, direction, data, callback) {
     return id
 }
     
-var getMessages = function(path) {
-    increaseQueue()
-    $.ajax({
-        url: path || '/manual',
-        type: 'get',
-        dataType: 'html',
-        success: parsePage,
-        error: function(error) {
-            console.log(error)
-            alert('Failed to start: ' + error.statusText)
-        }
-    })
+var getMessages = function(path, delay) {
+    if (!delay) delay = 0
+    setTimeout(function() {
+        increaseQueue()
+        $.ajax({
+            url: path || '/manual',
+            type: 'get',
+            dataType: 'html',
+            success: parsePage,
+            error: function(error) {
+                console.log(error)
+                alert('Failed to start: ' + error.statusText)
+            }
+        })
+    }, delay)
 }
 
 var increaseQueue = function() {
@@ -185,8 +188,8 @@ var outgoing = []
 $(document).ready(function() {
     console.log("Page loaded...")
 
+    getMessages('/extensions', 2000)
     getMessages()
-    getMessages('/extensions')
 
     socket = io.connect('//' + window.document.location.host);
     socket.on('error', function(error) { console.log(error); })
