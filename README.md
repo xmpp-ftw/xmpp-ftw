@@ -18,6 +18,8 @@ The version running on the website matches 'master' branch here and auto-deploys
 
 # Blog posts/Talks
 
+* http://www.evilprofessor.co.uk/615-xmpp-ftw-now-supports-superfeedr/
+ * XMPP-FTW now supports [SuperFeed](http://www.superfeedr.com)
 * http://www.evilprofessor.co.uk/573-talking-at-the-first-xmppuk-event-march-2013/
  * Talking at the first XMPPUK event (March 2013) 
 * http://www.evilprofessor.co.uk/562-new-demo-system-for-xmpp-ftw/
