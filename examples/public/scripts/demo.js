@@ -1,10 +1,13 @@
 var messageCount = 1
 var manualPageRetrievalQueue = 0
 
+var outgoingMessages = []
+var outgoing         = []
+var incoming         = []
+
 var parsePage = function(data) {
 
     var data             = $(data.replace(/^\n/, ""))
-    var outgoingMessages = []
     
     data.each(function(i, ele) {
 
@@ -29,8 +32,6 @@ var parsePage = function(data) {
             outgoingMessages.push(out.value)
         })
     })
-    console.log('Listening for the following messages', incoming)
-    console.log('Logging the following outgoing messages', outgoingMessages)
     decreaseQueue()
 }
 
@@ -113,8 +114,8 @@ var addMessage = function(message, direction, data, callback) {
     
 var getMessages = function(path, delay) {
     if (!delay) delay = 0
+    increaseQueue()
     setTimeout(function() {
-        increaseQueue()
         $.ajax({
             url: path || '/manual',
             type: 'get',
@@ -137,8 +138,8 @@ var decreaseQueue = function() {
     if (manualPageRetrievalQueue > 0) return
     setupListener()
     setupAutocomplete()
-
-    
+    console.log('Listening for the following messages', incoming)
+    console.log('Logging the following outgoing messages', outgoingMessages)
 }
 
 $('#send').on('click', function() {
@@ -181,9 +182,6 @@ var clearForm = function() {
     $('#data').html('')
     $('#callback').removeClass('callback-yes').removeClass('callback-no').html('')
 }
-
-var incoming = []
-var outgoing = []
 
 $(document).ready(function() {
     console.log("Page loaded...")
