@@ -1,5 +1,6 @@
 $(document).ready(function() {
-	var headings = []
+    if (0 == $('#toc').length) return
+    var headings = []
     $("h2, h3, h4").not('.not-toc').each(function(i) {
         var current = $(this);
         var header  = current.text()

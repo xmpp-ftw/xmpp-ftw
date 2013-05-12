@@ -98,6 +98,10 @@ app.get('/extensions', function(req, res) {
     res.render('extensions', options)
 })
 
+app.get('/publishing', function(req, res) {
+    var options = cloneextend.clone(configuration)
+    res.render('publishing', options)
+})
 
 app.get('/*', function(req, res) {
     res.send(404)
