@@ -82,7 +82,6 @@ var addMessage = function(message, direction, data, callback) {
     var id = messageCount
     html.attr('id', id)
     ++messageCount
-    console.log(direction, callback)
     if ('in' == direction && callback) {
     	
     	var callbackDiv = html.find('.callback')
@@ -147,7 +146,7 @@ $('#send').on('click', function() {
     var message = $('#message').val()
     var payload = $('#data').text()
     var callback = $('#callback').hasClass('callback-yes')
-    
+   
     if (message.length < 6) return alert('You must enter a valid message')
     if (payload.length < 2) return alert("You must enter a valid payload, at least empty JSON object...\n\n{}")
     
@@ -158,8 +157,9 @@ $('#send').on('click', function() {
         return alert("You must enter valid JSON:\n\n" + e.toString())
     } 
     var id = addMessage(message, 'out', parsed, callback)
-    console.debug('OUT: ', message, parsed)
+    console.debug('OUT: ', '(id=' + id + ')', message, parsed)
     if (true == callback) {
+        console.time('id=' + id)
         socket.emit(message, parsed, function(error, data) {
             var callback = $('#' + id).find('.callback')
             if (error) {
@@ -169,7 +169,8 @@ $('#send').on('click', function() {
                 callback.addClass('success')
                 callback.html(JSON.stringify(data, null, 2).replace(/\n/g, '<br/>'))
             }
-            console.log(error, data)
+            console.log('Response', '(id=' + id + ')', error, data)
+            console.timeEnd('id=' + id)
         })
     } else {
         socket.emit(message, parsed)
