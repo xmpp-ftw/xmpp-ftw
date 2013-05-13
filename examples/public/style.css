@@ -285,3 +285,7 @@ div.example-data {
 #demo .payload > div.callback.out {
 	border-color: #15b2e7;
 }
+
+.messages-container {
+    display: none;
+}

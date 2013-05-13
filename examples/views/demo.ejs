@@ -13,17 +13,19 @@ message, the DOM will be updated to reflect your messages. The string you enter 
 
 <p class="hint"><span class="bold">Hint:</span> You'll probably want to start with '<i>xmpp.login</i>'.</p>
 
-<h2>Messages</h2>
+<div class="messages-container">
+    <h2>Messages</h2>
 
-<div id="messages"></div>
+    <div id="messages"></div>
 
-<div class="send payload">
-    <div class="message ui-widget" title="Event name">
-        <input type="text" id="message" placeholder="event name (autocompletes)" />
+    <div class="send payload">
+        <div class="message ui-widget" title="Event name">
+            <input type="text" id="message" placeholder="event name (autocompletes)" />
+        </div>
+        <div class="data" id="data" contenteditable="true" title="Message to send"></div>
+        <div class="callback" id="callback" title="Green if callback used"></div>
+       <div class="send"><button id="send">Send</button></div>
     </div>
-    <div class="data" id="data" contenteditable="true" title="Message to send"></div>
-    <div class="callback" id="callback" title="Green if callback used"></div>
-    <div class="send"><button id="send">Send</button></div>
 </div>
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="/scripts/demo.js"></script>

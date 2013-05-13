@@ -140,6 +140,7 @@ var decreaseQueue = function() {
     setupAutocomplete()
     console.log('Listening for the following messages', incoming)
     console.log('Logging the following outgoing messages', outgoingMessages)
+    $('.messages-container').css('display', 'block')
 }
 
 $('#send').on('click', function() {
