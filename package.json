@@ -11,7 +11,8 @@
     "express-middleware-readme.md": "~0.3.0",
     "ejs-locals": "~1.0.2",
     "express": "~3.0.3",
-    "ltx": "~0.2.2"
+    "ltx": "~0.2.2",
+    "xmpp-ftw-item-parser": "~0.1.1"
   },
   "devDependencies": {
     "mocha": "~1.8.1",
