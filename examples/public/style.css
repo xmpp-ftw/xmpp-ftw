@@ -46,6 +46,7 @@ h2 {
 
 h3, h4 {
     padding-left: 40px;
+    clear: both;
 }
 
 pre { 
