@@ -289,3 +289,8 @@ div.example-data {
 .messages-container {
     display: none;
 }
+
+.nodejitsu-logo {
+    float: left;
+    width: 150px;
+}
