@@ -40,6 +40,9 @@ Xmpp.prototype.registerSocketEvents = function() {
     this.socket.on('xmpp.login', function(data) { 
         self.login(data.jid, data.password, data.resource, data.host)
     })
+    this.socket.on('xmpp.login.anonymous', function(data) {
+        self.anonymousLogin(data)
+    })
     this.socket.on('xmpp.logout', function(data, callback) {
         self.logout(callback)
     })
@@ -53,6 +56,23 @@ Xmpp.prototype.logout = function(callback) {
    this.socket.disconnect()
 }
 
+Xmpp.prototype.anonymousLogin = function(data) {
+   if (!data.jid) return
+   console.log("Attempting anonymous connection " + data.jid)
+   if (-1 != data.jid.indexOf('@'))
+       data.jid = data.jid.split('@')[1]
+   if (-1 !== data.jid.indexOf('/')) {
+       data.resource = data.jid.split('/')[1]
+       data.jid      = data.jid.split('/')[0]
+   }
+   this.jid = data.jid
+   this.domain = data.jid.split('@')[1]
+   var credentials = {jid: '@' + data.jid, preferredSaslMechanism: 'ANONYMOUS'}
+   if (data.resource) credentials.jid += '/' + data.resource
+   if (data.host) credentials.host = data.host
+   this._connect(credentials)
+}
+
 Xmpp.prototype.login = function(jid, password, resource, host) {
    console.log("Attempting to connect to " + jid)
    if (!jid || !password) return
@@ -62,13 +82,17 @@ Xmpp.prototype.login = function(jid, password, resource, host) {
        resource = jid.split('/')[1]
        jid      = jid.split('/')[0]
    }
-   var self = this
-   self.jid = jid
-   self.domain = jid.split('@')[1]
+   this.domain = jid.split('@')[1]
    var credentials = {jid: jid, password: password}
    if (resource) credentials.jid += '/' + resource
    if (host) credentials.host = host
-   this.client = new nodeXmpp.Client(credentials)
+   this._connect(credentials)
+}
+
+Xmpp.prototype._connect = function(options) {
+   var self = this
+   this.jid    = options.jid
+   this.client = new nodeXmpp.Client(options)
    this.listeners.forEach(function(listener) {
        listener.init(self)
    })
