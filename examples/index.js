@@ -23,6 +23,7 @@ var muc = require('../lib/multi-user-chat')
 var disco = require('../lib/disco')
 var pubsub = require('../lib/pubsub')
 var superfeedr = require('../lib/extensions/superfeedr')
+var buddycloud = require('../lib/extensions/buddycloud')
 
 io.sockets.on('connection', function(socket) {
      var xmppFtw = new xmpp.Xmpp(socket);
@@ -30,6 +31,7 @@ io.sockets.on('connection', function(socket) {
      xmppFtw.addListener(new disco())
      xmppFtw.addListener(new pubsub())
      xmppFtw.addListener(new superfeedr())
+     xmppFtw.addListener(new buddycloud())
 })
 
 var readme = require('express-middleware-readme.md')

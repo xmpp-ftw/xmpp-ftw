@@ -162,7 +162,6 @@
 
         <h4>Item Retrieval</h4>
         
- 
         <p><strong>Note:</strong> Superfeedr inform me that this is currently being 
         rewritten and suggest in the short term you use the HTTP API in order to 
         retrieve posts. <strong>Not functional and therefore not complete.</strong></p>
@@ -197,5 +196,27 @@
              ]
         }
         </pre>
- 
+
+        <h2>buddycloud</h2>
+
+        <p><strong>Note:</strong> Work in progress.</p>
+
+        <h3>Discover buddycloud server</h3>
+
+        <p>The first thing you must do is to discover your buddycloud 
+        server. Any attempted actions before the discovery will result 
+        in an error response.</p>
+
+        <pre class="out callback" message="xmpp.buddycloud.discover">
+        socket.emit(
+            'xmpp.buddycloud.discover',
+            {},
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+
+        <p>If a server is discovered the `<em>data</em>` will contain the 
+        channel server host, if not `<em>error</em>` will be populated to 
+        tell you that no server was found.</p>
+
 <% include ./partials/footer %>
