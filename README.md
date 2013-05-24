@@ -18,6 +18,8 @@ The version running on the website matches 'master' branch here and auto-deploys
 
 # Blog posts/Talks
 
+* http://blog.superfeedr.com/easy-xmpp-ftw/
+ * XMPP-FTW XMPP and JSON for the Web
 * http://www.evilprofessor.co.uk/615-xmpp-ftw-now-supports-superfeedr/
  * XMPP-FTW now supports [SuperFeedr](http://www.superfeedr.com)
 * http://www.evilprofessor.co.uk/573-talking-at-the-first-xmppuk-event-march-2013/
