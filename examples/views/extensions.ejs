@@ -263,6 +263,25 @@
 
         <h3>Items</h3>
 
+        <h4>Retrieve items</h4>
+
+        <p>Retrieve items from a buddycloud node. RSM is not considered or 
+        reported back to the user at present.</p>
+
+        <pre class="out callback" message="xmpp.buddycloud.retrieve">
+        socket.emit(
+            'xmpp.buddycloud.retrieve',
+            {
+                "node": "/user/lloyd@buddycloud.org/posts"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+
+        <p>Items are parsed using `xmpp-ftw-item-parse` although it is 
+        possible to inject your own parser.  Additonal features of the 
+        item will be come available as this project adds support.</p>
+
         <h4>Delete an item</h4>
   
         <pre class="out callback" message="xmpp.buddycloud.item.delete">
