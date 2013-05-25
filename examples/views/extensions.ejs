@@ -261,4 +261,22 @@
         <p>If there is no `<em>error</em>` then `<em>data</em>` will 
         simply be true.</p>
 
+        <h3>Items</h3>
+
+        <h4>Delete an item</h4>
+  
+        <pre class="out callback" message="xmpp.buddycloud.item.delete">
+        socket.emit(
+            'xmpp.buddycloud.item.delete',
+            {
+                "node": "/user/lloyd@buddycloud.org/posts",
+                "id": "1"
+            },
+            function(error, data) { console.log(error, data) }
+        )        
+        </pre>
+ 
+        <p>If the delete is successful then `<em>data</em>` will simply 
+        be <strong>true</strong>.</p>
+
 <% include ./partials/footer %>
