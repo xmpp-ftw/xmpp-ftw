@@ -225,4 +225,40 @@
         channel server host, if not `<em>error</em>` will be populated to 
         tell you that no server was found.</p>
 
+        <h3>Subscribe to a node</h3>
+
+        <pre class="out callback" message="xmpp.buddycloud.subscribe">
+        socket.emit(
+            'xmpp.buddycloud.subscribe',
+            {
+                "node": "/user/lloyd@buddycloud.org/posts"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+
+        <p>If a subscription is successful then the value of `<em>data</em>` 
+        will be as follows:</p>
+
+        <pre class="example">
+        {
+            subscription: "subscribed"
+        }
+        </pre>
+
+        <h3>Unsubscribe from a node</h3>
+
+        <pre class="out callback" message="xmpp.buddycloud.unsubscribe">
+        socket.emit(
+            'xmpp.buddycloud.unsubscribe',
+            {
+                "node": "/user/lloyd@buddycloud.org/posts"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+      
+        <p>If there is no `<em>error</em>` then `<em>data</em>` will 
+        simply be true.</p>
+
 <% include ./partials/footer %>
