@@ -225,6 +225,19 @@
         channel server host, if not `<em>error</em>` will be populated to 
         tell you that no server was found.</p>
 
+        <h3>Presence</h3>
+
+        <p>Presence must be sent to the buddycloud server in order to 
+        start receiving notifications. Default presence is set as 'online' 
+        with a priority of -1, and a status of 'buddycloud'.</p>
+
+        <p>For more advanced priority setting it is suggested that you use 
+        '<em>xmpp.presence</em>'.</p>
+ 
+        <pre class="out" message="xmpp.buddycloud.presence">
+        socket.emit('xmpp.buddycloud.presence', {})
+        </pre>
+
         <h3>Subscribe to a node</h3>
 
         <pre class="out callback" message="xmpp.buddycloud.subscribe">
