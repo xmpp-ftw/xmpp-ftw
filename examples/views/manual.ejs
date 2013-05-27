@@ -821,7 +821,33 @@
             "id": "1"
         }
         </pre>
-        <pre class="in" message="xmpp.pubsub.push.item" style="display:none;"></pre> 
+ 
+        <h4>Notification of new messages/h4>
+
+        <p>When an item is published to a node that your user is 
+        subscribed to then a message will be received with item 
+        details.</p>
+
+        <pre class="in" message="xmpp.pubsub.push.item">
+        socket.on('xmpp.pubsub.push.item', function(data) {
+            console.log(data)
+        })        
+        </pre>
+
+        <p>The item itself is parsed by `<em>xmpp-ftw-item-parser</em>` 
+        and is held in the <strong>item</strong> key if the payload 
+        is included.</p>
+
+        <pre class="example">
+        {
+            from: 'pubsub.evilprofessor.co.uk',
+            node: 'weather',
+            id:   '201305301825',
+         /* item: ...as parsed by xmpp-ftw-item-parser... */
+         /* headers: [ { name: 'SubID', value: '123-abc' } ] */
+        }
+        </pre>
+
         <h4>Delete an item</h4>
         
         <pre class="out callback" message="xmpp.pubsub.item.delete">

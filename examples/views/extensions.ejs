@@ -295,7 +295,29 @@
         possible to inject your own parser.  Additonal features of the 
         item will be come available as this project adds support.</p>
 
-        <pre class="in" message="xmpp.buddycloud.push.item" style="display:none"></pre>
+        <h4>Notification of new messages/h4>
+
+        <p>When an item is published to a node that your user is
+        subscribed to then a message will be received with item
+        details.</p>
+
+        <pre class="in" message="xmpp.buddycloud.push.item">
+        socket.on('xmpp.buddycloud.push.item', function(data) {
+            console.log(data)
+        })
+        </pre>
+        
+        <p>The item itself is parsed by `<em>xmpp-ftw-item-parser</em>`
+        and is held in the <strong>item</strong> key.</p>
+
+        <pre class="example">
+        {
+            from: 'pubsub.evilprofessor.co.uk',
+            node: 'weather',
+            id:   '201305301825',
+            item: ...as parsed by xmpp-ftw-item-parser...
+        }
+        </pre>
 
         <h4>Delete an item</h4>
   
