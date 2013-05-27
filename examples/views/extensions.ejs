@@ -295,7 +295,7 @@
         possible to inject your own parser.  Additonal features of the 
         item will be come available as this project adds support.</p>
 
-        <h4>Notification of new messages/h4>
+        <h4>Notification of new messages</h4>
 
         <p>When an item is published to a node that your user is
         subscribed to then a message will be received with item
@@ -334,5 +334,82 @@
  
         <p>If the delete is successful then `<em>data</em>` will simply 
         be <strong>true</strong>.</p>
+
+        <h5>Item deletion notification</h5>
+
+        <p>If an item is successfully deleted from a node then all 
+        subscribers will be notified of this event (configuration
+        dependent).</p>
+
+        <pre class="in" message="xmpp.pubsub.push.retract">
+        socket.on('xmpp.pubsub.push.retract', function(data) {
+            console.log(data)
+        })
+        </pre>
+
+        <p>With the payload as follows:</p>
+
+        <pre class="example">
+        {
+            node: '/user/weather@topics.evilprofessor.co.uk',
+            id: '222'
+        }
+        </pre>
+
+        <h3>Configuring a node</h3>
+
+        <p>Node configuration follows that of the 
+        <a href="/manual#node-configuration">standard pubsub setup</a> 
+        with simply the event name changed.</p>
+
+        <h4>Get node configuration</h4>
+
+        <pre class="out callback" message="xmpp.buddycloud.config.get">
+        socket.emit(
+            'xmpp.buddycloud.config.get',
+            {
+                "node": "xmpp-ftw updates"
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+
+        <h4>Set node configuration</h4>
+
+        <pre class="out callback" message="xmpp.buddycloud.config.set">
+        socket.emit(
+            'xmpp.buddycloud.config.set',
+            {
+                "node": "xmpp-ftw updates",
+                "form": []
+            },
+            function(error, data) { console.log(error, data) }
+        )
+        </pre>
+
+        <p>If configuration update is sucessful then `<em>data</em>` will simply be <b>true</b>.</p>
+
+        <h5>Node configuration update notification</h5>
+
+        <p>On update of a node's configuration then a notification will be
+        sent to all node subscribers.</p>
+
+        <pre class="in" message="xmpp.buddycloud.push.configuration">
+        socket.on('xmpp.buddycloud.push.configuration', function(data) {
+            console.log(data)
+        })
+        </pre>
+
+        <p>With data looking as follows:</p>
+
+        <pre class="example">
+        {
+            node: '/user/weather@topics.evilprofessor.co.uk',
+            configuration: []
+        }
+        </pre>
+
+        <p><strong>configuration</strong> if provided will match the parsing
+        of other <a href="/data-forms" title="Data forms">data forms</a>.</p>
 
 <% include ./partials/footer %>
