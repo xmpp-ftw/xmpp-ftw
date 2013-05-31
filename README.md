@@ -43,9 +43,9 @@ io.sockets.on('connection', function(socket) {
 ```
 * All events are prefixed with 'xmpp.'
 
-For an example of usage and a breakdown of commands simply install the development dependencies and run the index.js file the examples directory.
+For an example of usage and a breakdown of commands simply install ```xmpp-ftw-demo``` 
 
-* `git clone https://github.com/lloydwatkin/xmpp-ftw`
+* `git clone https://github.com/lloydwatkin/xmpp-ftw-demo`
 * `npm i .`
 * `npm run-script develop`
 * Go to http://localhost:3000
