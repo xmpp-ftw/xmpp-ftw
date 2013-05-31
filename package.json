@@ -1,6 +1,6 @@
 {
   "name": "xmpp-ftw",
-  "version": "0.12.0-buddycloud5",
+  "version": "0.12.0-buddycloud6",
   "description": "XMPP-FTW (For the Web/Win) ::: Powerful XMPP, simple JSON",
   "main": "index.js",
   "dependencies": {
