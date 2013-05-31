@@ -16,6 +16,8 @@ setup is only for trying xmpp-ftw out and may be slow as we need to go client â†
 
 The version running on the website matches 'master' branch here and auto-deploys with commits.
 
+Also check out the [xmpp-ftw-demo](https://github.com/lloydwatkin/xmpp-ftw-demo) repository which is what https://xmpp-ftw.jit.su is running.
+
 # Blog posts/Talks
 
 * http://blog.superfeedr.com/easy-xmpp-ftw/
@@ -42,21 +44,6 @@ io.sockets.on('connection', function(socket) {
 });
 ```
 * All events are prefixed with 'xmpp.'
-
-For an example of usage and a breakdown of commands simply install ```xmpp-ftw-demo``` 
-
-* `git clone https://github.com/lloydwatkin/xmpp-ftw-demo`
-* `npm i .`
-* `npm run-script develop`
-* Go to http://localhost:3000
-* See instructions on the page
-
-Alternatively have a look at the demo client:
-
-* `npm run-script develop`
-* Go to `http://localhost:3000/demo`
-
-To work on the code in 'development mode' (where process restarts as files change) run `npm run-script develop`.
 
 # License
 
