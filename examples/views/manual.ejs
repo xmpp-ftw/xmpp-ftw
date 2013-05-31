@@ -691,7 +691,8 @@
             'xmpp.pubsub.delete',
             {
                 "to": "pubsub.evilprofessor.co.uk",
-                "node": "xmpp-ftw updates"
+                "node": "xmpp-ftw updates",
+             /* "redirect": "xmpp:pubsub.evilprofessor.co.uk?;node=xmpp-ftw-news" */
             },
             function(error, data) { console.log(error, data) }
         )
