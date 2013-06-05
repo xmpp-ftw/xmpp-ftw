@@ -4,7 +4,10 @@ var ltx = require('ltx')
 
 exports.getStanza = function(file) {
     var stanza = fs.readFileSync(__dirname + '/resources/' + file)
-    return ltx.parse(stanza.toString().replace(/>(.)</g, ''))
+    var stanzaStr = stanza.toString()
+        .replace(/[\n\r]/g, '')
+        .replace(/>\s{1,}/g, '>')
+    return ltx.parse(stanzaStr)
 }
 
 var Eventer = function() {}
