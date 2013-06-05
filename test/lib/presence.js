@@ -63,5 +63,17 @@ describe('Presence', function() {
             })
             presence.handle(helper.getStanza('presence/offline'))
         })
+
+        it('Should be able to receive a blank presence stanza', function(done) {
+            socket.once('xmpp.presence', function(data) {
+                data.from.should.eql({
+                    user: 'juliet',
+                    domain: 'example.com',
+                    resource: 'balcony'
+                })
+                done()
+            })
+            presence.handle(helper.getStanza('presence/presence'))
+        })
     })
 })
