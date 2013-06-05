@@ -34,7 +34,7 @@ describe('Presence', function() {
 
         it('Can handle error stanzas', function(done) {
             socket.once('xmpp.presence.error', function(data) {
-                data.error.should.equal('gone')
+                data.error.should.eql('gone')
                 data.from.user.should.equal('mercutio')
                 data.from.domain.should.equal('example.org')
                 should.not.exist(data.from.resource) 
@@ -66,14 +66,29 @@ describe('Presence', function() {
 
         it('Should be able to receive a blank presence stanza', function(done) {
             socket.once('xmpp.presence', function(data) {
+                data.should.eql({ from : {
+                    user: 'juliet',
+                    domain: 'example.com',
+                    resource: 'balcony'
+                }})
+                done()
+            })
+            presence.handle(helper.getStanza('presence/presence'))
+        })
+
+        it('Should handle standard presence elements', function(done) {
+            socket.once('xmpp.presence', function(data) {
                 data.from.should.eql({
                     user: 'juliet',
                     domain: 'example.com',
                     resource: 'balcony'
                 })
-                done()
+                data.status.should.equal('say hello to me')
+                data.priority.should.equal('10')
+                data.show.should.equal('chat')
+                 done()
             })
-            presence.handle(helper.getStanza('presence/presence'))
+             presence.handle(helper.getStanza('presence/presence-reply'))
         })
     })
 })
