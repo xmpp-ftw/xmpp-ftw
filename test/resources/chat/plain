@@ -1,0 +1,3 @@
+<message type="chat" from="user@domain/resource">
+    <body>message</body>
+</message>

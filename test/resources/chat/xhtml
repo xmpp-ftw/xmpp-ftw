@@ -1,0 +1,8 @@
+<message from="user@domain/resource" type="chat">
+  <body>hi!</body>
+  <html xmlns='http://jabber.org/protocol/xhtml-im'>
+    <body xmlns='http://www.w3.org/1999/xhtml'>
+      <p>Hello to <strong>you!</strong></p>
+    </body>
+  </html>
+</message>

@@ -1,0 +1,15 @@
+<iq xmlns:stream="http://etherx.jabber.org/streams" from="firehoser.superfeedr.com" to="demo@superfeedr.com/22107977201370382007519209" id="f0a94:1" type="result">
+    <pubsub xmlns="http://jabber.org/protocol/pubsub" xmlns:superfeedr="http://superfeedr.com/xmpp-pubsub-ext">
+        <subscription node="http://www.evilprofessor.co.uk/feed" jid="demo@superfeedr.com" subscription="subscribed">
+            <status xmlns="http://superfeedr.com/xmpp-pubsub-ext">
+                <http code="304">Fetched (ring) 304</http>
+                <title>Evilprofessor.co.uk</title>
+                <period>900</period>
+                <last_parse>2013-06-03T22:42:51Z</last_parse>
+                <last_fetch>2013-06-04T21:39:20Z</last_fetch>
+                <next_fetch>2013-06-04T21:54:20Z</next_fetch>
+                <last_maintenance_at>2013-06-03T22:42:52Z</last_maintenance_at>
+            </status>
+        </subscription>
+    </pubsub>
+</iq>

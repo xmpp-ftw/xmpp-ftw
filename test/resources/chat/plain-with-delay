@@ -1,0 +1,15 @@
+<message
+    from='romeo@montague.net/orchard'
+    to='juliet@capulet.com'
+    type='chat'>
+  <body>
+    O blessed, blessed night! I am afeard.
+    Being in night, all this is but a dream,
+    Too flattering-sweet to be substantial.
+  </body>
+  <delay xmlns='urn:xmpp:delay'
+     from='capulet.com'
+     stamp='2002-09-10T23:08:25Z'>
+    Offline Storage
+  </delay>
+</message>

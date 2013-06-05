@@ -1,0 +1,28 @@
+<iq xmlns:stream="http://etherx.jabber.org/streams" from="firehoser.superfeedr.com" to="demo@superfeedr.com/22107977201370382007519209" id="f0a94:4" type="result">
+    <pubsub xmlns="http://jabber.org/protocol/pubsub" xmlns:superfeedr="http://superfeedr.com/xmpp-pubsub-ext">
+        <subscriptions jid="demo@superfeedr.com" superfeedr:page="1">
+            <subscription node="http://push-pub.appspot.com/feed" subscription="subscribed" jid="demo@superfeedr.com/mysub">
+                <status xmlns="http://superfeedr.com/xmpp-pubsub-ext">
+                    <http code="200">Fetched (ping) 200 and parsed 1/20 entries</http>
+                    <title>Publisher example</title>
+                    <period>43200</period>
+                    <last_parse>2013-06-04T13:44:57Z</last_parse>
+                    <last_fetch>2013-06-04T13:44:57Z</last_fetch>
+                    <next_fetch>2013-06-05T01:44:57Z</next_fetch>
+                    <last_maintenance_at>2013-06-03T21:57:51Z</last_maintenance_at>
+                </status>
+            </subscription>
+            <subscription node="http://www.engadget.com/rss.xml" subscription="subscribed" jid="demo@superfeedr.com/Engadget">
+                <status xmlns="http://superfeedr.com/xmpp-pubsub-ext">
+                    <http code="200">Fetched (ring) 200 and parsed 0/25 entries</http>
+                    <title>Engadget RSS Feed</title>
+                    <period>900</period>
+                    <last_parse>2013-06-04T21:49:29Z</last_parse>
+                    <last_fetch>2013-06-04T21:49:29Z</last_fetch>
+                    <next_fetch>2013-06-04T22:04:29Z</next_fetch>
+                    <last_maintenance_at>2013-06-04T00:32:24Z</last_maintenance_at>
+                </status>
+            </subscription>
+        </subscriptions>
+    </pubsub>
+</iq>
