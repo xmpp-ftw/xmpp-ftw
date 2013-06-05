@@ -1,0 +1,6 @@
+<presence
+    from='juliet@example.com/balcony'
+    to='romeo@example.net/orchard'
+    xml:lang='en'
+    type='unavailable'
+/>

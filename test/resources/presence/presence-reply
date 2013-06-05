@@ -1,0 +1,8 @@
+<presence
+    from='juliet@example.com/balcony'
+    to='romeo@example.net/orchard'
+    xml:lang='en'>
+  <show>chat</show>
+  <status>say hello to me</status>
+  <priority>10</priority>
+</presence>

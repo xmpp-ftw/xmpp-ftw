@@ -1,0 +1,8 @@
+<presence
+    type='error'
+    from='mercutio@example.org'
+    to='romeo@example.net/orchard'>
+  <error type='cancel'>
+    <gone xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>
+  </error>
+</presence>
