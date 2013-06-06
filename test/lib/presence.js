@@ -6,19 +6,18 @@ var should   = require('should')
 
 describe('Presence', function() {
 
-    var presence
-    var socket
-    var xmpp
+    var presence, socket, xmpp, manager
 
     before(function() {
         socket = new helper.Eventer()
         xmpp = new helper.Eventer()
-        var manager = {
+        manager = {
             socket: socket,
-            client: xmpp
+            client: xmpp,
+            jid: 'bottom@dreams.org'
         }
         presence = new Presence()
-        presence.init({ socket: socket, client: xmpp })
+        presence.init(manager)
     })
 
     describe('Can handle incoming presence updates', function() {
@@ -120,6 +119,7 @@ describe('Presence', function() {
                 show: 'chat'
             }
             xmpp.once('stanza', function(stanza) {
+                stanza.is('presence').should.be.true
                 should.not.exist(stanza.attrs.type)
                 stanza.attrs.to.should.equal(data.to)
                 stanza.getChild('status').getText()
@@ -131,6 +131,124 @@ describe('Presence', function() {
                 done() 
             })
             socket.emit('xmpp.presence', data)
+        })
+
+        describe('Subscribe stanzas', function() {
+
+            it('Returns error when no \'to\' value provided', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(data) {
+                    data.type.should.equal('modify')
+                    data.condition.should.equal('client-error')
+                    data.description.should.equal("Missing 'to' key")
+                    data.request.should.eql({})
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.presence.subscribe', {})
+            })
+
+            it('Can send subscribe stanza', function(done) {
+                 var to = 'juliet@example.com/balcony'
+                 xmpp.once('stanza', function(stanza) {
+                     stanza.is('presence').should.be.true
+                     stanza.attrs.to.should.equal(to)
+                     stanza.attrs.type.should.equal('subscribe')
+                     stanza.attrs.from.should.equal(manager.jid)
+                     done()
+                 })
+                 socket.emit('xmpp.presence.subscribe', { to: to })
+            })
+        })
+
+
+        describe('Subscribed stanzas', function() {
+
+            it('Returns error when no \'to\' value provided', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(data) {
+                    data.type.should.equal('modify')
+                    data.condition.should.equal('client-error')
+                    data.description.should.equal("Missing 'to' key")
+                    data.request.should.eql({})
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.presence.subscribed', {})
+            })
+
+            it('Can send subscribed stanza', function(done) {
+                 var to = 'juliet@example.com/balcony'
+                 xmpp.once('stanza', function(stanza) {
+                     stanza.is('presence').should.be.true
+                     stanza.attrs.to.should.equal(to)
+                     stanza.attrs.type.should.equal('subscribed')
+                     stanza.attrs.from.should.equal(manager.jid)
+                     done()
+                 })
+                 socket.emit('xmpp.presence.subscribed', { to: to })
+            })
+        })
+
+
+        describe('Unsubscribed stanzas', function() {
+
+            it('Returns error when no \'to\' value provided', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(data) {
+                    data.type.should.equal('modify')
+                    data.condition.should.equal('client-error')
+                    data.description.should.equal("Missing 'to' key")
+                    data.request.should.eql({})
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.presence.unsubscribed', {})
+            })
+
+            it('Can send unsubscribed stanza', function(done) {
+                 var to = 'juliet@example.com/balcony'
+                 xmpp.once('stanza', function(stanza) {
+                     stanza.is('presence').should.be.true
+                     stanza.attrs.to.should.equal(to)
+                     stanza.attrs.type.should.equal('unsubscribed')
+                     stanza.attrs.from.should.equal(manager.jid)
+                     done()
+                 })
+                 socket.emit('xmpp.presence.unsubscribed', { to: to })
+            })
+        })
+
+        it('Presence request errors when missing \'to\'', function(done) {
+            xmpp.once('stazna', function() {
+                done('Unexpected outgoing stanza')
+            })
+            socket.once('xmpp.error.client', function(data) {
+                data.type.should.equal('modify')
+                data.condition.should.equal('client-error')
+                data.description.should.equal("Missing 'to' key")
+                data.request.should.eql({})
+                xmpp.removeAllListeners('stanza')
+                done()
+            })
+            socket.emit('xmpp.presence.get', {})
+        })
+  
+        it('Can request a user\'s presence', function(done) {
+            var to = 'juliet@example.com/balcony'
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('presence').should.be.true
+                stanza.attrs.from.should.equal(manager.jid)
+                stanza.attrs.to.should.equal(to)
+                done()
+            })
+            socket.emit('xmpp.presence.get', { to: to })
         })
     })
 })
