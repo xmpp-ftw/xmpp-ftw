@@ -91,4 +91,24 @@ describe('Presence', function() {
              presence.handle(helper.getStanza('presence/presence-reply'))
         })
     })
+
+    describe('Can send presence stanzas', function() {
+
+        it('Can send a minimal presence stanza', function(done) {
+            xmpp.once('stanza', function(stanza) {
+                stanza.root().toString().should.equal('<presence/>')          
+                done()
+            })
+            socket.emit('xmpp.presence', {})
+        })
+
+        it('Can send offline stanza', function(done) {
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('presence').should.be.true
+                stanza.attrs.type.should.equal('unavailable')
+                done()
+            })
+            socket.emit('xmpp.presence', { type: 'unavailable' })
+        })
+    })
 })
