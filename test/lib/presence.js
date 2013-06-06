@@ -250,5 +250,24 @@ describe('Presence', function() {
             })
             socket.emit('xmpp.presence.get', { to: to })
         })
+
+        it('Sends \'unavailable\' presence when asked', function(done) {
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('presence').should.be.true
+                stanza.attrs.type.should.equal('unavailable')
+                done()
+            })
+            socket.emit('xmpp.presence.offline', {})
+        })
+
+        it('Sends \'unavailable\' when going offline', function(done) {
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('presence').should.be.true
+                stanza.attrs.type.should.equal('unavailable')
+                done()
+            })
+            socket.emit('disconnect', {})
+
+        })
     })
 })
