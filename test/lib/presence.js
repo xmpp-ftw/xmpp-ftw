@@ -110,5 +110,27 @@ describe('Presence', function() {
             })
             socket.emit('xmpp.presence', { type: 'unavailable' })
         })
+
+        it('Can send full presence stanza', function(done) {
+            var data = {
+                type: 'should-not-exist',
+                to: 'juliet@example.com/balcony',
+                status: 'Looking for Romeo...',
+                priority: '100',
+                show: 'chat'
+            }
+            xmpp.once('stanza', function(stanza) {
+                should.not.exist(stanza.attrs.type)
+                stanza.attrs.to.should.equal(data.to)
+                stanza.getChild('status').getText()
+                    .should.equal(data.status)
+                stanza.getChild('priority').getText()
+                    .should.equal(data.priority)
+                stanza.getChild('show').getText()
+                    .should.equal(data.show)
+                done() 
+            })
+            socket.emit('xmpp.presence', data)
+        })
     })
 })
