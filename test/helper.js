@@ -13,6 +13,6 @@ exports.getStanza = function(file) {
 var Eventer = function() {}
 Eventer.prototype = new Event()
 Eventer.prototype.send = function(stanza) {
-    this.emit('stanza', stanza)
+    this.emit('stanza', stanza.root())
 }
 exports.Eventer = Eventer
