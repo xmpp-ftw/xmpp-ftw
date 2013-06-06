@@ -52,7 +52,7 @@ describe('Chat', function() {
                 data.format.should.equal(chat.PLAIN)
                 done()
             })
-            chat.handle(helper.getStanza('chat/plain'))
+            chat.handle(helper.getStanza('chat/plain')).should.be.true
         })
 
         it('Can handle XHTML type messages', function(done) {
@@ -66,7 +66,7 @@ describe('Chat', function() {
                 data.format.should.equal(chat.XHTML)
                 done()
             })
-            chat.handle(helper.getStanza('chat/xhtml'))
+            chat.handle(helper.getStanza('chat/xhtml')).should.be.true
         })
 
         it('Can handle <delay> element', function(done) {
@@ -77,6 +77,7 @@ describe('Chat', function() {
                 done()
             })
             chat.handle(helper.getStanza('chat/plain-with-delay'))
+                .should.be.true
         })
     })
 

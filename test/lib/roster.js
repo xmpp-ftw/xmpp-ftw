@@ -31,9 +31,48 @@ describe('Roster', function() {
         })
 
         it('Should confirm it can handle roster IQs', function() {
-            var item = ltx.parse('<iq><query xmlns="'+roster.NS+'"/></iq>')
-            roster.handles(item).should.be.true
+            var request = ltx.parse(
+                '<iq><query xmlns="' + roster.NS + '"/></iq>'
+            )
+            roster.handles(request).should.be.true
         })
 
+        it('Should return false from \'handle\' with non-set stanza', function() {
+            var request = ltx.parse(
+                '<iq type="get"><query xmlns="' + roster.NS + '"/></iq>'
+            )
+            roster.handle(request).should.be.false
+        })
+ 
+        describe('Roster push', function() {
+
+            it('Handles no groups', function(done) {
+                socket.once('xmpp.roster.push', function(data) {
+                    data.jid.should.eql({
+                        user: 'mapbot',
+                        domain: 'wonderland.lit'
+                    })
+                    data.subscription.should.equal('both')
+                    should.not.exist(data.groups)
+                    done()
+                })
+                roster.handle(helper.getStanza('roster/roster-push-no-groups'))
+                    .should.be.true
+            })
+
+            it('Can handle roster push', function(done) {
+                socket.once('xmpp.roster.push', function(data) {
+                    data.jid.should.eql({
+                        user: 'mapbot',
+                        domain: 'wonderland.lit'
+                    })
+                    data.groups.should.eql(['Bots', 'Local'])
+                    done()
+                })
+                roster.handle(helper.getStanza('roster/roster-push'))
+                   .should.be.true
+            })
+
+        })        
     })
 })

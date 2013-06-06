@@ -1,0 +1,8 @@
+<iq from='alice@wonderland.lit' 
+    id='1234'
+    to='alice@wonderland.lit/rabbithole'
+    type='set'>
+   <query xmlns='jabber:iq:roster'>
+       <item jid='mapbot@wonderland.lit' name='Alice' subscription='both' />
+   </query>
+</iq>
