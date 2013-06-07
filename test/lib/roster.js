@@ -104,7 +104,6 @@ describe('Roster', function() {
            it('Sends expected add stanza', function(done) {
                 var jid = 'alice@wonderland.lit'
                 xmpp.once('stanza', function(stanza) {
-                     
                      stanza.is('iq').should.be.true
                      stanza.attrs.type.should.equal('set')
                      should.exist(stanza.attrs.id)
