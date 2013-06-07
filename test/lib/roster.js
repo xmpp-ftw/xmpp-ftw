@@ -123,6 +123,10 @@ describe('Roster', function() {
                 )
            })
 
+           it('Can handle roster add with additional data', function(done) {
+               done('Need to include groups and name in request')
+           })
+
        })
     })
 })
