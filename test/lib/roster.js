@@ -103,24 +103,18 @@ describe('Roster', function() {
  
            it('Sends expected add stanza', function(done) {
                 var jid = 'alice@wonderland.lit'
-                var id 
                 xmpp.once('stanza', function(stanza) {
-                     
                      stanza.is('iq').should.be.true
                      stanza.attrs.type.should.equal('set')
                      should.exist(stanza.attrs.id)
-                     id = stanza.attrs.id
                      manager.makeCallback(ltx.parse('<iq type="result" />'))
                 })
-                socket.emit(
-                    'xmpp.roster.add', 
-                    { jid: jid }, 
-                    function(error, success) {
-                        should.not.exist(error)
-                        success.should.be.true
-                        done()
-                    }
-                )
+                var callback = function(error, success) {
+                    should.not.exist(error)
+                    success.should.be.true
+                    done()
+                }
+                socket.emit('xmpp.roster.add', { jid: jid }, callback)
            })
 
            it('Can handle roster add with additional data', function(done) {
