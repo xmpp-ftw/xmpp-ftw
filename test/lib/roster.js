@@ -118,9 +118,106 @@ describe('Roster', function() {
            })
 
            it('Can handle roster add with additional data', function(done) {
-               done('Need to include groups and name in request')
-           })
+                var request = {
+                    jid: 'alice@wonderland.lit',
+                    groups: [ 'group1', 'group2' ],
+                    name: 'Alice'
+                }
+                xmpp.once('stanza', function(stanza) {
+                     stanza.is('iq').should.be.true
+                     stanza.attrs.type.should.equal('set')
+                     should.exist(stanza.attrs.id)
+                     var query = stanza.getChild('query', roster.NS)
+                     var item  = query.getChild('item')
+                     item.attrs.jid.should.equal(request.jid)
+                     item.attrs.name.should.equal(request.name)
+                     item.getChildren('group').length.should.equal(2)
+                     item.getChildren('group')[0].getText().should.equal('group1')
+                     item.getChildren('group')[1].getText().should.equal('group2')                     
+                     manager.makeCallback(ltx.parse('<iq type="result" />'))
+                })
+                var callback = function(error, success) {
+                    should.not.exist(error)
+                    success.should.be.true
+                    done()
+                }
+                socket.emit('xmpp.roster.add', request, callback)
+            })
+ 
+            it('Can handle error response', function(done) {
+                var jid = 'alice@wonderland.lit'
+                xmpp.once('stanza', function(stanza) {
+                     stanza.is('iq').should.be.true
+                     stanza.attrs.type.should.equal('set')
+                     should.exist(stanza.attrs.id)
+                     var query = stanza.getChild('query', roster.NS)
+                     query.getChild('item').attrs.jid.should.equal(jid)
+                     manager.makeCallback(helper.getStanza('iq-error'))
+                })
+                var callback = function(error, success) {
+                    should.not.exist(success)
+                    error.should.eql({
+                        type: 'cancel',
+                        condition: 'error-condition'
+                    })
+                    done()
+                }
+                socket.emit('xmpp.roster.add', { jid: jid }, callback)
+            })
 
-       })
+        })
+
+        describe('Roster retrieval', function() {
+ 
+            it('Can get roster', function(done) {
+                xmpp.once('stanza', function(stanza) {
+                     stanza.is('iq').should.be.true
+                     stanza.attrs.type.should.equal('get')
+                     should.exist(stanza.attrs.id)
+                     should.exist(stanza.getChild('query', roster.NS))
+                     manager.makeCallback(helper.getStanza('roster/get'))
+                })
+                var callback = function(error, roster) {
+                    should.not.exist(error)
+                    roster.length.should.equal(2)
+                    roster[0].jid.should.eql({
+                        domain: 'example.net', user: 'juliet'
+                    })
+                    roster[0].subscription.should.equal('from')
+                    roster[0].groups.should.eql(['colleagues', 'buddies'])
+                    should.not.exist(roster[0].name)
+                    should.not.exist(roster[0].ask)
+                    roster[1].jid.should.eql({
+                        domain: 'example.com', user: 'romeo'
+                    })
+                    roster[1].subscription.should.equal('none')
+                    roster[1].name.should.equal('Romeo')
+                    roster[1].ask.should.equal('subscribe')
+                    should.not.exist(roster[1].groups)
+                    done()
+                }
+                socket.emit('xmpp.roster.get', {}, callback)
+            })
+
+            it('Can handle error response', function(done) {
+                xmpp.once('stanza', function(stanza) {
+                     stanza.is('iq').should.be.true
+                     stanza.attrs.type.should.equal('get')
+                     should.exist(stanza.attrs.id)
+                     var query = stanza.getChild('query', roster.NS)
+                     manager.makeCallback(helper.getStanza('iq-error'))
+                })
+                var callback = function(error, success) {
+                    should.not.exist(success)
+                    error.should.eql({
+                        type: 'cancel',
+                        condition: 'error-condition'
+                    })
+                    done()
+                }
+                socket.emit('xmpp.roster.get', {}, callback)
+            })
+  
+        })
     })
 })
