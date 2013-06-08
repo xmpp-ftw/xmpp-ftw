@@ -1,4 +1,3 @@
-require('mocha')
 var should  = require('should')
   , Chat    = require('../../lib/chat')
   , ltx     = require('ltx')

@@ -1,4 +1,3 @@
-require('mocha')
 var should   = require('should')
   , Presence = require('../../lib/presence')
   , ltx      = require('ltx')

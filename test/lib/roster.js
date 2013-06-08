@@ -1,4 +1,3 @@
-require('mocha')
 var should  = require('should')
   , Roster  = require('../../lib/roster')
   , ltx     = require('ltx')
