@@ -1,0 +1,12 @@
+<iq id="1" type="result" to="alice@wonderland.lit/rabbithole">
+    <query ver="4" xmlns="jabber:iq:roster">
+        <item jid="juliet@example.net" subscription="from">
+            <group>colleagues</group>
+            <group>buddies</group>
+        </item>
+        <item jid="romeo@example.com" 
+              subscription="none" 
+              ask="subscribe" 
+              name="Romeo" />
+    </query>
+</iq>

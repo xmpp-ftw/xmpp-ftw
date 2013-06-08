@@ -1,0 +1,9 @@
+<iq from='notify.wonderland.lit'
+    id='1'
+    to='alice@wonderland.lit/rabbithole'
+    type='error'>
+    <error type='cancel'>
+       <error-condition xmlns='urn:ietf:params:xml:ns:xmpp-stanzas' />
+       <unknown-error xmlns='http://jabber.org/protocol/pubsub#errors' />
+    </error>
+</iq>

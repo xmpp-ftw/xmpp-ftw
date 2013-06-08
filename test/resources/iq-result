@@ -1,0 +1,4 @@
+<iq from='notify.wonderland.lit'
+    id='1'
+    to='alice@wonderland.lit/rabbithole'
+    type='result' />
