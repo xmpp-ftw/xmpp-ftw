@@ -219,5 +219,65 @@ describe('Roster', function() {
             })
   
         })
+
+        describe('Set roster groups', function() {
+
+           it('Not providing \'jid\' returns error', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.emit('xmpp.roster.group', {}, function(error, success) {
+                    should.not.exist(success)
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal("Missing 'jid' key")
+                    error.request.should.eql({})
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+           })
+
+           it('Not providing \'groups\' return error', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                var request = { jid: 'juliet@example.com' }
+                socket.emit('xmpp.roster.group', request, function(error, success) {
+                    should.not.exist(success)
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal("Missing 'groups' key")
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+           })
+
+           it('Not passing array for \'groups\' returns error', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                var request = { jid: 'juliet@example.com', groups: { 0: 'group1' }}
+                socket.emit('xmpp.roster.group', request, function(error, success) {
+                    should.not.exist(success)
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal("Groups should be an array")
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+           })
+
+           it('Handles error response stanza', function(done) {
+ 
+           })
+ 
+           it('Allows the setting of roster groups', function(done) {
+
+           })
+
+        })
+
     })
 })
