@@ -270,11 +270,52 @@ describe('Roster', function() {
            })
 
            it('Handles error response stanza', function(done) {
- 
+                var request = {
+                    jid: 'alice@wonderland.lit',
+                    groups: [ 'group1', 'group2' ]
+                }
+                xmpp.once('stanza', function(stanza) {
+                     stanza.is('iq').should.be.true
+                     stanza.attrs.type.should.equal('set')
+                     should.exist(stanza.attrs.id)
+                     var query = stanza.getChild('query', roster.NS)
+                     query.getChild('item').attrs.jid.should.equal(request.jid)
+                     manager.makeCallback(helper.getStanza('iq-error'))
+                })
+                var callback = function(error, success) {
+                    should.not.exist(success)
+                    error.should.eql({
+                        type: 'cancel',
+                        condition: 'error-condition'
+                    })
+                    done()
+                }
+                socket.emit('xmpp.roster.group', request, callback) 
            })
  
            it('Allows the setting of roster groups', function(done) {
-
+                var request = {
+                    jid: 'alice@wonderland.lit',
+                    groups: [ 'group1', 'group2' ]
+                }
+                xmpp.once('stanza', function(stanza) {
+                     stanza.is('iq').should.be.true
+                     stanza.attrs.type.should.equal('set')
+                     should.exist(stanza.attrs.id)
+                     var item = stanza.getChild('query', roster.NS)
+                         .getChild('item')
+                     item.attrs.jid.should.equal(request.jid)
+                     item.getChildren('group').length.should.equal(2)
+                     item.getChildren('group')[0].getText().should.equal('group1')
+                     item.getChildren('group')[1].getText().should.equal('group2')
+                     manager.makeCallback(helper.getStanza('iq-result'))
+                })
+                var callback = function(error, success) {
+                    should.not.exist(error)
+                    success.should.be.true
+                    done()
+                }
+                socket.emit('xmpp.roster.group', request, callback)
            })
 
         })
