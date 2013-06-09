@@ -64,7 +64,7 @@ describe('XEP-0004', function() {
         })
     })
 
-    describe.only('Can parse data form from details', function() {
+    describe('Can parse data form from details', function() {
  
         var stanza
 
