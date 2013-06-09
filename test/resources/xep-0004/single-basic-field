@@ -1,0 +1,9 @@
+<x xmlns='jabber:x:data' type='form'>
+    <title>form-title</title>
+    <instructions>form-instructions</instructions>
+    <field type='text-single' var='field1' label='label1'>
+        <required />
+        <desc>field1-description</desc>
+        <value>value1</value>
+    </field>    
+</x>

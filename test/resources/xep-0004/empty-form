@@ -1,0 +1,4 @@
+<x xmlns='jabber:x:data' type='form'>
+    <title>form-title</title>
+    <instructions>form-instructions</instructions>
+</x>

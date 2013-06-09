@@ -63,5 +63,66 @@ describe('XEP-0004', function() {
             values[1].getText().should.equal('world')
         })
     })
-  
+
+    describe.only('Can parse data form from details', function() {
+ 
+        var stanza
+
+        beforeEach(function() {
+            stanza = helper.getStanza('xep-0004/empty-form')
+        })
+
+        it('Can parse empty data form', function() {
+            var form = dataForm.parseFields(stanza)
+            form.title.should.equal('form-title')
+            form.instructions.should.equal('form-instructions')
+            should.exist(form.fields)
+        })
+
+        it('Does not add \'FORM_TYPE\' fields', function() {
+            stanza.c('field', { type:'FORM_TYPE' })
+            var form = dataForm.parseFields(stanza)
+            form.fields.length.should.equal(0)
+        }) 
+
+        it('Can parse a very basic form field', function() {
+            stanza.c('field', { type: 'text-single', var: 'field1' })
+            var form = dataForm.parseFields(stanza)
+            form.fields.length.should.equal(1)
+            form.fields[0].var.should.equal('field1')
+            form.fields[0].type.should.equal('text-single')
+            form.fields[0].required.should.equal.false
+        })
+
+        it('Can parse basic form field', function() {
+            var stanza = helper.getStanza('xep-0004/single-basic-field')
+            var form = dataForm.parseFields(stanza)
+            form.fields.length.should.equal(1)
+            form.fields[0].var.should.equal('field1')
+            form.fields[0].type.should.equal('text-single')
+            form.fields[0].required.should.equal.true
+            form.fields[0].description.should.equal('field1-description')
+            form.fields[0].value.should.equal('value1')
+            form.fields[0].label.should.equal('label1')
+        })
+
+        it('Can parse multi-select field', function() {
+            var stanza = helper.getStanza('xep-0004/multi-select-field')
+            var form = dataForm.parseFields(stanza)
+            form.fields.length.should.equal(1)
+            form.fields[0].var.should.equal('field1')
+            form.fields[0].type.should.equal('list-multi')
+            form.fields[0].required.should.equal.true
+            form.fields[0].description.should.equal('field1-description')
+            form.fields[0].label.should.equal('label1')
+            form.fields[0].options.length.should.equal(3)
+            form.fields[0].options[0].should.eql(
+               { label: 'label3', value: 'value3' }
+            )
+            form.fields[0].value.length.should.equal(2)
+            form.fields[0].value[0].should.equal('value1')
+            form.fields[0].value[1].should.equal('value2')
+        })
+
+    })  
 })

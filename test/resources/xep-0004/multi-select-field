@@ -1,0 +1,13 @@
+<x xmlns='jabber:x:data' type='form'>
+    <title>form-title</title>
+    <instructions>form-instructions</instructions>
+    <field type='list-multi' var='field1' label='label1'>
+        <required />
+        <desc>field1-description</desc>
+        <value>value1</value>
+        <value>value2</value>
+        <option label="label3"><value>value3</value></option>
+        <option label="label2"><value>value2</value></option>
+        <option label="label1"><value>value1</value></option>
+    </field>
+</x>
