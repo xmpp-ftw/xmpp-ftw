@@ -22,9 +22,6 @@
   "keywords": [
     "xmpp",
     "json",
-    "websocket",
-    "socket.io",
-    "engine.io",
     "stanza",
     "federated",
     "server",
