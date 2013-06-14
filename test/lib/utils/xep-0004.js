@@ -80,7 +80,7 @@ describe('XEP-0004', function() {
         })
 
         it('Does not add \'FORM_TYPE\' fields', function() {
-            stanza.c('field', { type:'FORM_TYPE' })
+            stanza.c('field', { var:'FORM_TYPE' })
             var form = dataForm.parseFields(stanza)
             form.fields.length.should.equal(0)
         }) 
