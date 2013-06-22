@@ -62,6 +62,16 @@ describe('XEP-0004', function() {
             values[0].getText().should.equal('hello')
             values[1].getText().should.equal('world')
         })
+
+        it('Can change form type', function() {
+            dataForm.addForm(
+                stanza,
+                [{ var: 'field4', value: [ 'hello', 'world' ] }],
+                'df',
+                'form'
+            )
+            stanza.getChild('x').attrs.type.should.equal('form')
+        })
     })
 
     describe('Can parse data form from details', function() {
