@@ -134,5 +134,14 @@ describe('XEP-0004', function() {
             form.fields[0].value[1].should.equal('value2')
         })
 
+        it('Can parse a boolean field', function() {
+            stanza.c('field', { type: 'boolean', var: 'field1' })
+                .c('value').t('true')
+            var form = dataForm.parseFields(stanza)
+            form.fields.length.should.equal(1)
+            form.fields[0].var.should.equal('field1')
+            form.fields[0].type.should.equal('boolean')
+            form.fields[0].required.should.equal.true
+        })
     })  
 })
