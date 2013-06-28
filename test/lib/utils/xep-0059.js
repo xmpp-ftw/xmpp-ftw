@@ -3,7 +3,7 @@ var rsm     = require('../../../lib/utils/xep-0059')
   , helper  = require('../../helper')
   , ltx     = require('ltx')
  
-describe.only('XEP-0059', function() {
+describe('XEP-0059', function() {
 
     it('Should export the RSM namespace', function() {
         rsm.NS.should.equal('http://jabber.org/protocol/rsm')
