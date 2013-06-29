@@ -94,7 +94,7 @@ describe('XEP-0059', function() {
         it('Should add \'count\'', function() {
             stanza.getChild('set').c('count').t('200').root()
             var data = rsm.parse(stanza)
-            data.should.eql({ count: '200' })
+            data.should.eql({ count: 200 })
         })
 
         it('Should add \'first\'', function() {
