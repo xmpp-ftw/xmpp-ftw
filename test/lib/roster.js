@@ -42,7 +42,7 @@ describe('Roster', function() {
             roster.handles(request).should.be.true
         })
 
-        it('Should return false from \'handle\' with non-set stanza', function() {
+        it("Should return false from 'handle' with non-set stanza", function() {
             var request = ltx.parse(
                 '<iq type="get"><query xmlns="' + roster.NS + '"/></iq>'
             )
@@ -98,6 +98,21 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
+           })
+
+           it('Errors when no callback provided', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.on('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal("Missing callback")
+                    error.request.should.eql({})
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.roster.add', {})
            })
  
            it('Sends expected add stanza', function(done) {
