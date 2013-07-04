@@ -25,6 +25,10 @@ describe('Roster', function() {
         roster.init(manager)
     })
 
+    beforeEach(function() {
+        xmpp.removeAllListeners('stanza')
+    })
+
     describe('Can handle incoming roster IQs', function() {
     
         it('Shouldn\'t handle non-roster IQs', function() {
@@ -104,7 +108,7 @@ describe('Roster', function() {
                 xmpp.once('stanza', function() {
                     done('Unexpected outgoing stanza')
                 })
-                socket.on('xmpp.error.client', function(error) {
+                socket.once('xmpp.error.client', function(error) {
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
                     error.description.should.equal("Missing callback")
@@ -113,6 +117,21 @@ describe('Roster', function() {
                     done()
                 })
                 socket.emit('xmpp.roster.add', {})
+           })
+ 
+           it('Errors when non-function callback provided', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal("Missing callback")
+                    error.request.should.eql({})
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.roster.add', {}, true)
            })
  
            it('Sends expected add stanza', function(done) {
@@ -146,8 +165,10 @@ describe('Roster', function() {
                      item.attrs.jid.should.equal(request.jid)
                      item.attrs.name.should.equal(request.name)
                      item.getChildren('group').length.should.equal(2)
-                     item.getChildren('group')[0].getText().should.equal('group1')
-                     item.getChildren('group')[1].getText().should.equal('group2')                     
+                     item.getChildren('group')[0].getText()
+                         .should.equal('group1')
+                     item.getChildren('group')[1].getText()
+                         .should.equal('group2')                     
                      manager.makeCallback(ltx.parse('<iq type="result" />'))
                 })
                 var callback = function(error, success) {
@@ -213,6 +234,36 @@ describe('Roster', function() {
                 socket.emit('xmpp.roster.get', {}, callback)
             })
 
+            it('Errors when no callback provided', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal("Missing callback")
+                    should.not.exist(error.request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.roster.get', {})
+            })
+
+            it('Errors when non-function callback provided', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal("Missing callback")
+                    should.not.exist(error.request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.roster.get', {}, true)
+            })
+
             it('Can handle error response', function(done) {
                 xmpp.once('stanza', function(stanza) {
                      stanza.is('iq').should.be.true
@@ -271,7 +322,10 @@ describe('Roster', function() {
                 xmpp.once('stanza', function() {
                     done('Unexpected outgoing stanza')
                 })
-                var request = { jid: 'juliet@example.com', groups: { 0: 'group1' }}
+                var request = {
+                    jid: 'juliet@example.com',
+                    groups: { 0: 'group1' }
+                }
                 socket.emit('xmpp.roster.group', request, function(error, success) {
                     should.not.exist(success)
                     error.type.should.equal('modify')
@@ -306,7 +360,7 @@ describe('Roster', function() {
                 }
                 socket.emit('xmpp.roster.group', request, callback) 
            })
- 
+
            it('Allows the setting of roster groups', function(done) {
                 var request = {
                     jid: 'alice@wonderland.lit',
@@ -332,7 +386,45 @@ describe('Roster', function() {
                 socket.emit('xmpp.roster.group', request, callback)
            })
 
+           it('Errors when no callback provided', function(done) {
+                var request = {
+                    jid: 'alice@wonderland.lit',
+                    groups: [ 'group1', 'group2' ]
+                }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal("Missing callback")
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.roster.group', request)
+           })
+
+           it('Errors when non-function callback provided', function(done) {
+                var request = {
+                    jid: 'alice@wonderland.lit',
+                    groups: [ 'group1', 'group2' ]
+                }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal("Missing callback")
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.roster.group', request, true)
+           })
         })
 
     })
+
 })
