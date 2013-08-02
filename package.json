@@ -30,7 +30,7 @@
   "license": "Apache 2.0",
   "engines": {
     "node": {
-      "node": ">=0.6.0 <0.10."
+      "node": ">=0.6.0 <=0.10.X"
     }
   },
   "scripts": {
