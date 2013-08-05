@@ -29,9 +29,7 @@
   "author": "Steven Lloyd Watkin <lloyd@evilprofessor.co.uk>",
   "license": "Apache 2.0",
   "engines": {
-    "node": {
-      "node": ">=0.6.0 <=0.10.X"
-    }
+    "node": ">=0.6.0 <=0.10"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha -R spec --recursive ./test/lib"
