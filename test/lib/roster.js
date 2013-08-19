@@ -209,6 +209,8 @@ describe('Roster', function() {
                      stanza.is('iq').should.be.true
                      stanza.attrs.type.should.equal('get')
                      should.exist(stanza.attrs.id)
+                     should.not.exist(stanza.attrs.to)
+                     stanza.attrs.from.should.include(manager.jid)
                      should.exist(stanza.getChild('query', roster.NS))
                      manager.makeCallback(helper.getStanza('roster/get'))
                 })
