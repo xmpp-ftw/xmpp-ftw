@@ -1,6 +1,4 @@
 var rsm     = require('../../../lib/utils/xep-0059')
-  , should  = require('should')
-  , helper  = require('../../helper')
   , ltx     = require('ltx')
  
 describe('XEP-0059', function() {
@@ -41,7 +39,7 @@ describe('XEP-0059', function() {
             var rsmElement = stanza.root().getChild('set', rsm.NS)
             rsmElement.should.exist
             rsmElement.getChildText('after').should.equal(after)
-         }) 
+         })
 
     
          it('Adds <before> element if provided', function() {

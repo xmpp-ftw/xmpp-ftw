@@ -29,7 +29,7 @@ describe('XEP-0071', function() {
     })
 
     it('Returns error if \'to\' jid not provided', function() {
-        xep0071.builder({}, {}, caller) 
+        xep0071.builder({}, {}, caller)
         caller.error.should.equal('Missing \'to\' key')
         caller.request.should.be.null
     })
@@ -56,8 +56,8 @@ describe('XEP-0071', function() {
 
     it('Returns error if unparsable XHTML provided', function() {
         xep0071.builder(
-            { content: 'Invalid <strong>yes', format: 'xhtml' }, 
-            { to: 'romeo@example.com' }, 
+            { content: 'Invalid <strong>yes', format: 'xhtml' },
+            { to: 'romeo@example.com' },
             caller
         )
         caller.error.should.equal('Can not parse XHTML message')
@@ -66,7 +66,7 @@ describe('XEP-0071', function() {
 
     it('Can build an XHTML chat message', function(done) {
 
-        var request = { 
+        var request = {
             content: '<p>XMPP-FTW <b>ROCKS!</b></p>',
             format: 'xhtml'
         }

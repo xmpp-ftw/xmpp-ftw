@@ -1,6 +1,4 @@
 var oob     = require('../../../lib/utils/xep-0066')
-  , should  = require('should')
-  , helper  = require('../../helper')
   , ltx     = require('ltx')
  
 describe('XEP-0066', function() {
@@ -35,12 +33,12 @@ describe('XEP-0066', function() {
                var url = 'http://www.shakepeare.lit'
                  , description = 'Plays and sonnets'
                var stanza = ltx.parse(
-                 '<iq>'
-                     + '<x xmlns="jabber:x:oob">'
-                     + '<url>' + url + '</url>'
-                     + '<desc>' + description + '</desc>'
-                     + '</x>'
-                 + '</iq>'
+                 '<iq>' +
+                     '<x xmlns="jabber:x:oob">' +
+                     '<url>' + url + '</url>' +
+                     '<desc>' + description + '</desc>' +
+                     '</x>' +
+                 '</iq>'
                )
                var data = oob.parse(stanza)
                data.url.should.equal(url)
@@ -49,9 +47,9 @@ describe('XEP-0066', function() {
           
           it('Shouldn\'t error if fields missing', function() {
                var stanza = ltx.parse(
-                 '<iq>'
-                     + '<x xmlns="jabber:x:oob"/>'
-                 + '</iq>'
+                 '<iq>' +
+                     '<x xmlns="jabber:x:oob"/>' +
+                 '</iq>'
                )
                oob.parse(stanza).should.eql({})
           })
@@ -64,12 +62,12 @@ describe('XEP-0066', function() {
                var url = 'http://www.shakepeare.lit'
                  , description = 'Plays and sonnets'
                var stanza = ltx.parse(
-                 '<iq>'
-                     + '<query xmlns="jabber:iq:oob">'
-                     + '<url>' + url + '</url>'
-                     + '<desc>' + description + '</desc>'
-                     + '</query>'
-                 + '</iq>'
+                 '<iq>' +
+                     '<query xmlns="jabber:iq:oob">' +
+                     '<url>' + url + '</url>' +
+                     '<desc>' + description + '</desc>' +
+                     '</query>' +
+                 '</iq>'
                )
                var data = oob.parse(stanza)
                data.url.should.equal(url)
@@ -78,9 +76,9 @@ describe('XEP-0066', function() {
           
           it('Shouldn\'t error if fields missing', function() {
                var stanza = ltx.parse(
-                 '<iq>'
-                     + '<query xmlns="jabber:iq:oob"/>'
-                 + '</iq>'
+                 '<iq>' +
+                     '<query xmlns="jabber:iq:oob"/>' +
+                 '</iq>'
                )
                oob.parse(stanza).should.eql({})
           })
@@ -89,9 +87,9 @@ describe('XEP-0066', function() {
                var stream = '0123456'
 
                var stanza = ltx.parse(
-                 '<iq>'
-                   + '<query xmlns="jabber:iq:oob" sid="' + stream + '"/>'
-                 + '</iq>'
+                 '<iq>' +
+                   '<query xmlns="jabber:iq:oob" sid="' + stream + '"/>' +
+                 '</iq>'
                )
                oob.parse(stanza).stream.should.equal(stream)
           })

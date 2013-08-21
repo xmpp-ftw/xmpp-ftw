@@ -1,5 +1,4 @@
-var should  = require('should')
-  , Chat    = require('../../lib/chat')
+var Chat    = require('../../lib/chat')
   , ltx     = require('ltx')
   , helper  = require('../helper')
 
@@ -17,7 +16,7 @@ describe('Chat', function() {
             client: xmpp
         }
         chat = new Chat()
-        chat.init({ socket: socket, client: xmpp })
+        chat.init(manager)
     })
 
     describe('Can handle incoming messages', function() {

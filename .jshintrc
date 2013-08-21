@@ -7,5 +7,5 @@
   "trailing": true, 
   "maxlen": 90, 
   "laxcomma": true,
-  "predef": [ "console", "define", "require", "it", "before", "beforeEach", "describe", "exports" ]
+  "predef": [ "console", "define", "require", "it", "before", "beforeEach", "describe", "exports", "module", "__dirname" ]
 }

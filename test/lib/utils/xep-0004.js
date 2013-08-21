@@ -51,8 +51,8 @@ describe('XEP-0004', function() {
 
         it('Can add an array of values', function() {
             dataForm.addForm(
-                stanza, 
-                [{ var: 'field4', value: [ 'hello', 'world' ] }], 
+                stanza,
+                [{ var: 'field4', value: [ 'hello', 'world' ] }],
                 'df'
             )
             var field = stanza.getChild('x').getChildren('field')[1]
@@ -93,7 +93,7 @@ describe('XEP-0004', function() {
             stanza.c('field', { var: 'FORM_TYPE' })
             var form = dataForm.parseFields(stanza)
             form.fields.length.should.equal(0)
-        }) 
+        })
 
         it('Can parse a very basic form field', function() {
             stanza.c('field', { type: 'text-single', var: 'field1' })
@@ -143,5 +143,5 @@ describe('XEP-0004', function() {
             form.fields[0].type.should.equal('boolean')
             form.fields[0].required.should.equal.true
         })
-    })  
+    })
 })

@@ -35,7 +35,7 @@ describe('Presence', function() {
                 data.error.should.eql('gone')
                 data.from.user.should.equal('mercutio')
                 data.from.domain.should.equal('example.org')
-                should.not.exist(data.from.resource) 
+                should.not.exist(data.from.resource)
                 done()
             })
             presence.handle(helper.getStanza('presence/error'))
@@ -94,7 +94,7 @@ describe('Presence', function() {
 
         it('Can send a minimal presence stanza', function(done) {
             xmpp.once('stanza', function(stanza) {
-                stanza.root().toString().should.equal('<presence/>')          
+                stanza.root().toString().should.equal('<presence/>')
                 done()
             })
             socket.emit('xmpp.presence', {})
@@ -127,7 +127,7 @@ describe('Presence', function() {
                     .should.equal(data.priority)
                 stanza.getChild('show').getText()
                     .should.equal(data.show)
-                done() 
+                done()
             })
             socket.emit('xmpp.presence', data)
         })

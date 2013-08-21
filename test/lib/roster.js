@@ -82,7 +82,7 @@ describe('Roster', function() {
                    .should.be.true
             })
 
-        })        
+        })
     })
 
     describe('Can send roster IQ stanzas', function() {
@@ -168,7 +168,7 @@ describe('Roster', function() {
                      item.getChildren('group')[0].getText()
                          .should.equal('group1')
                      item.getChildren('group')[1].getText()
-                         .should.equal('group2')                     
+                         .should.equal('group2')
                      manager.makeCallback(ltx.parse('<iq type="result" />'))
                 })
                 var callback = function(error, success) {
@@ -271,7 +271,7 @@ describe('Roster', function() {
                      stanza.is('iq').should.be.true
                      stanza.attrs.type.should.equal('get')
                      should.exist(stanza.attrs.id)
-                     var query = stanza.getChild('query', roster.NS)
+                     stanza.getChild('query', roster.NS).should.exist
                      manager.makeCallback(helper.getStanza('iq-error'))
                 })
                 var callback = function(error, success) {
@@ -360,7 +360,7 @@ describe('Roster', function() {
                     })
                     done()
                 }
-                socket.emit('xmpp.roster.group', request, callback) 
+                socket.emit('xmpp.roster.group', request, callback)
            })
 
            it('Allows the setting of roster groups', function(done) {
