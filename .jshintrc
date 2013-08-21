@@ -1,0 +1,11 @@
+{
+  "asi": true, 
+  "camelcase": true, 
+  "noempty": true, 
+  "undef": true, 
+  "unused": true, 
+  "trailing": true, 
+  "maxlen": 90, 
+  "laxcomma": true,
+  "predef": [ "console", "define", "require", "it", "before", "beforeEach", "describe", "exports" ]
+}
