@@ -34,24 +34,24 @@ describe('XEP-0071', function() {
         caller.request.should.be.null
     })
 
-    it('Returns error if content property not available', function() {
-         xep0071.builder({}, { to: 'romeo@example.com' }, caller)
-         caller.error.should.equal('Message content not provided')
-         caller.request.should.be.null
+    it('Returns empty stanza if no content key', function() {
+         var result = xep0071.builder({}, { to: 'romeo@example.com' }, caller)
+         result.is('message').should.be.true
+         result.attrs.to.should.equal('romeo@example.com')
+         result.attrs.type.should.equal('chat')
     })
 
-    it('Can build a plain chat message', function(done) {
-        xmpp.once('stanza', function(stanza) {
-            stanza.is('message').should.be.true
-            stanza.getChild('body').getText().should.equal(request.content)
-            stanza.attrs.type.should.equal('chat')
-            stanza.attrs.to.should.equal(request.to)
-            done()
-        })
+    it('Can build a plain chat message', function() {
         var request = { content: 'Hello world!', to: 'romeo@example.com' }
-        xep0071.builder(request, { to: request.to }, caller)
+        var result = xep0071.builder(request, { to: request.to }, caller)
+        result.should.not.be.false
         should.not.exist(caller.error)
         should.not.exist(caller.request)
+        result.is('message').should.be.true
+        result.attrs.to.should.equal('romeo@example.com')
+        result.attrs.type.should.equal('chat')
+        result.getChild('body').getText()
+            .should.equal('Hello world!')
     })
 
     it('Returns error if unparsable XHTML provided', function() {
@@ -72,19 +72,16 @@ describe('XEP-0071', function() {
         }
         var data = { type: 'groupchat', to: 'room@muc.example.com' }
 
-        xmpp.on('stanza', function(stanza) {
-            stanza.is('message').should.be.true
-            stanza.attrs.type.should.equal(data.type)
-            stanza.getChild('body').getText().should.equal('XMPP-FTW ROCKS!')
-            stanza.getChild('html', xep0071.NS_XHTML_IM)
-                .getChild('body', xep0071.NS_XHTML)
-                .children.join()
-                .should.equal(request.content)
-            done()
-        })
-        xep0071.builder(request, data, caller)
+        var stanza = xep0071.builder(request, data, caller)
         should.not.exist(caller.error)
         should.not.exist(caller.request)
-
+        stanza.is('message').should.be.true
+        stanza.attrs.type.should.equal(data.type)
+        stanza.getChild('body').getText().should.equal('XMPP-FTW ROCKS!')
+        stanza.getChild('html', xep0071.NS_XHTML_IM)
+            .getChild('body', xep0071.NS_XHTML)
+            .children.join()
+            .should.equal(request.content)
+        done()
     })
 })

@@ -1,7 +1,8 @@
-var Chat    = require('../../lib/chat')
-  , ltx     = require('ltx')
-  , helper  = require('../helper')
-  , should  = require('should')
+var Chat      = require('../../lib/chat')
+  , ltx       = require('ltx')
+  , helper    = require('../helper')
+  , should    = require('should')
+  , chatState = require('../../lib/utils/xep-0085')
 
 describe('Chat', function() {
 
@@ -117,7 +118,7 @@ describe('Chat', function() {
 
         it('Sends error message if \'to\' parameter missing', function(done) {
             socket.once('xmpp.error.client', function(data) {
-                data.description.should.equal("Missing 'to' JID")
+                data.description.should.equal("Missing 'to' key")
                 data.type.should.equal('modify')
                 data.condition.should.equal('client-error')
                 data.request.should.eql({})
@@ -126,9 +127,10 @@ describe('Chat', function() {
             chat.sendMessage({})
         })
 
-        it('Sends error if \'content\' parameter missing', function(done) {
+        it('Errors if \'content\' & chat state not provided', function(done) {
             socket.once('xmpp.error.client', function(data) {
-                data.description.should.equal("Message content not provided")
+                data.description
+                    .should.equal('Message content or chat state not provided')
                 data.type.should.equal('modify')
                 data.condition.should.equal('client-error')
                 data.request.to.should.equal('romeo@montague.net/orchard')
@@ -148,7 +150,7 @@ describe('Chat', function() {
                 stanza.getChild('body').getText().should.equal(content)
                 done()
             })
-            chat.sendMessage({to: to, content: content})
+            chat.sendMessage({ to: to, content: content })
         })
 
         it('Returns error if invalid XHTML provided', function(done) {
@@ -188,6 +190,42 @@ describe('Chat', function() {
             })
             chat.sendMessage({
                 to: to, content: content, format: chat.XHTML
+            })
+        })
+        
+        it('Should build stanza with chat state notification', function(done) {
+            var to = 'romeo@montague.net/orchard'
+            var content = '<p>This will <strong>pass</strong></p>'
+            xmpp.once('stanza', function(stanza) {
+                stanza.getChild('body').getText()
+                    .should.equal('This will pass')
+                stanza.attrs.to.should.equal(to)
+                stanza.getChild('html', 'http://jabber.org/protocol/xhtml-im')
+                    .should.exist
+                stanza.getChild('html')
+                    .getChild('body', 'http://www.w3.org/1999/xhtml')
+                    .should.exist
+                stanza.getChild('html')
+                    .getChild('body')
+                    .children.join('')
+                    .should.equal(content)
+                done()
+            })
+            chat.sendMessage({
+                to: to, content: content, format: chat.XHTML
+            })
+        })
+        
+        it('Should build stanza with just chat state', function(done) {
+            var to = 'romeo@montague.net/orchard'
+            var state = 'composing'
+            xmpp.once('stanza', function(stanza) {
+                stanza.attrs.to.should.equal(to)
+                stanza.getChild('composing', chatState.NS).should.exist
+                done()
+            })
+            chat.sendMessage({
+                to: to, state: state
             })
         })
 
