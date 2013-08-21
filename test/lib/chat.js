@@ -1,6 +1,7 @@
 var Chat    = require('../../lib/chat')
   , ltx     = require('ltx')
   , helper  = require('../helper')
+  , should  = require('should')
 
 describe('Chat', function() {
 
@@ -60,7 +61,8 @@ describe('Chat', function() {
                     domain: 'domain',
                     resource: 'resource'
                 })
-                data.content.should.equal('<p>Hello to <strong>you!</strong></p>')
+                data.content
+                    .should.equal('<p>Hello to <strong>you!</strong></p>')
                 data.format.should.equal(chat.XHTML)
                 done()
             })
@@ -77,6 +79,38 @@ describe('Chat', function() {
             chat.handle(helper.getStanza('chat/plain-with-delay'))
                 .should.be.true
         })
+        
+        it('Handles messages with a chat state notification', function(done) {
+            socket.once('xmpp.chat.message', function(data) {
+                data.from.should.eql({
+                    user: 'user',
+                    domain: 'domain',
+                    resource: 'resource'
+                })
+                data.content
+                    .should.equal('<p>Hello to <strong>you!</strong></p>')
+                data.state.should.equal('composing')
+                data.format.should.equal(chat.XHTML)
+                done()
+            })
+            chat.handle(helper.getStanza('chat/xhtml-with-state')).should.be.true
+        })
+        
+        it('Can handle just chat state notifications', function(done) {
+            socket.once('xmpp.chat.message', function(data) {
+                data.from.should.eql({
+                    user: 'user',
+                    domain: 'domain',
+                    resource: 'resource'
+                })
+                should.not.exist(data.content)
+                should.not.exist(data.format)
+                data.state.should.equal('composing')
+                done()
+            })
+            chat.handle(helper.getStanza('chat/chat-state')).should.be.true
+        })
+        
     })
 
     describe('Can send messages', function() {
