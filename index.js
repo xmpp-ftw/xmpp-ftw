@@ -37,10 +37,12 @@ Xmpp.prototype.registerXmppEvents = function() {
 
 Xmpp.prototype.registerSocketEvents = function() {
     var self = this
-    this.socket.on('xmpp.login', function(data) { 
+    this.socket.on('xmpp.login', function(data) {
+        self.logout(function() {})
         self.login(data.jid, data.password, data.resource, data.host)
     })
     this.socket.on('xmpp.login.anonymous', function(data) {
+        self.logout(function() {})
         self.anonymousLogin(data)
     })
     this.socket.on('xmpp.logout', function(data, callback) {
@@ -52,7 +54,7 @@ Xmpp.prototype.logout = function(callback) {
    if (!this.client) return
    this.client.emit('end')
    delete this.client
-   if (callback) callback(null, true)
+   if (callback) return callback(null, true)
    this.socket.disconnect()
 }
 
