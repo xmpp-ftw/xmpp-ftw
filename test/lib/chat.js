@@ -112,6 +112,19 @@ describe('Chat', function() {
             chat.handle(helper.getStanza('chat/chat-state')).should.be.true
         })
         
+        it('https://github.com/lloydwatkin/xmpp-ftw/issues/40', function(done) {
+            socket.once('xmpp.chat.message', function(data) {
+               data.should.eql({
+                   from: { domain: 'buddycloud.org', user: 'lloyd', resource: '...' },
+                   content: 'hey',
+                   format: 'plain',
+                   state: 'active'
+               })
+               done()
+            })
+            chat.handle(helper.getStanza('issues/40')).should.be.true 
+        })
+        
     })
 
     describe('Can send messages', function() {
@@ -230,4 +243,5 @@ describe('Chat', function() {
         })
 
     })
+
 })

@@ -1,0 +1,8 @@
+<message id="purple7c9a49fd"
+     type="chat"
+     to="lloyd.watkin@surevine.com/..." 
+     from="lloyd@buddycloud.org/..."
+     xmlns:stream="http://etherx.jabber.org/streams">
+    <active xmlns="http://jabber.org/protocol/chatstates"/>
+    <body>hey</body>
+</message>
