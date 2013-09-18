@@ -1,6 +1,6 @@
 {
   "name": "xmpp-ftw",
-  "version": "0.24.2",
+  "version": "0.25.0",
   "description": "XMPP-FTW (For the Web/Win) ::: Powerful XMPP, simple JSON",
   "main": "index.js",
   "dependencies": {
