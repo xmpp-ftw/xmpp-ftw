@@ -35,6 +35,12 @@ Also check out the [xmpp-ftw-demo](https://github.com/lloydwatkin/xmpp-ftw-demo)
 
 [![Build Status](https://secure.travis-ci.org/lloydwatkin/xmpp-ftw.png)](http://travis-ci.org/lloydwatkin/xmpp-ftw)
 
+# Dependency status
+
+[![Dependency Status](https://david-dm.org/lloydwatkin/xmpp-ftw.png)](https://david-dm.org/lloydwatkin/xmpp-ftw)
+
+# Instructions
+
 * npm i xmpp-ftw
 * Create your socket.io connection manually and then pass this socket into the constructor
 
