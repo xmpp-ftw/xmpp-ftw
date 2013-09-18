@@ -143,5 +143,23 @@ describe('XEP-0004', function() {
             form.fields[0].type.should.equal('boolean')
             form.fields[0].required.should.equal.true
         })
+        
+        it('Can handle \'fixed\' field', function() {
+            var number = 555
+            var stanza = ltx.parse('<field type="fixed" var="field1">' +
+                '<value>' + number + '</value>' +
+                '</field>')
+            var value = dataForm.getValues(stanza, 'fixed')
+            value.should.equal(number)
+        })
+        
+        it('Can handle XML field - NOTE: non-standard', function() {
+            var xml = '<entry><item><content>Some content</content></item></entry>'
+            var stanza = ltx.parse('<field type="xml" var="field1">' +
+                '<value>' + xml + '</value>' +
+                '</field>')
+            var value = dataForm.getValues(stanza, 'xml')
+            value.should.equal(xml)
+        })
     })
 })
