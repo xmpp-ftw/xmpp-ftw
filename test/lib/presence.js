@@ -266,7 +266,6 @@ describe('Presence', function() {
                 done()
             })
             socket.emit('disconnect', {})
-
         })
     })
 })
