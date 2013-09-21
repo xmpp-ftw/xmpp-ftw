@@ -75,7 +75,6 @@ Xmpp.prototype.logout = function(callback) {
 Xmpp.prototype.anonymousLogin = function(data) {
    if (!data.jid) return
    console.log("Attempting anonymous connection " + data.jid)
-   this.unRegisterSocketEvents()
    if (-1 != data.jid.indexOf('@'))
        data.jid = data.jid.split('@')[1]
    if (-1 !== data.jid.indexOf('/')) {
@@ -92,7 +91,6 @@ Xmpp.prototype.anonymousLogin = function(data) {
 
 Xmpp.prototype.login = function(jid, password, resource, host) {
    console.log("Attempting to connect to " + jid)
-   this.unRegisterSocketEvents()
    if (!jid || !password) return
    if (-1 === jid.indexOf('@')) 
        jid += '@' + host
