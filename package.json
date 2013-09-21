@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "node-xmpp": "~0.6.1",
-    "MD5": "~1.0.3",
+    "MD5": "~1.X",
     "ltx": "*",
     "xmpp-ftw-item-parser": "*"
   },
