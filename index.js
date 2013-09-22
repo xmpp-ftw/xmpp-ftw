@@ -6,9 +6,9 @@ var presence = require('./lib/presence')
 var roster = require('./lib/roster')
     
 var Xmpp = function(socket) {
-    this.prototype = new events.EventEmitter
+    this.prototype = new events.EventEmitter()
     this.socket    = socket
-    this.tracking  = new Array()
+    this.tracking  = []
     
     this.listeners = [
        new roster(),
@@ -17,7 +17,7 @@ var Xmpp = function(socket) {
     ]
     this.client = false
     this.registerSocketEvents()
-} 
+}
 
 Xmpp.prototype.clearListeners = function() {
     this.listeners = []
@@ -39,7 +39,7 @@ Xmpp.prototype.registerSocketEvents = function() {
     var self = this
     this.socket.on('xmpp.login', function(data) {
         self.logout(function() {})
-        self.login(data.jid, data.password, data.resource, data.host)
+        self.login(data)
     })
     this.socket.on('xmpp.login.anonymous', function(data) {
         self.logout(function() {})
@@ -83,25 +83,40 @@ Xmpp.prototype.anonymousLogin = function(data) {
    }
    this.jid = data.jid
    this.domain = data.jid.split('@')[1]
-   var credentials = {jid: '@' + data.jid, preferredSaslMechanism: 'ANONYMOUS'}
+   var credentials = data
+   credentials.jid =  '@' + data.jid
+   credentials.preferredSaslMechanism = 'ANONYMOUS'
    if (data.resource) credentials.jid += '/' + data.resource
    if (data.host) credentials.host = data.host
    this._connect(credentials)
 }
 
-Xmpp.prototype.login = function(jid, password, resource, host) {
+Xmpp.prototype.login = function(data) {
    console.log("Attempting to connect to " + jid)
-   if (!jid || !password) return
-   if (-1 === jid.indexOf('@')) 
-       jid += '@' + host
+   if (!data.jid || !data.password)
+       return this.socket.emit('xmpp.error', {
+           type: 'auth',
+           condition: 'client-error',
+           description: 'Missing jid and/or password',
+           request: data
+       })
+
+   var jid = data.jid
+   var password = data.password
+   if (-1 === data.jid.indexOf('@'))
+       jid += '@' + data.host
    if (-1 !== jid.indexOf('/')) {
-       resource = jid.split('/')[1]
-       jid      = jid.split('/')[0]
+       data.resource = jid.split('/')[1]
+       jid           = jid.split('/')[0]
    }
    this.domain = jid.split('@')[1]
-   var credentials = {jid: jid, password: password}
-   if (resource) credentials.jid += '/' + resource
-   if (host) credentials.host = host
+   if (data.resource) {
+       jid += '/' + data.resource
+       delete data.resource
+   }
+   var credentials      = data
+   credentials.jid      =  jid
+   credentials.password =  password
    this._connect(credentials)
 }
 
@@ -146,9 +161,9 @@ Xmpp.prototype.handleStanza = function(stanza) {
     if (this.catchTracked(stanza)) return
     var handled = false
     this.listeners.some(function(listener) {
-        if (true == listener.handles(stanza)) {
+        if (true === listener.handles(stanza)) {
             handled = true
-            if (true == listener.handle(stanza)) return true
+            if (true === listener.handle(stanza)) return true
         }
     })
     if (!handled) console.log('No listeners for: ' + stanza)
