@@ -123,6 +123,10 @@ Xmpp.prototype.login = function(data) {
 Xmpp.prototype._connect = function(options) {
    this.jid    = options.jid
    this.client = new nodeXmpp.Client(options)
+   
+   this.client.connection.socket.setTimeout(0)
+   this.client.connection.socket.setKeepAlive(true, 10000)
+    
    this._initialiseListeners()
    this.registerXmppEvents()
 }
