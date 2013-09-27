@@ -51,6 +51,20 @@ io.sockets.on('connection', function(socket) {
 ```
 * All events are prefixed with 'xmpp.'
 
+# Logging
+
+Logging is handled using a [Winston](https://github.com/flatiron/winston) like interface but by default 
+does not record any logging (uses a null logger). Developers can inject any logging platform they wish 
+provided it uses the same interface as Winston. In order to inject a logger simply call `setLogger` on 
+the main XMPP-FTW object after instantiation.
+
+Methods used in XMPP-FTW projects are:
+
+* log()
+* warn()
+* info()
+* error()
+
 # License
 
 License is Apache 2.0, please let me know if this doesn't suit.
