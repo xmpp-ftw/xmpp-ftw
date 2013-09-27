@@ -9,7 +9,7 @@ var Xmpp = function(socket) {
     this.prototype = new events.EventEmitter()
     this.socket    = socket
     this.tracking  = []
-    this.logger
+    this.logger    = null
     
     this.listeners = [
        new roster(),
@@ -93,7 +93,7 @@ Xmpp.prototype.anonymousLogin = function(data) {
 }
 
 Xmpp.prototype.login = function(data) {
-   this._getLogger().info('Attempting to connect to ' + jid)
+   this._getLogger().info('Attempting to connect to ' + data.jid)
    if (!data.jid || !data.password)
        return this.socket.emit('xmpp.error', {
            type: 'auth',
@@ -181,7 +181,7 @@ Xmpp.prototype.setLogger = function(logger) {
 
 Xmpp.prototype._getLogger = function() {
     if (!this.logger) {
-        this.logger = { 
+        this.logger = {
             log: function() {},
             info: function() {},
             warn: function() {},
