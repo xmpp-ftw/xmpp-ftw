@@ -9,6 +9,7 @@ var Xmpp = function(socket) {
     this.prototype = new events.EventEmitter()
     this.socket    = socket
     this.tracking  = []
+    this.logger
     
     this.listeners = [
        new roster(),
@@ -74,7 +75,7 @@ Xmpp.prototype.logout = function(callback) {
 
 Xmpp.prototype.anonymousLogin = function(data) {
    if (!data.jid) return
-   console.log("Attempting anonymous connection " + data.jid)
+   this._getLogger().info('Attempting anonymous connection ' + data.jid)
    if (-1 != data.jid.indexOf('@'))
        data.jid = data.jid.split('@')[1]
    if (-1 !== data.jid.indexOf('/')) {
@@ -92,7 +93,7 @@ Xmpp.prototype.anonymousLogin = function(data) {
 }
 
 Xmpp.prototype.login = function(data) {
-   console.log("Attempting to connect to " + jid)
+   this._getLogger().info('Attempting to connect to ' + jid)
    if (!data.jid || !data.password)
        return this.socket.emit('xmpp.error', {
            type: 'auth',
@@ -161,7 +162,7 @@ Xmpp.prototype.catchTracked = function(stanza) {
 }
 
 Xmpp.prototype.handleStanza = function(stanza) {
-    console.log("Stanza received: " + stanza)
+    this._getLogger().info('Stanza received: ' + stanza)
     if (this.catchTracked(stanza)) return
     var handled = false
     this.listeners.some(function(listener) {
@@ -170,7 +171,24 @@ Xmpp.prototype.handleStanza = function(stanza) {
             if (true === listener.handle(stanza)) return true
         }
     })
-    if (!handled) console.log('No listeners for: ' + stanza)
+    if (!handled) this._getLogger().info('No listeners for: ' + stanza)
+}
+
+Xmpp.prototype.setLogger = function(logger) {
+    this.logger = logger
+    return logger
+}
+
+Xmpp.prototype._getLogger = function() {
+    if (!this.logger) {
+        this.logger = { 
+            log: function() {},
+            info: function() {},
+            warn: function() {},
+            error: function() {}
+        }
+    }
+    return this.logger
 }
 
 exports.Xmpp = Xmpp
