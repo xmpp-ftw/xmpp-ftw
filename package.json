@@ -6,8 +6,7 @@
   "dependencies": {
     "node-xmpp": "~0.6.1",
     "MD5": "~1.X",
-    "ltx": "*",
-    "xmpp-ftw-item-parser": "*"
+    "ltx": "*"
   },
   "devDependencies": {
     "mocha": "~1.13.0",
