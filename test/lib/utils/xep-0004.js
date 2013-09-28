@@ -72,6 +72,22 @@ describe('XEP-0004', function() {
             )
             stanza.getChild('x').attrs.type.should.equal('form')
         })
+
+        it('Can add a field with additional attributes', function() {
+            dataForm.addForm(
+                stanza,
+                [{
+                    var: 'muc#role',
+                    value: 'participant',
+                    label: 'Requested role',
+                    type: 'text-single'
+                }],
+                'df'
+            )
+            var field = stanza.getChild('x').getChildren('field')[1]
+            field.attrs.type.should.equal('text-single')
+            field.attrs.label.should.equal('Requested role')
+        })
     })
 
     describe('Can parse data form from details', function() {
