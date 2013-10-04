@@ -32,7 +32,12 @@ Xmpp.prototype.addListener = function(listener) {
 Xmpp.prototype.registerXmppEvents = function() {
     var self = this
     this.client.on('error', function(error) { self.error(error) })
-    this.client.on('online', function() { self.online() })
+    this.client.on('online', function(data) {
+        self.jid = data.jid.user + '@' +
+            data.jid.domain + '/' +
+            data.jid.resource
+        self.online() 
+    })
     this.client.on('stanza', function(stanza) { self.handleStanza(stanza) })
 }
 
@@ -127,12 +132,12 @@ Xmpp.prototype._connect = function(options) {
    
    this.client.connection.socket.setTimeout(0)
    this.client.connection.socket.setKeepAlive(true, 10000)
-    
-   this._initialiseListeners()
+
    this.registerXmppEvents()
 }
 
 Xmpp.prototype.online = function() {
+    this._initialiseListeners()
     this.socket.emit('xmpp.connection', 'online')
 }
 
