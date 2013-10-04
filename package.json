@@ -4,7 +4,7 @@
   "description": "XMPP-FTW (For the Web/Win) ::: Powerful XMPP, simple JSON",
   "main": "index.js",
   "dependencies": {
-    "node-xmpp": "~0.6.1",
+    "node-xmpp": "*",
     "MD5": "~1.X",
     "ltx": "*"
   },
