@@ -142,16 +142,24 @@ Xmpp.prototype.online = function() {
 }
 
 Xmpp.prototype.error = function(error) {
-    var message = JSON.stringify(error, function(key, value) {
-        if (key == 'parent') {
-            if (!value) return value
-            return value.id
-        }
-        return value
-    })
+    this._getLogger().error(error)
+    var message, type, condition
+    if ('Registration error' === error.message) {
+        message = error.message
+        type = 'auth'
+        condition = 'cancel'
+    } else {
+        var message = JSON.stringify(error, function(key, value) {
+            if (key == 'parent') {
+                if (!value) return value
+                return value.id
+            }
+            return value
+        })
+    }
     this.socket.emit('xmpp.error', {
-        type: 'cancel',
-        condition: 'unknown',
+        type: type || 'cancel',
+        condition: condition || 'unknown',
         description: message
     })
 }
