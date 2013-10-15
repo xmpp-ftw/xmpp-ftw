@@ -27,8 +27,8 @@ describe('Chat', function() {
             chat.handles(ltx.parse('<iq/>')).should.be.false
         })
 
-        it('Shouldn\'t handle messages without a type', function() {
-            chat.handles(ltx.parse('<message />')).should.be.false
+        it('Should handle messages without a type', function() {
+            chat.handles(ltx.parse('<message />')).should.be.true
         })
 
         it('Should confirm it can handle chat messages', function() {
