@@ -138,7 +138,10 @@ Xmpp.prototype._connect = function(options) {
 
 Xmpp.prototype.online = function() {
     this._initialiseListeners()
-    this.socket.emit('xmpp.connection', 'online')
+    this.socket.emit(
+        'xmpp.connection',
+        { status: 'online', jid: this.jid }
+    )
 }
 
 Xmpp.prototype.error = function(error) {
