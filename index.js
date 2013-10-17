@@ -140,7 +140,7 @@ Xmpp.prototype.online = function() {
     this._initialiseListeners()
     this.socket.emit(
         'xmpp.connection',
-        { status: 'online', jid: this.fulJid }
+        { status: 'online', jid: this.fullJid }
     )
 }
 
