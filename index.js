@@ -190,6 +190,15 @@ Xmpp.prototype.handleStanza = function(stanza) {
     if (!handled) this._getLogger().info('No listeners for: ' + stanza)
 }
 
+Xmpp.prototype.getJidType = function(type) {
+    switch (type) {
+        case 'full':
+            return this.manager.fullJid.user + '@' +
+            this.manager.fullJid.domain + '/' +
+            this.manager.fullJid.resource
+    }
+}
+
 Xmpp.prototype.setLogger = function(logger) {
     this.logger = logger
     return logger
