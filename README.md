@@ -16,7 +16,7 @@ setup is only for trying xmpp-ftw out and may be slow as we need to go client â†
 
 The version running on the website matches 'master' branch here and auto-deploys with commits.
 
-Also check out the [xmpp-ftw-demo](https://github.com/lloydwatkin/xmpp-ftw-demo) repository which is what https://xmpp-ftw.jit.su is running.
+Also check out the [xmpp-ftw-demo](https://github.com/xmpp-ftw/xmpp-ftw-demo) repository which is what https://xmpp-ftw.jit.su is running.
 
 # Blog posts/Talks
 
@@ -33,11 +33,11 @@ Also check out the [xmpp-ftw-demo](https://github.com/lloydwatkin/xmpp-ftw-demo)
 
 # Build status
 
-[![Build Status](https://secure.travis-ci.org/lloydwatkin/xmpp-ftw.png)](http://travis-ci.org/lloydwatkin/xmpp-ftw)
+[![Build Status](https://secure.travis-ci.org/xmpp-ftw/xmpp-ftw.png)](http://travis-ci.org/xmpp-ftw/xmpp-ftw)
 
 # Dependency status
 
-[![Dependency Status](https://david-dm.org/lloydwatkin/xmpp-ftw.png)](https://david-dm.org/lloydwatkin/xmpp-ftw)
+[![Dependency Status](https://david-dm.org/xmpp-ftw/xmpp-ftw.png)](https://david-dm.org/xmpp-ftw/xmpp-ftw)
 
 # Instructions
 
