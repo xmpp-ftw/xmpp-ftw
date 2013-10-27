@@ -1,0 +1,4 @@
+<message type="chat" from="user@domain/resource">
+    <body>message</body>
+    <archived by="juliet@shakespeare.lit" id="archive:1" />
+</message>

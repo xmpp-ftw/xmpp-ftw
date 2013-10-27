@@ -111,6 +111,16 @@ describe('Chat', function() {
             })
             chat.handle(helper.getStanza('chat/chat-state')).should.be.true
         })
+
+        it('Can handle archived messages', function(done) {
+            socket.once('xmpp.chat.message', function(data) {
+                data.archived.by.should.equal('juliet@shakespeare.lit')
+                data.archived.id.should.equal('archive:1')
+                done()
+            })
+            chat.handle(helper.getStanza('chat/chat-archived'))
+                .should.be.true
+        })
         
         it('https://github.com/lloydwatkin/xmpp-ftw/issues/40', function(done) {
             socket.once('xmpp.chat.message', function(data) {
