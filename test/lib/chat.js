@@ -115,7 +115,10 @@ describe('Chat', function() {
         it('Can handle archived messages', function(done) {
             socket.once('xmpp.chat.message', function(data) {
                 data.archived.length.should.equal(1)
-                data.archived[0].by.should.equal('juliet@shakespeare.lit')
+                data.archived[0].by.should.eql({
+                    domain: 'shakespeare.lit',
+                    user: 'juliet'
+                })
                 data.archived[0].id.should.equal('archive:1')
                 done()
             })
