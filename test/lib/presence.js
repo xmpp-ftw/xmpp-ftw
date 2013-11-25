@@ -40,6 +40,17 @@ describe('Presence', function() {
             })
             presence.handle(helper.getStanza('presence/error'))
         })
+        
+        it('Can handle error stanza with no \'from\'', function(done) {
+            socket.once('xmpp.presence.error', function(data) {
+                data.error.should.eql('gone')
+                should.not.exist(data.from)
+                done()
+            })
+            var stanza = helper.getStanza('presence/error')
+            delete stanza.attrs.from
+            presence.handle(stanza)
+        })
 
         it('Can handle subscription requests', function(done) {
             socket.once('xmpp.presence.subscribe', function(data) {
