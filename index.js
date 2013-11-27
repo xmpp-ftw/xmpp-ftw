@@ -1,5 +1,5 @@
-var nodeXmpp = require('node-xmpp'),
-    events = require('events')
+var Client = require('node-xmpp-client')
+  , events = require('events')
 
 var chat = require('./lib/chat')
 var presence = require('./lib/presence')
@@ -128,7 +128,7 @@ Xmpp.prototype.login = function(data) {
 
 Xmpp.prototype._connect = function(options) {
    this.jid    = options.jid
-   this.client = new nodeXmpp.Client(options)
+   this.client = new Client(options)
    
    this.client.connection.socket.setTimeout(0)
    this.client.connection.socket.setKeepAlive(true, 10000)
