@@ -73,3 +73,7 @@ License is Apache 2.0, please let me know if this doesn't suit.
 
 * Strophe http://strophe.im/
 * Stanza.io https://github.com/legastero/stanza.io
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/xmpp-ftw/xmpp-ftw/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
