@@ -173,7 +173,6 @@ describe('Presence', function() {
             })
         })
 
-
         describe('Subscribed stanzas', function() {
 
             it('Returns error when no \'to\' value provided', function(done) {
@@ -203,7 +202,6 @@ describe('Presence', function() {
                  socket.emit('xmpp.presence.subscribed', { to: to })
             })
         })
-
 
         describe('Unsubscribed stanzas', function() {
 
@@ -279,4 +277,114 @@ describe('Presence', function() {
             socket.emit('disconnect', {})
         })
     })
+    
+    describe('XEP-0115 Entity capibilities', function() {
+        
+        describe('Sending', function() {
+            
+            it('Errors if \'client\' key is not an object', function(done) {
+                var request = { client: false }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal('\'client\' key must be an object')
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.presence', request)
+            })
+            
+            it('Errors if missing \'node\' key', function(done) {
+                var request = { client: {} }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal('Missing \'node\' key')
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.presence', request)
+            })
+            
+            it('Errors if missing \'ver\' key', function(done) {
+                var request = { client: { node: 'node-value' } }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal('Missing \'ver\' key')
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.presence', request)
+            })
+            
+            it('Errors if missing \'hash\' key', function(done) {
+                var request = { 
+                    client: { node: 'node-value', ver: 'ver-value' } 
+                }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal('Missing \'hash\' key')
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.emit('xmpp.presence', request)
+            })
+            
+            it('Sends expected stanza', function(done) {
+                var data = {
+                    client: {
+                        node: 'node-value',
+                        ver: 'ver-value',
+                        hash: 'hash-value'
+                    }
+                }
+                xmpp.once('stanza', function(stanza) {
+                    stanza.is('presence').should.be.true
+                    var c = stanza.getChild('c', presence.NS_ENTITY_CAPABILITIES)
+                    c.should.exist
+                    c.attrs.node.should.equal(data.client.node)
+                    c.attrs.ver.should.equal(data.client.ver)
+                    c.attrs.hash.should.equal(data.client.hash)
+                    done()
+                })
+                socket.emit('xmpp.presence', data)
+            })
+            
+        })
+        
+        describe('Receiving', function() {
+        
+            it('Adds entity capability data', function(done) {
+                socket.once('xmpp.presence', function(data) {
+                    data.client.should.exist
+                    data.client.ver.should.equal('ver-value')
+                    data.client.hash.should.equal('hash-value')
+                    data.client.node.should.equal('node-value')
+                    done()
+                })
+                presence.handle(helper.getStanza('presence/xep-0115'))
+            })
+            
+        })
+        
+    })
+        
 })

@@ -1,0 +1,10 @@
+<presence
+    from='juliet@example.com/balcony'
+    to='romeo@example.net/orchard'
+    xml:lang='en'
+    type='unavailable'>
+  <c xmlns='http://jabber.org/protocol/caps'  
+     hash='hash-value' 
+     node='node-value' 
+     ver='ver-value' />
+</presence>
