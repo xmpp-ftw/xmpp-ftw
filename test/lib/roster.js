@@ -287,13 +287,13 @@ describe('Roster', function() {
   
         })
 
-        describe('Set roster groups', function() {
+        describe('Edit roster', function() {
 
            it('Not providing \'jid\' returns error', function(done) {
                 xmpp.once('stanza', function() {
                     done('Unexpected outgoing stanza')
                 })
-                socket.emit('xmpp.roster.group', {}, function(error, success) {
+                socket.emit('xmpp.roster.edit', {}, function(error, success) {
                     should.not.exist(success)
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
@@ -309,7 +309,7 @@ describe('Roster', function() {
                     done('Unexpected outgoing stanza')
                 })
                 var request = { jid: 'juliet@example.com' }
-                socket.emit('xmpp.roster.group', request, function(error, success) {
+                socket.emit('xmpp.roster.edit', request, function(error, success) {
                     should.not.exist(success)
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
@@ -328,7 +328,7 @@ describe('Roster', function() {
                     jid: 'juliet@example.com',
                     groups: { 0: 'group1' }
                 }
-                socket.emit('xmpp.roster.group', request, function(error, success) {
+                socket.emit('xmpp.roster.edit', request, function(error, success) {
                     should.not.exist(success)
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
@@ -360,7 +360,7 @@ describe('Roster', function() {
                     })
                     done()
                 }
-                socket.emit('xmpp.roster.group', request, callback)
+                socket.emit('xmpp.roster.edit', request, callback)
            })
 
            it('Allows the setting of roster groups', function(done) {
@@ -385,7 +385,7 @@ describe('Roster', function() {
                     success.should.be.true
                     done()
                 }
-                socket.emit('xmpp.roster.group', request, callback)
+                socket.emit('xmpp.roster.edit', request, callback)
            })
 
            it('Errors when no callback provided', function(done) {
@@ -404,7 +404,7 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.group', request)
+                socket.emit('xmpp.roster.edit', request)
            })
 
            it('Errors when non-function callback provided', function(done) {
@@ -423,8 +423,28 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.group', request, true)
+                socket.emit('xmpp.roster.edit', request, true)
            })
+
+           it('Can handle name field', function(done) {
+                var request = {
+                    jid: 'alice@wonderland.lit',
+                    groups: [],
+                    name: 'Alice'
+                }
+                xmpp.once('stanza', function(stanza) {
+                     stanza.is('iq').should.be.true
+                     stanza.attrs.type.should.equal('set')
+                     should.exist(stanza.attrs.id)
+                     var query = stanza.getChild('query', roster.NS)
+                     query.getChild('item').attrs.jid.should.equal(request.jid)
+                     query.getChild('item').attrs.name.should.equal(request.name)
+                     manager.makeCallback(helper.getStanza('iq-error'))
+                     done()
+                })
+                socket.emit('xmpp.roster.edit', request, function(){})
+           })
+
         })
 
     })
