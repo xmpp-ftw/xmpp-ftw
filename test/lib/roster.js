@@ -442,7 +442,7 @@ describe('Roster', function() {
                      manager.makeCallback(helper.getStanza('iq-error'))
                      done()
                 })
-                socket.emit('xmpp.roster.edit', request, function(){})
+                socket.emit('xmpp.roster.edit', request, function() {})
            })
 
         })
