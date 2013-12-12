@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var Client = require('node-xmpp-client')
   , events = require('events')
