@@ -1,5 +1,7 @@
 before_install:
   - sudo apt-get install libicu-dev
+before_script:
+  - npm install -g grunt-cli
 language: node_js
 node_js:
   - "0.11"
