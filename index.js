@@ -1,16 +1,18 @@
+"use strict";
+
 var Client = require('node-xmpp-client')
   , events = require('events')
 
 var chat = require('./lib/chat')
 var presence = require('./lib/presence')
 var roster = require('./lib/roster')
-    
+
 var Xmpp = function(socket) {
     this.prototype = new events.EventEmitter()
     this.socket    = socket
     this.tracking  = []
     this.logger    = null
-    
+
     this.listeners = [
        new roster(),
        new presence(),
@@ -36,7 +38,7 @@ Xmpp.prototype.registerXmppEvents = function() {
         self.jid = data.jid.user + '@' +
             data.jid.domain
         self.fullJid = data.jid
-        self.online() 
+        self.online()
     })
     this.client.on('stanza', function(stanza) { self.handleStanza(stanza) })
 }
@@ -129,7 +131,7 @@ Xmpp.prototype.login = function(data) {
 Xmpp.prototype._connect = function(options) {
    this.jid    = options.jid
    this.client = new Client(options)
-   
+
    this.client.connection.socket.setTimeout(0)
    this.client.connection.socket.setKeepAlive(true, 10000)
 
