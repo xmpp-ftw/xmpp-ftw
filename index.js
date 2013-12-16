@@ -218,4 +218,18 @@ Xmpp.prototype._getLogger = function() {
     return this.logger
 }
 
-exports.Xmpp = Xmpp
+module.exports = {
+    Xmpp: Xmpp,
+    Base: require('./lib/base'),
+    Presence: require('./lib/presence'),
+    Chat: require('./lib/chat'),
+    Roster: require('./lib/roster'),
+    utils: {
+        'xep-0004': require('./lib/utils/xep-0004'),
+        'xep-0059': require('./lib/utils/xep-0059'),
+        'xep-0066': require('./lib/utils/xep-0066'),
+        'xep-0071': require('./lib/utils/xep-0071'),
+        'xep-0085': require('./lib/utils/xep-0085'),
+        'xep-0203': require('./lib/utils/xep-0203')
+    }
+}

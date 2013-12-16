@@ -1,8 +1,8 @@
-var dataForm = require('../../../lib/utils/xep-0004')
+var dataForm = require('../../../index').utils['xep-0004']
   , should   = require('should')
   , helper   = require('../../helper')
   , ltx      = require('ltx')
- 
+
 describe('XEP-0004', function() {
 
     it('Should export the data form namespace', function() {
@@ -10,9 +10,9 @@ describe('XEP-0004', function() {
     })
 
     describe('Add a data form to a stanza', function() {
-    
+
         var stanza
-    
+
         beforeEach(function() {
             stanza = new ltx.Element('iq')
         })
@@ -91,7 +91,7 @@ describe('XEP-0004', function() {
     })
 
     describe('Can parse data form from details', function() {
- 
+
         var stanza
 
         beforeEach(function() {
@@ -159,7 +159,7 @@ describe('XEP-0004', function() {
             form.fields[0].type.should.equal('boolean')
             form.fields[0].required.should.equal.true
         })
-        
+
         it('Can handle \'fixed\' field', function() {
             var number = 555
             var stanza = ltx.parse('<field type="fixed" var="field1">' +
@@ -168,7 +168,7 @@ describe('XEP-0004', function() {
             var value = dataForm.getValues(stanza, 'fixed')
             value.should.equal(number)
         })
-        
+
         it('Can handle XML field - NOTE: non-standard', function() {
             var xml = '<entry><item><content>Some content</content></item></entry>'
             var stanza = ltx.parse('<field type="xml" var="field1">' +

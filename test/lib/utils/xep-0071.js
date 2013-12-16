@@ -1,4 +1,4 @@
-var xep0071 = require('../../../lib/utils/xep-0071')
+var xep0071 = require('../../../index').utils['xep-0071']
   , should  = require('should')
   , helper  = require('../../helper')
 

@@ -1,6 +1,6 @@
-var delay = require('../../../lib/utils/xep-0203')
+var delay = require('../../../index').utils['xep-0203']
   , ltx   = require('ltx')
- 
+
 describe('XEP-0203', function() {
 
     it('Should export the delay namespace', function() {
@@ -8,9 +8,9 @@ describe('XEP-0203', function() {
     })
 
     describe('Build a chat state element', function() {
-    
+
         var stanza
-    
+
         beforeEach(function() {
             stanza = new ltx.Element('message')
         })
@@ -32,7 +32,7 @@ describe('XEP-0203', function() {
             element.should.exist
             element.attrs.stamp.should.equal(stamp)
         })
-        
+
         it('Adds detailed delay data', function() {
             var request = {
                 when: '2015-10-21T16:29:00Z',
@@ -67,7 +67,7 @@ describe('XEP-0203', function() {
             delay.parse(ltx.parse('<message/>'), data)
             data.should.eql({})
         })
-        
+
         it('Should add basic delay data if available', function() {
             var data = {}
             stanza = ltx.parse('<message>' +
@@ -76,7 +76,7 @@ describe('XEP-0203', function() {
             delay.parse(stanza, data)
             data.should.eql({ delay: { when: '2015-10-21T16:29:00Z' }})
         })
-        
+
         it('Should add full delay data if available', function() {
             var data = {}
             delay.parse(stanza, data)

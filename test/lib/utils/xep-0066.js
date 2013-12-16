@@ -1,12 +1,12 @@
-var oob     = require('../../../lib/utils/xep-0066')
+var oob     = require('../../../index').utils['xep-0066']
   , ltx     = require('ltx')
- 
+
 describe('XEP-0066', function() {
 
     it('Should export the jabber:iq:oob namespace', function() {
         oob.NS_IQ.should.equal('jabber:iq:oob')
     })
-    
+
     it('Should export the jabber:x:oob namesapce', function() {
         oob.NS_X.should.equal('jabber:x:oob')
     })
@@ -19,16 +19,16 @@ describe('XEP-0066', function() {
             stanza = ltx.parse('<iq/>')
             oob.parse(stanza).should.eql({})
         })
-        
+
         describe('OOB X element', function() {
-  
+
           it('Returns empty object if no OOB X element', function() {
               var data = oob.parse(
                 ltx.parse('<iq><x xmlns="jabber:x:not-oob"/></iq>')
               )
               data.should.eql({})
           })
-  
+
           it('Should add URL and DESC properties', function() {
                var url = 'http://www.shakepeare.lit'
                  , description = 'Plays and sonnets'
@@ -44,7 +44,7 @@ describe('XEP-0066', function() {
                data.url.should.equal(url)
                data.description.should.equal(description)
           })
-          
+
           it('Shouldn\'t error if fields missing', function() {
                var stanza = ltx.parse(
                  '<iq>' +
@@ -55,9 +55,9 @@ describe('XEP-0066', function() {
           })
 
         })
-        
+
         describe('OOB IQ element', function() {
-  
+
           it('Should add URL and DESC properties', function() {
                var url = 'http://www.shakepeare.lit'
                  , description = 'Plays and sonnets'
@@ -73,7 +73,7 @@ describe('XEP-0066', function() {
                data.url.should.equal(url)
                data.description.should.equal(description)
           })
-          
+
           it('Shouldn\'t error if fields missing', function() {
                var stanza = ltx.parse(
                  '<iq>' +
@@ -82,7 +82,7 @@ describe('XEP-0066', function() {
                )
                oob.parse(stanza).should.eql({})
           })
-          
+
           it('Should add stream ID if present', function() {
                var stream = '0123456'
 
@@ -95,7 +95,7 @@ describe('XEP-0066', function() {
           })
 
         })
-        
+
     })
 
 })

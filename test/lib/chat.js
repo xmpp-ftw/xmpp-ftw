@@ -1,8 +1,8 @@
-var Chat      = require('../../lib/chat')
+var Chat      = require('../../index').Chat
   , ltx       = require('ltx')
   , helper    = require('../helper')
   , should    = require('should')
-  , chatState = require('../../lib/utils/xep-0085')
+  , chatState = require('../../index').utils['xep-0085']
 
 describe('Chat', function() {
 
@@ -22,7 +22,7 @@ describe('Chat', function() {
     })
 
     describe('Can handle incoming messages', function() {
-    
+
         it('Shouldn\'t handle non-message stanzas', function() {
             chat.handles(ltx.parse('<iq/>')).should.be.false
         })
@@ -80,7 +80,7 @@ describe('Chat', function() {
             chat.handle(helper.getStanza('chat/plain-with-delay'))
                 .should.be.true
         })
-        
+
         it('Handles messages with a chat state notification', function(done) {
             socket.once('xmpp.chat.message', function(data) {
                 data.from.should.eql({
@@ -96,7 +96,7 @@ describe('Chat', function() {
             })
             chat.handle(helper.getStanza('chat/xhtml-with-state')).should.be.true
         })
-        
+
         it('Can handle just chat state notifications', function(done) {
             socket.once('xmpp.chat.message', function(data) {
                 data.from.should.eql({
@@ -125,7 +125,7 @@ describe('Chat', function() {
             chat.handle(helper.getStanza('chat/chat-archived'))
                 .should.be.true
         })
-        
+
         it('https://github.com/lloydwatkin/xmpp-ftw/issues/40', function(done) {
             socket.once('xmpp.chat.message', function(data) {
                data.should.eql({
@@ -136,9 +136,9 @@ describe('Chat', function() {
                })
                done()
             })
-            chat.handle(helper.getStanza('issues/40')).should.be.true 
+            chat.handle(helper.getStanza('issues/40')).should.be.true
         })
-        
+
     })
 
     describe('Can send messages', function() {
@@ -165,7 +165,7 @@ describe('Chat', function() {
                 done()
             })
             chat.sendMessage({ to: 'romeo@montague.net/orchard' })
-            
+
         })
 
         it('Can send simple plain text messages', function(done) {
@@ -219,7 +219,7 @@ describe('Chat', function() {
                 to: to, content: content, format: chat.XHTML
             })
         })
-        
+
         it('Should build stanza with chat state notification', function(done) {
             var to = 'romeo@montague.net/orchard'
             var content = '<p>This will <strong>pass</strong></p>'
@@ -242,7 +242,7 @@ describe('Chat', function() {
                 to: to, content: content, format: chat.XHTML
             })
         })
-        
+
         it('Should build stanza with just chat state', function(done) {
             var to = 'romeo@montague.net/orchard'
             var state = 'composing'

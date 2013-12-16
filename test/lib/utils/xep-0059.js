@@ -1,6 +1,6 @@
-var rsm     = require('../../../lib/utils/xep-0059')
+var rsm     = require('../../../index').utils['xep-0059']
   , ltx     = require('ltx')
- 
+
 describe('XEP-0059', function() {
 
     it('Should export the RSM namespace', function() {
@@ -8,9 +8,9 @@ describe('XEP-0059', function() {
     })
 
     describe('Build an RSM element', function() {
-    
+
         var stanza
-    
+
         beforeEach(function() {
             stanza = new ltx.Element('iq')
         })
@@ -41,7 +41,7 @@ describe('XEP-0059', function() {
             rsmElement.getChildText('after').should.equal(after)
          })
 
-    
+
          it('Adds <before> element if provided', function() {
             var before = 'item-id-1234'
             rsm.build(stanza, { before: before })

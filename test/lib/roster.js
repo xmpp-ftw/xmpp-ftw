@@ -1,5 +1,5 @@
 var should  = require('should')
-  , Roster  = require('../../lib/roster')
+  , Roster  = require('../../index').Roster
   , ltx     = require('ltx')
   , helper  = require('../helper')
 
@@ -30,7 +30,7 @@ describe('Roster', function() {
     })
 
     describe('Can handle incoming roster IQs', function() {
-    
+
         it('Shouldn\'t handle non-roster IQs', function() {
             roster.handles(ltx.parse('<iq/>')).should.be.false
         })
@@ -52,7 +52,7 @@ describe('Roster', function() {
             )
             roster.handle(request).should.be.false
         })
- 
+
         describe('Roster push', function() {
 
             it('Handles no groups', function(done) {
@@ -118,7 +118,7 @@ describe('Roster', function() {
                 })
                 socket.emit('xmpp.roster.add', {})
            })
- 
+
            it('Errors when non-function callback provided', function(done) {
                 xmpp.once('stanza', function() {
                     done('Unexpected outgoing stanza')
@@ -133,7 +133,7 @@ describe('Roster', function() {
                 })
                 socket.emit('xmpp.roster.add', {}, true)
            })
- 
+
            it('Sends expected add stanza', function(done) {
                 var jid = 'alice@wonderland.lit'
                 xmpp.once('stanza', function(stanza) {
@@ -178,7 +178,7 @@ describe('Roster', function() {
                 }
                 socket.emit('xmpp.roster.add', request, callback)
             })
- 
+
             it('Can handle error response', function(done) {
                 var jid = 'alice@wonderland.lit'
                 xmpp.once('stanza', function(stanza) {
@@ -203,7 +203,7 @@ describe('Roster', function() {
         })
 
         describe('Roster retrieval', function() {
- 
+
             it('Can get roster', function(done) {
                 xmpp.once('stanza', function(stanza) {
                      stanza.is('iq').should.be.true
@@ -284,7 +284,7 @@ describe('Roster', function() {
                 }
                 socket.emit('xmpp.roster.get', {}, callback)
             })
-  
+
         })
 
         describe('Edit roster', function() {
@@ -448,7 +448,7 @@ describe('Roster', function() {
         })
 
     })
-    
+
     describe('Remove a roster item', function() {
 
            it('Returns error when no jid provided', function(done) {
@@ -480,7 +480,7 @@ describe('Roster', function() {
                 })
                 socket.emit('xmpp.roster.remove', {})
            })
- 
+
            it('Errors when non-function callback provided', function(done) {
                 xmpp.once('stanza', function() {
                     done('Unexpected outgoing stanza')
@@ -495,7 +495,7 @@ describe('Roster', function() {
                 })
                 socket.emit('xmpp.roster.remove', {}, true)
            })
- 
+
            it('Sends expected remove stanza', function(done) {
                 var jid = 'alice@wonderland.lit'
                 xmpp.once('stanza', function(stanza) {
@@ -515,7 +515,7 @@ describe('Roster', function() {
                 }
                 socket.emit('xmpp.roster.remove', { jid: jid }, callback)
            })
- 
+
             it('Can handle error response', function(done) {
                 var jid = 'alice@wonderland.lit'
                 xmpp.once('stanza', function(stanza) {

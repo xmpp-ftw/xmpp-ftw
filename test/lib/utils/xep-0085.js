@@ -1,6 +1,6 @@
-var state = require('../../../lib/utils/xep-0085')
+var state = require('../../../index').utils['xep-0085']
   , ltx   = require('ltx')
- 
+
 describe('XEP-0085', function() {
 
     it('Should export the chatstate namespace', function() {
@@ -8,9 +8,9 @@ describe('XEP-0085', function() {
     })
 
     describe('Build a chat state element', function() {
-    
+
         var stanza
-    
+
         beforeEach(function() {
             stanza = new ltx.Element('message')
         })
@@ -45,7 +45,7 @@ describe('XEP-0085', function() {
             state.parse(ltx.parse('<message/>'), data)
             data.should.eql({})
         })
-        
+
         it('Should add chat state data if available', function() {
             var data = {}
             state.parse(stanza, data)
