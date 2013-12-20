@@ -1,6 +1,9 @@
+'use strict';
+
 var delay = require('../../../index').utils['xep-0203']
   , ltx   = require('ltx')
 
+/* jshint -W030 */
 describe('XEP-0203', function() {
 
     it('Should export the delay namespace', function() {

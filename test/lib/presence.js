@@ -1,8 +1,11 @@
+'use strict';
+
 var should   = require('should')
   , Presence = require('../../index').Presence
   , ltx      = require('ltx')
   , helper   = require('../helper')
 
+/* jshint -W030 */
 describe('Presence', function() {
 
     var presence, socket, xmpp, manager
@@ -95,9 +98,9 @@ describe('Presence', function() {
                 data.status.should.equal('say hello to me')
                 data.priority.should.equal('10')
                 data.show.should.equal('chat')
-                 done()
+                done()
             })
-             presence.handle(helper.getStanza('presence/presence-reply'))
+            presence.handle(helper.getStanza('presence/presence-reply'))
         })
     })
 
@@ -152,7 +155,7 @@ describe('Presence', function() {
                 socket.once('xmpp.error.client', function(data) {
                     data.type.should.equal('modify')
                     data.condition.should.equal('client-error')
-                    data.description.should.equal("Missing 'to' key")
+                    data.description.should.equal('Missing \'to\' key')
                     data.request.should.eql({})
                     xmpp.removeAllListeners('stanza')
                     done()
@@ -161,16 +164,17 @@ describe('Presence', function() {
             })
 
             it('Can send subscribe stanza', function(done) {
-                 var to = 'juliet@example.com/balcony'
-                 xmpp.once('stanza', function(stanza) {
-                     stanza.is('presence').should.be.true
-                     stanza.attrs.to.should.equal(to)
-                     stanza.attrs.type.should.equal('subscribe')
-                     stanza.attrs.from.should.equal(manager.jid)
-                     done()
-                 })
-                 socket.emit('xmpp.presence.subscribe', { to: to })
-            })
+                    var to = 'juliet@example.com/balcony'
+                    xmpp.once('stanza', function(stanza) {
+                        stanza.is('presence').should.be.true
+                        stanza.attrs.to.should.equal(to)
+                        stanza.attrs.type.should.equal('subscribe')
+                        stanza.attrs.from.should.equal(manager.jid)
+                        done()
+                    })
+                    socket.emit('xmpp.presence.subscribe', { to: to })
+                }
+            )
         })
 
         describe('Subscribed stanzas', function() {
@@ -182,7 +186,7 @@ describe('Presence', function() {
                 socket.once('xmpp.error.client', function(data) {
                     data.type.should.equal('modify')
                     data.condition.should.equal('client-error')
-                    data.description.should.equal("Missing 'to' key")
+                    data.description.should.equal('Missing \'to\' key')
                     data.request.should.eql({})
                     xmpp.removeAllListeners('stanza')
                     done()
@@ -191,16 +195,17 @@ describe('Presence', function() {
             })
 
             it('Can send subscribed stanza', function(done) {
-                 var to = 'juliet@example.com/balcony'
-                 xmpp.once('stanza', function(stanza) {
-                     stanza.is('presence').should.be.true
-                     stanza.attrs.to.should.equal(to)
-                     stanza.attrs.type.should.equal('subscribed')
-                     stanza.attrs.from.should.equal(manager.jid)
-                     done()
-                 })
-                 socket.emit('xmpp.presence.subscribed', { to: to })
-            })
+                    var to = 'juliet@example.com/balcony'
+                    xmpp.once('stanza', function(stanza) {
+                        stanza.is('presence').should.be.true
+                        stanza.attrs.to.should.equal(to)
+                        stanza.attrs.type.should.equal('subscribed')
+                        stanza.attrs.from.should.equal(manager.jid)
+                        done()
+                    })
+                    socket.emit('xmpp.presence.subscribed', { to: to })
+                }
+            )
         })
 
         describe('Unsubscribed stanzas', function() {
@@ -212,7 +217,7 @@ describe('Presence', function() {
                 socket.once('xmpp.error.client', function(data) {
                     data.type.should.equal('modify')
                     data.condition.should.equal('client-error')
-                    data.description.should.equal("Missing 'to' key")
+                    data.description.should.equal('Missing \'to\' key')
                     data.request.should.eql({})
                     xmpp.removeAllListeners('stanza')
                     done()
@@ -221,16 +226,17 @@ describe('Presence', function() {
             })
 
             it('Can send unsubscribed stanza', function(done) {
-                 var to = 'juliet@example.com/balcony'
-                 xmpp.once('stanza', function(stanza) {
-                     stanza.is('presence').should.be.true
-                     stanza.attrs.to.should.equal(to)
-                     stanza.attrs.type.should.equal('unsubscribed')
-                     stanza.attrs.from.should.equal(manager.jid)
-                     done()
-                 })
-                 socket.emit('xmpp.presence.unsubscribed', { to: to })
-            })
+                    var to = 'juliet@example.com/balcony'
+                    xmpp.once('stanza', function(stanza) {
+                        stanza.is('presence').should.be.true
+                        stanza.attrs.to.should.equal(to)
+                        stanza.attrs.type.should.equal('unsubscribed')
+                        stanza.attrs.from.should.equal(manager.jid)
+                        done()
+                    })
+                    socket.emit('xmpp.presence.unsubscribed', { to: to })
+                }
+            )
         })
 
         it('Presence request errors when missing \'to\'', function(done) {
@@ -240,7 +246,7 @@ describe('Presence', function() {
             socket.once('xmpp.error.client', function(data) {
                 data.type.should.equal('modify')
                 data.condition.should.equal('client-error')
-                data.description.should.equal("Missing 'to' key")
+                data.description.should.equal('Missing \'to\' key')
                 data.request.should.eql({})
                 xmpp.removeAllListeners('stanza')
                 done()

@@ -1,6 +1,9 @@
+'use strict';
+
 var rsm     = require('../../../index').utils['xep-0059']
   , ltx     = require('ltx')
 
+/* jshint -W030 */
 describe('XEP-0059', function() {
 
     it('Should export the RSM namespace', function() {
@@ -30,49 +33,49 @@ describe('XEP-0059', function() {
             rsm.build(stanza, { max: max })
             var rsmElement = stanza.root().getChild('set', rsm.NS)
             rsmElement.should.exist
-            rsmElement.getChildText('max').should.equal("" + max)
-         })
+            rsmElement.getChildText('max').should.equal('' + max)
+        })
 
-         it('Adds <after> element if provided', function() {
+        it('Adds <after> element if provided', function() {
             var after = 'item-id-1234'
             rsm.build(stanza, { after: after })
             var rsmElement = stanza.root().getChild('set', rsm.NS)
             rsmElement.should.exist
             rsmElement.getChildText('after').should.equal(after)
-         })
+        })
 
 
-         it('Adds <before> element if provided', function() {
+        it('Adds <before> element if provided', function() {
             var before = 'item-id-1234'
             rsm.build(stanza, { before: before })
             var rsmElement = stanza.root().getChild('set', rsm.NS)
             rsmElement.should.exist
             rsmElement.getChildText('before').should.equal(before)
-         })
+        })
 
-         it('Adds empty <before> element if provided', function() {
-             var before = true
-             rsm.build(stanza, { before: before })
-             var rsmElement = stanza.root().getChild('set', rsm.NS)
-             rsmElement.should.exist
-             rsmElement.getChild('before').toString().should.equal('<before/>')
-         })
+        it('Adds empty <before> element if provided', function() {
+                var before = true
+                rsm.build(stanza, { before: before })
+                var rsmElement = stanza.root().getChild('set', rsm.NS)
+                rsmElement.should.exist
+                rsmElement.getChild('before').toString().should.equal('<before/>')
+            })
 
-         it('Adds <index> element if provided', function() {
+        it('Adds <index> element if provided', function() {
             var index = '1234'
             rsm.build(stanza, { index: index })
             var rsmElement = stanza.root().getChild('set', rsm.NS)
             rsmElement.should.exist
             rsmElement.getChildText('index').should.equal(index)
-         })
+        })
 
-         it('Can request 0 results', function() {
+        it('Can request 0 results', function() {
             var max = 0
             rsm.build(stanza, { max: 0 })
             var rsmElement = stanza.root().getChild('set', rsm.NS)
             rsmElement.should.exist
-            rsmElement.getChildText('max').should.equal("" + max)
-         })
+            rsmElement.getChildText('max').should.equal('' + max)
+        })
 
     })
 

@@ -1,9 +1,12 @@
+'use strict';
+
 var Chat      = require('../../index').Chat
   , ltx       = require('ltx')
   , helper    = require('../helper')
   , should    = require('should')
   , chatState = require('../../index').utils['xep-0085']
 
+/* jshint -W030 */
 describe('Chat', function() {
 
     var chat
@@ -128,13 +131,13 @@ describe('Chat', function() {
 
         it('https://github.com/lloydwatkin/xmpp-ftw/issues/40', function(done) {
             socket.once('xmpp.chat.message', function(data) {
-               data.should.eql({
-                   from: { domain: 'buddycloud.org', user: 'lloyd', resource: '...' },
-                   content: 'hey',
-                   format: 'plain',
-                   state: 'active'
-               })
-               done()
+                data.should.eql({
+                    from: { domain: 'buddycloud.org', user: 'lloyd', resource: '...' },
+                    content: 'hey',
+                    format: 'plain',
+                    state: 'active'
+                })
+                done()
             })
             chat.handle(helper.getStanza('issues/40')).should.be.true
         })
@@ -145,7 +148,7 @@ describe('Chat', function() {
 
         it('Sends error message if \'to\' parameter missing', function(done) {
             socket.once('xmpp.error.client', function(data) {
-                data.description.should.equal("Missing 'to' key")
+                data.description.should.equal('Missing \'to\' key')
                 data.type.should.equal('modify')
                 data.condition.should.equal('client-error')
                 data.request.should.eql({})
@@ -184,7 +187,7 @@ describe('Chat', function() {
             var to = 'romeo@montague.net/orchard'
             var content = 'This will <strong>fail'
             socket.once('xmpp.error.client', function(data) {
-                data.description.should.equal("Can not parse XHTML message")
+                data.description.should.equal('Can not parse XHTML message')
                 data.type.should.equal('modify')
                 data.condition.should.equal('client-error')
                 data.request.to.should.equal(to)
@@ -193,7 +196,9 @@ describe('Chat', function() {
                 done()
             })
             chat.sendMessage({
-                to: to, content: content, format: chat.XHTML
+                to: to,
+                content: content,
+                format: chat.XHTML
             })
         })
 
@@ -216,7 +221,9 @@ describe('Chat', function() {
                 done()
             })
             chat.sendMessage({
-                to: to, content: content, format: chat.XHTML
+                to: to,
+                content: content,
+                format: chat.XHTML
             })
         })
 
@@ -239,7 +246,9 @@ describe('Chat', function() {
                 done()
             })
             chat.sendMessage({
-                to: to, content: content, format: chat.XHTML
+                to: to,
+                content: content,
+                format: chat.XHTML
             })
         })
 
@@ -252,7 +261,8 @@ describe('Chat', function() {
                 done()
             })
             chat.sendMessage({
-                to: to, state: state
+                to: to,
+                state: state
             })
         })
 

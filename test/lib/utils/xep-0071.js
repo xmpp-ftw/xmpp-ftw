@@ -1,7 +1,10 @@
+'use strict';
+
 var xep0071 = require('../../../index').utils['xep-0071']
   , should  = require('should')
   , helper  = require('../../helper')
 
+/* jshint -W030 */
 describe('XEP-0071', function() {
 
     var caller, xmpp
@@ -35,11 +38,12 @@ describe('XEP-0071', function() {
     })
 
     it('Returns empty stanza if no content key', function() {
-         var result = xep0071.builder({}, { to: 'romeo@example.com' }, caller)
-         result.is('message').should.be.true
-         result.attrs.to.should.equal('romeo@example.com')
-         result.attrs.type.should.equal('chat')
-    })
+            var result = xep0071.builder({}, { to: 'romeo@example.com' }, caller)
+            result.is('message').should.be.true
+            result.attrs.to.should.equal('romeo@example.com')
+            result.attrs.type.should.equal('chat')
+        }
+    )
 
     it('Can build a plain chat message', function() {
         var request = { content: 'Hello world!', to: 'romeo@example.com' }

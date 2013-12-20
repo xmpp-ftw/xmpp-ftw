@@ -1,3 +1,5 @@
+'use strict';
+
 var ltx = require('ltx')
   , fs = require('fs')
   , Event = require('events').EventEmitter
@@ -15,4 +17,5 @@ Eventer.prototype = new Event()
 Eventer.prototype.send = function(stanza) {
     this.emit('stanza', stanza.root())
 }
+
 exports.Eventer = Eventer

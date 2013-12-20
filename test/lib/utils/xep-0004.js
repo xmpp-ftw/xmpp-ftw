@@ -1,8 +1,11 @@
+'use strict';
+
 var dataForm = require('../../../index').utils['xep-0004']
   , should   = require('should')
   , helper   = require('../../helper')
   , ltx      = require('ltx')
 
+/* jshint -W030 */
 describe('XEP-0004', function() {
 
     it('Should export the data form namespace', function() {
