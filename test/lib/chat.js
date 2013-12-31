@@ -18,7 +18,8 @@ describe('Chat', function() {
         xmpp = new helper.Eventer()
         var manager = {
             socket: socket,
-            client: xmpp
+            client: xmpp,
+            jid: 'test@example.com'
         }
         chat = new Chat()
         chat.init(manager)
