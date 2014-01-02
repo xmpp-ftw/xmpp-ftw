@@ -17,12 +17,15 @@ XmppEventer.prototype = new Event()
 XmppEventer.prototype.send = function(stanza) {
     this.emit('stanza', stanza.root())
 }
+exports.XmppEventer = XmppEventer
 
 var SocketEventer = function() {}
 SocketEventer.prototype = new Event()
 SocketEventer.prototype.send = function(event, data, callback) {
     this.emit(event, data, callback)
 }
-
-exports.XmppEventer = XmppEventer
 exports.SocketEventer = SocketEventer
+
+exports.failingItemParser = function() {
+    throw new Error('FAIL!')
+}
