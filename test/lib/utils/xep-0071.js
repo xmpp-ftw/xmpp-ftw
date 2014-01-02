@@ -10,7 +10,7 @@ describe('XEP-0071', function() {
     var caller, xmpp
 
     beforeEach(function() {
-        xmpp = new helper.Eventer()
+        xmpp = new helper.XmppEventer()
         caller = {
             error: null,
             request: null,

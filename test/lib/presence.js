@@ -11,8 +11,8 @@ describe('Presence', function() {
     var presence, socket, xmpp, manager
 
     before(function() {
-        socket = new helper.Eventer()
-        xmpp = new helper.Eventer()
+        socket = new helper.SocketEventer()
+        xmpp = new helper.XmppEventer()
         manager = {
             socket: socket,
             client: xmpp,
@@ -111,7 +111,7 @@ describe('Presence', function() {
                 stanza.root().toString().should.equal('<presence/>')
                 done()
             })
-            socket.emit('xmpp.presence', {})
+            socket.send('xmpp.presence', {})
         })
 
         it('Can send offline stanza', function(done) {
@@ -120,7 +120,7 @@ describe('Presence', function() {
                 stanza.attrs.type.should.equal('unavailable')
                 done()
             })
-            socket.emit('xmpp.presence', { type: 'unavailable' })
+            socket.send('xmpp.presence', { type: 'unavailable' })
         })
 
         it('Can send full presence stanza', function(done) {
@@ -143,7 +143,7 @@ describe('Presence', function() {
                     .should.equal(data.show)
                 done()
             })
-            socket.emit('xmpp.presence', data)
+            socket.send('xmpp.presence', data)
         })
 
         describe('Subscribe stanzas', function() {
@@ -160,7 +160,7 @@ describe('Presence', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.presence.subscribe', {})
+                socket.send('xmpp.presence.subscribe', {})
             })
 
             it('Can send subscribe stanza', function(done) {
@@ -172,7 +172,7 @@ describe('Presence', function() {
                         stanza.attrs.from.should.equal(manager.jid)
                         done()
                     })
-                    socket.emit('xmpp.presence.subscribe', { to: to })
+                    socket.send('xmpp.presence.subscribe', { to: to })
                 }
             )
         })
@@ -191,7 +191,7 @@ describe('Presence', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.presence.subscribed', {})
+                socket.send('xmpp.presence.subscribed', {})
             })
 
             it('Can send subscribed stanza', function(done) {
@@ -203,7 +203,7 @@ describe('Presence', function() {
                         stanza.attrs.from.should.equal(manager.jid)
                         done()
                     })
-                    socket.emit('xmpp.presence.subscribed', { to: to })
+                    socket.send('xmpp.presence.subscribed', { to: to })
                 }
             )
         })
@@ -222,7 +222,7 @@ describe('Presence', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.presence.unsubscribed', {})
+                socket.send('xmpp.presence.unsubscribed', {})
             })
 
             it('Can send unsubscribed stanza', function(done) {
@@ -234,7 +234,7 @@ describe('Presence', function() {
                         stanza.attrs.from.should.equal(manager.jid)
                         done()
                     })
-                    socket.emit('xmpp.presence.unsubscribed', { to: to })
+                    socket.send('xmpp.presence.unsubscribed', { to: to })
                 }
             )
         })
@@ -251,7 +251,7 @@ describe('Presence', function() {
                 xmpp.removeAllListeners('stanza')
                 done()
             })
-            socket.emit('xmpp.presence.get', {})
+            socket.send('xmpp.presence.get', {})
         })
 
         it('Can request a user\'s presence', function(done) {
@@ -262,7 +262,7 @@ describe('Presence', function() {
                 stanza.attrs.to.should.equal(to)
                 done()
             })
-            socket.emit('xmpp.presence.get', { to: to })
+            socket.send('xmpp.presence.get', { to: to })
         })
 
         it('Sends \'unavailable\' presence when asked', function(done) {
@@ -271,7 +271,7 @@ describe('Presence', function() {
                 stanza.attrs.type.should.equal('unavailable')
                 done()
             })
-            socket.emit('xmpp.presence.offline', {})
+            socket.send('xmpp.presence.offline', {})
         })
 
         it('Sends \'unavailable\' when going offline', function(done) {
@@ -280,7 +280,7 @@ describe('Presence', function() {
                 stanza.attrs.type.should.equal('unavailable')
                 done()
             })
-            socket.emit('disconnect', {})
+            socket.send('disconnect', {})
         })
     })
 
@@ -301,7 +301,7 @@ describe('Presence', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.presence', request)
+                socket.send('xmpp.presence', request)
             })
 
             it('Errors if missing \'node\' key', function(done) {
@@ -317,7 +317,7 @@ describe('Presence', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.presence', request)
+                socket.send('xmpp.presence', request)
             })
 
             it('Errors if missing \'ver\' key', function(done) {
@@ -333,7 +333,7 @@ describe('Presence', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.presence', request)
+                socket.send('xmpp.presence', request)
             })
 
             it('Errors if missing \'hash\' key', function(done) {
@@ -351,7 +351,7 @@ describe('Presence', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.presence', request)
+                socket.send('xmpp.presence', request)
             })
 
             it('Sends expected stanza', function(done) {
@@ -371,7 +371,7 @@ describe('Presence', function() {
                     c.attrs.hash.should.equal(data.client.hash)
                     done()
                 })
-                socket.emit('xmpp.presence', data)
+                socket.send('xmpp.presence', data)
             })
 
         })

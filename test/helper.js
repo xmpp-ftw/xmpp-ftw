@@ -12,10 +12,17 @@ exports.getStanza = function(file) {
     return ltx.parse(stanzaStr)
 }
 
-var Eventer = function() {}
-Eventer.prototype = new Event()
-Eventer.prototype.send = function(stanza) {
+var XmppEventer = function() {}
+XmppEventer.prototype = new Event()
+XmppEventer.prototype.send = function(stanza) {
     this.emit('stanza', stanza.root())
 }
 
-exports.Eventer = Eventer
+var SocketEventer = function() {}
+SocketEventer.prototype = new Event()
+SocketEventer.prototype.send = function(event, data, callback) {
+    this.emit(event, data, callback)
+}
+
+exports.XmppEventer = XmppEventer
+exports.SocketEventer = SocketEventer

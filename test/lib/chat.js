@@ -14,8 +14,8 @@ describe('Chat', function() {
     var xmpp
 
     before(function() {
-        socket = new helper.Eventer()
-        xmpp = new helper.Eventer()
+        socket = new helper.SocketEventer()
+        xmpp = new helper.XmppEventer()
         var manager = {
             socket: socket,
             client: xmpp,

@@ -102,7 +102,7 @@ Xmpp.prototype.anonymousLogin = function(data) {
 Xmpp.prototype.login = function(data) {
    this._getLogger().info('Attempting to connect to ' + data.jid)
    if (!data.jid || !data.password)
-       return this.socket.emit('xmpp.error', {
+       return this.socket.send('xmpp.error', {
            type: 'auth',
            condition: 'client-error',
            description: 'Missing jid and/or password',
@@ -140,7 +140,7 @@ Xmpp.prototype._connect = function(options) {
 
 Xmpp.prototype.online = function() {
     this._initialiseListeners()
-    this.socket.emit(
+    this.socket.send(
         'xmpp.connection',
         { status: 'online', jid: this.fullJid }
     )
@@ -162,7 +162,7 @@ Xmpp.prototype.error = function(error) {
             return value
         })
     }
-    this.socket.emit('xmpp.error', {
+    this.socket.send('xmpp.error', {
         type: type || 'cancel',
         condition: condition || 'unknown',
         description: message

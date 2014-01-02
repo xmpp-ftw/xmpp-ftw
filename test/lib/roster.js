@@ -11,8 +11,8 @@ describe('Roster', function() {
     var roster, socket, xmpp, manager
 
     before(function() {
-        socket = new helper.Eventer()
-        xmpp = new helper.Eventer()
+        socket = new helper.SocketEventer()
+        xmpp = new helper.XmppEventer()
         manager = {
             socket: socket,
             client: xmpp,
@@ -96,7 +96,7 @@ describe('Roster', function() {
                 xmpp.once('stanza', function() {
                     done('Unexpected outgoing stanza')
                 })
-                socket.emit('xmpp.roster.add', {}, function(error, success) {
+                socket.send('xmpp.roster.add', {}, function(error, success) {
                     should.not.exist(success)
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
@@ -119,7 +119,7 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.add', {})
+                socket.send('xmpp.roster.add', {})
             })
 
             it('Errors when non-function callback provided', function(done) {
@@ -134,7 +134,7 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.add', {}, true)
+                socket.send('xmpp.roster.add', {}, true)
             })
 
             it('Sends expected add stanza', function(done) {
@@ -151,7 +151,7 @@ describe('Roster', function() {
                     success.should.be.true
                     done()
                 }
-                socket.emit('xmpp.roster.add', { jid: jid }, callback)
+                socket.send('xmpp.roster.add', { jid: jid }, callback)
             })
 
             it('Can handle roster add with additional data', function(done) {
@@ -181,7 +181,7 @@ describe('Roster', function() {
                     success.should.be.true
                     done()
                 }
-                socket.emit('xmpp.roster.add', request, callback)
+                socket.send('xmpp.roster.add', request, callback)
             })
 
             it('Can handle error response', function(done) {
@@ -203,7 +203,7 @@ describe('Roster', function() {
                     })
                     done()
                 }
-                socket.emit('xmpp.roster.add', { jid: jid }, callback)
+                socket.send('xmpp.roster.add', { jid: jid }, callback)
             })
 
         })
@@ -242,7 +242,7 @@ describe('Roster', function() {
                     should.not.exist(roster[1].groups)
                     done()
                 }
-                socket.emit('xmpp.roster.get', {}, callback)
+                socket.send('xmpp.roster.get', {}, callback)
             })
 
             it('Errors when no callback provided', function(done) {
@@ -257,7 +257,7 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.get', {})
+                socket.send('xmpp.roster.get', {})
             })
 
             it('Errors when non-function callback provided', function(done) {
@@ -272,7 +272,7 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.get', {}, true)
+                socket.send('xmpp.roster.get', {}, true)
             })
 
             it('Can handle error response', function(done) {
@@ -292,7 +292,7 @@ describe('Roster', function() {
                             })
                             done()
                         }
-                        socket.emit('xmpp.roster.get', {}, callback)
+                        socket.send('xmpp.roster.get', {}, callback)
                     })
 
         })
@@ -303,7 +303,7 @@ describe('Roster', function() {
                 xmpp.once('stanza', function() {
                     done('Unexpected outgoing stanza')
                 })
-                socket.emit('xmpp.roster.edit', {}, function(error, success) {
+                socket.send('xmpp.roster.edit', {}, function(error, success) {
                     should.not.exist(success)
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
@@ -319,7 +319,7 @@ describe('Roster', function() {
                     done('Unexpected outgoing stanza')
                 })
                 var request = { jid: 'juliet@example.com' }
-                socket.emit('xmpp.roster.edit', request, function(error, success) {
+                socket.send('xmpp.roster.edit', request, function(error, success) {
                     should.not.exist(success)
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
@@ -338,7 +338,7 @@ describe('Roster', function() {
                     jid: 'juliet@example.com',
                     groups: { 0: 'group1' }
                 }
-                socket.emit('xmpp.roster.edit', request, function(error, success) {
+                socket.send('xmpp.roster.edit', request, function(error, success) {
                     should.not.exist(success)
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
@@ -370,7 +370,7 @@ describe('Roster', function() {
                     })
                     done()
                 }
-                socket.emit('xmpp.roster.edit', request, callback)
+                socket.send('xmpp.roster.edit', request, callback)
             })
 
             it('Allows the setting of roster groups', function(done) {
@@ -395,7 +395,7 @@ describe('Roster', function() {
                     success.should.be.true
                     done()
                 }
-                socket.emit('xmpp.roster.edit', request, callback)
+                socket.send('xmpp.roster.edit', request, callback)
             })
 
             it('Errors when no callback provided', function(done) {
@@ -414,7 +414,7 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.edit', request)
+                socket.send('xmpp.roster.edit', request)
             })
 
             it('Errors when non-function callback provided', function(done) {
@@ -433,7 +433,7 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.edit', request, true)
+                socket.send('xmpp.roster.edit', request, true)
             })
 
             it('Can handle name field', function(done) {
@@ -452,7 +452,7 @@ describe('Roster', function() {
                         manager.makeCallback(helper.getStanza('iq-error'))
                         done()
                     })
-                socket.emit('xmpp.roster.edit', request, function() {})
+                socket.send('xmpp.roster.edit', request, function() {})
             })
 
         })
@@ -465,7 +465,7 @@ describe('Roster', function() {
                 xmpp.once('stanza', function() {
                     done('Unexpected outgoing stanza')
                 })
-                socket.emit('xmpp.roster.remove', {}, function(error, success) {
+                socket.send('xmpp.roster.remove', {}, function(error, success) {
                     should.not.exist(success)
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
@@ -488,7 +488,7 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.remove', {})
+                socket.send('xmpp.roster.remove', {})
             })
 
             it('Errors when non-function callback provided', function(done) {
@@ -503,7 +503,7 @@ describe('Roster', function() {
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
-                socket.emit('xmpp.roster.remove', {}, true)
+                socket.send('xmpp.roster.remove', {}, true)
             })
 
             it('Sends expected remove stanza', function(done) {
@@ -523,7 +523,7 @@ describe('Roster', function() {
                     success.should.be.true
                     done()
                 }
-                socket.emit('xmpp.roster.remove', { jid: jid }, callback)
+                socket.send('xmpp.roster.remove', { jid: jid }, callback)
             })
 
             it('Can handle error response', function(done) {
@@ -544,7 +544,7 @@ describe('Roster', function() {
                     })
                     done()
                 }
-                socket.emit('xmpp.roster.remove', { jid: jid }, callback)
+                socket.send('xmpp.roster.remove', { jid: jid }, callback)
             })
 
         })
