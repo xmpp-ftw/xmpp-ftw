@@ -29,7 +29,9 @@ describe('Roster', function() {
     })
 
     beforeEach(function() {
-        xmpp.removeAllListeners('stanza')
+        socket.removeAllListeners()
+        xmpp.removeAllListeners()
+        roster.init(manager)
     })
 
     describe('Can handle incoming roster IQs', function() {

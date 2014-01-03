@@ -22,6 +22,12 @@ describe('Presence', function() {
         presence.init(manager)
     })
 
+    beforeEach(function() {
+        socket.removeAllListeners()
+        xmpp.removeAllListeners()
+        presence.init(manager)
+    })
+
     describe('Can handle incoming presence updates', function() {
 
         it('Shouldn\'t handle non-presence stanzas', function() {

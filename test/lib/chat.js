@@ -9,19 +9,23 @@ var Chat      = require('../../index').Chat
 /* jshint -W030 */
 describe('Chat', function() {
 
-    var chat
-    var socket
-    var xmpp
+    var chat, socket, xmpp, manager
 
     before(function() {
         socket = new helper.SocketEventer()
         xmpp = new helper.XmppEventer()
-        var manager = {
+        manager = {
             socket: socket,
             client: xmpp,
             jid: 'test@example.com'
         }
         chat = new Chat()
+        chat.init(manager)
+    })
+
+    beforeEach(function() {
+        socket.removeAllListeners()
+        xmpp.removeAllListeners()
         chat.init(manager)
     })
 
