@@ -37,7 +37,7 @@ Xmpp.prototype.registerXmppEvents = function() {
     this.client.on('online', function(data) {
         self.jid = data.jid.user + '@' +
             data.jid.domain
-        self.fullJid = data.jid
+        self.fullJid = new JID(data.jid)
         self.online()
     })
     this.client.on('stanza', function(stanza) { self.handleStanza(stanza) })

@@ -105,7 +105,7 @@ describe('XEP-0004', function() {
             var form = dataForm.parseFields(stanza)
             form.title.should.equal('form-title')
             form.instructions.should.equal('form-instructions')
-            should.exist(form.fields)
+            should.not.exist(form.fields)
         })
 
         it('Does not add \'FORM_TYPE\' fields', function() {
@@ -120,7 +120,6 @@ describe('XEP-0004', function() {
             form.fields.length.should.equal(1)
             form.fields[0].var.should.equal('field1')
             form.fields[0].type.should.equal('text-single')
-            form.fields[0].required.should.equal.false
         })
 
         it('Can parse basic form field', function() {
@@ -160,7 +159,6 @@ describe('XEP-0004', function() {
             form.fields.length.should.equal(1)
             form.fields[0].var.should.equal('field1')
             form.fields[0].type.should.equal('boolean')
-            form.fields[0].required.should.equal.true
         })
 
         it('Can handle \'fixed\' field', function() {
@@ -180,5 +178,37 @@ describe('XEP-0004', function() {
             var value = dataForm.getValues(stanza, 'xml')
             value.should.equal(xml)
         })
+
+        /* jshint -W071 */
+        it('Can parse <item/> and <reported/>', function() {
+            var stanza = helper.getStanza('xep-0004/items')
+            var value = dataForm.parseFields(stanza)
+
+            value.title.should.equal('Available Services')
+
+            should.not.exist(value.fields)
+
+            value.reported.length.should.equal(5)
+            value.reported[0].var.should.equal('service')
+            value.reported[0].label.should.equal('Service')
+            should.not.exist(value.reported[0].required)
+            should.not.exist(value.reported[0].type)
+
+            value.reported[1].var.should.equal('runlevel-1')
+            value.reported[1].label.should.equal('Single-User mode')
+
+            value.items.length.should.equal(3)
+            value.items[0].length.should.equal(5)
+
+            value.items[0][0].var.should.equal('service')
+            value.items[0][0].value.should.equal('httpd')
+
+            value.items[0][1].var.should.equal('runlevel-1')
+            value.items[0][1].value.should.equal('off')
+
+            value.items[1][0].var.should.equal('service')
+            value.items[1][0].value.should.equal('postgresql')
+        })
+
     })
 })

@@ -1,0 +1,31 @@
+<x xmlns='jabber:x:data' type='result'>
+      <title>Available Services</title>
+      <reported>
+        <field var='service' label='Service'/>
+        <field var='runlevel-1' label='Single-User mode'/>
+        <field var='runlevel-2' label='Non-Networked Multi-User mode'/>
+        <field var='runlevel-3' label='Full Multi-User mode'/>
+        <field var='runlevel-5' label='X-Window mode'/>
+      </reported>
+      <item>
+        <field var='service'><value>httpd</value></field>
+        <field var='runlevel-1'><value>off</value></field>
+        <field var='runlevel-2'><value>off</value></field>
+        <field var='runlevel-3'><value>on</value></field>
+        <field var='runlevel-5'><value>on</value></field>
+      </item>
+      <item>
+        <field var='service'><value>postgresql</value></field>
+        <field var='runlevel-1'><value>off</value></field>
+        <field var='runlevel-2'><value>off</value></field>
+        <field var='runlevel-3'><value>on</value></field>
+        <field var='runlevel-5'><value>on</value></field>
+      </item>
+      <item>
+        <field var='service'><value>jabberd</value></field>
+        <field var='runlevel-1'><value>off</value></field>
+        <field var='runlevel-2'><value>off</value></field>
+        <field var='runlevel-3'><value>on</value></field>
+        <field var='runlevel-5'><value>on</value></field>
+      </item>
+</x>
