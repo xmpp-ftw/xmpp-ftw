@@ -31,6 +31,12 @@ describe('XEP-0004', function() {
             x.getChildren('field').length.should.equal(1)
         })
 
+        it('Doesn\'t add FORM_TYPE value if \'value\' not provided', function() {
+            dataForm.addForm(stanza, [])
+            var x = stanza.getChild('x', dataForm.NS)
+            should.not.exist(x.getChild('field'))
+        })
+
         it('Can add field with boolean value', function() {
             dataForm.addForm(stanza, [{ var: 'field1', value: true }], 'df')
             var field = stanza.getChild('x').getChildren('field')[1]
