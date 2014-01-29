@@ -2,10 +2,10 @@
 
 var Client = require('node-xmpp-client')
   , events = require('events')
-
-var chat = require('./lib/chat')
-var presence = require('./lib/presence')
-var roster = require('./lib/roster')
+  , chat = require('./lib/chat')
+  , presence = require('./lib/presence')
+  , roster = require('./lib/roster')
+  , JID    = require('node-xmpp-core').JID
 
 var Xmpp = function(socket) {
     this.prototype = new events.EventEmitter()
