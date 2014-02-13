@@ -341,6 +341,23 @@ describe('Chat', function() {
                 })
                 chat.sendMessage({ to: to, content: content, receipt: true }, function() {})
             })
+            
+            it('Handles error response', function(done) {
+                var to = 'user@domain/resource'
+                var content = 'message'
+                xmpp.once('stanza', function() {
+                    manager.makeCallback(helper.getStanza('iq-error'))
+                })
+                var callback = function(error, success) {
+                    should.not.exist(success)
+                    error.should.eql({
+                        type: 'cancel',
+                        condition: 'error-condition'
+                    })
+                    done()
+                }
+                chat.sendMessage({ to: to, content: content, receipt: true }, callback)
+            })
           
         })
         
