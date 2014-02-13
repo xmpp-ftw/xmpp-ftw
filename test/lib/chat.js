@@ -17,7 +17,13 @@ describe('Chat', function() {
         manager = {
             socket: socket,
             client: xmpp,
-            jid: 'test@example.com'
+            jid: 'test@example.com',
+            trackId: function(id, callback) {
+                this.callback = callback
+            },
+            makeCallback: function(error, data) {
+                this.callback(error, data)
+            }
         }
         chat = new Chat()
         chat.init(manager)
@@ -300,6 +306,40 @@ describe('Chat', function() {
                     done()
                 })
                 socket.send('xmpp.chat.message', request)
+            })
+            
+            it('Errors if receipt requested but non-function callback provided', function(done) {
+                var request = {
+                    to: 'user@example.com',
+                    content: 'hello',
+                    receipt: true
+                }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal('Missing callback')
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.send('xmpp.chat.message', request, true)
+            })
+            
+            it('Sends expected stanza with receipt request', function(done) {
+                var to = 'user@domain/resource'
+                var content = 'message'
+                xmpp.once('stanza', function(stanza) {
+                    stanza.attrs.to.should.equal(to)
+                    stanza.attrs.type.should.equal('chat')
+                    stanza.getChild('body').getText().should.equal(content)
+                    stanza.getChild('request', chat.NS_RECEIPT).should.exist
+                    stanza.attrs.id.should.exist
+                    done()
+                })
+                chat.sendMessage({ to: to, content: content, receipt: true }, function() {})
             })
           
         })
