@@ -272,5 +272,38 @@ describe('Chat', function() {
         })
 
     })
+    
+    describe('Receipts XEP-0184', function() {
+        
+        describe('Incoming', function() {
+          
+          
+        })
+      
+        describe('Outgoing', function() {
+        
+            it('Errors if receipt requested but no callback provided', function(done) {
+                var request = {
+                    to: 'user@example.com',
+                    content: 'hello',
+                    receipt: true
+                }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal('Missing callback')
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.send('xmpp.chat.message', request)
+            })
+          
+        })
+        
+    })
 
 })
