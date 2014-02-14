@@ -388,6 +388,63 @@ describe('Chat', function() {
 
         })
 
+        describe('Sending delivery receipt', function() {
+
+            it('Errors if missing \'to\' key', function(done) {
+                var request = {}
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal('Missing \'to\' key')
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.send('xmpp.chat.receipt', request)
+            })
+
+            it('Errors if missing \'id\' key', function(done) {
+                var request = {
+                    to: 'user@example.com'
+                }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description.should.equal('Missing \'id\' key')
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.send('xmpp.chat.receipt', request)
+            })
+
+            it('Sends expected stanza', function(done) {
+                var request = {
+                    to: 'user@example.com',
+                    id: '1234'
+                }
+                xmpp.once('stanza', function(message) {
+                    message.is('message').should.be.true
+                    message.attrs.id.should.exist
+                    message.attrs.to.should.equal(request.to)
+                    message.getChild('received', this.NS_RECEIPT).should.exist
+                    message.getChild('received').attrs.id.should.equal(request.id)
+                    done()
+                })
+                socket.once('xmpp.error.client', function() {
+                    done('Unexpected error')
+                })
+                socket.send('xmpp.chat.receipt', request)
+            })
+
+        })
+
     })
 
 })
