@@ -278,16 +278,16 @@ describe('Chat', function() {
         })
 
     })
-    
+
     describe('Receipts XEP-0184', function() {
-        
+
         describe('Incoming', function() {
-          
-          
+
+
         })
-      
+
         describe('Outgoing', function() {
-        
+
             it('Errors if receipt requested but no callback provided', function(done) {
                 var request = {
                     to: 'user@example.com',
@@ -300,15 +300,15 @@ describe('Chat', function() {
                 socket.once('xmpp.error.client', function(error) {
                     error.type.should.equal('modify')
                     error.condition.should.equal('client-error')
-                    error.description.should.equal('Missing callback')
+                    error.description.should.equal('Callback required')
                     error.request.should.eql(request)
                     xmpp.removeAllListeners('stanza')
                     done()
                 })
                 socket.send('xmpp.chat.message', request)
             })
-            
-            it('Errors if receipt requested but non-function callback provided', function(done) {
+
+            it('Errors if non-function callback provided', function(done) {
                 var request = {
                     to: 'user@example.com',
                     content: 'hello',
@@ -327,7 +327,7 @@ describe('Chat', function() {
                 })
                 socket.send('xmpp.chat.message', request, true)
             })
-            
+
             it('Sends expected stanza with receipt request', function(done) {
                 var to = 'user@domain/resource'
                 var content = 'message'
@@ -341,26 +341,20 @@ describe('Chat', function() {
                 })
                 chat.sendMessage({ to: to, content: content, receipt: true }, function() {})
             })
-            
-            it('Handles error response', function(done) {
+
+            it('Retuns message ID', function(done) {
                 var to = 'user@domain/resource'
                 var content = 'message'
-                xmpp.once('stanza', function() {
-                    manager.makeCallback(helper.getStanza('iq-error'))
-                })
                 var callback = function(error, success) {
-                    should.not.exist(success)
-                    error.should.eql({
-                        type: 'cancel',
-                        condition: 'error-condition'
-                    })
+                    should.not.exist(error)
+                    success.id.should.exist
                     done()
                 }
                 chat.sendMessage({ to: to, content: content, receipt: true }, callback)
             })
-          
+
         })
-        
+
     })
 
 })
