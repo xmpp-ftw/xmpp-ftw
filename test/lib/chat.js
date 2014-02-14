@@ -279,6 +279,18 @@ describe('Chat', function() {
 
     })
 
+    it('Returns message ID if callback provided', function(done) {
+            var request = {
+                to: 'user@example.com',
+                content: 'hello'
+            }
+            socket.send('xmpp.chat.message', request, function(error, data) {
+                data.id.should.exist
+                should.not.exist(error)
+                done()
+            })
+        })
+
     describe('Receipts XEP-0184', function() {
 
         describe('Incoming', function() {
