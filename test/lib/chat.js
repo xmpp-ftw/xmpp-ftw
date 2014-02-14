@@ -64,6 +64,7 @@ describe('Chat', function() {
                 })
                 data.content.should.equal('message')
                 data.format.should.equal(chat.PLAIN)
+                data.id.should.equal('111')
                 done()
             })
             chat.handle(helper.getStanza('chat/plain')).should.be.true
@@ -146,7 +147,8 @@ describe('Chat', function() {
                     from: { domain: 'buddycloud.org', user: 'lloyd', resource: '...' },
                     content: 'hey',
                     format: 'plain',
-                    state: 'active'
+                    state: 'active',
+                    id: 'purple7c9a49fd'
                 })
                 done()
             })
