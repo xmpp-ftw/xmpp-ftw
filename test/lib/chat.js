@@ -296,6 +296,24 @@ describe('Chat', function() {
 
         describe('Incoming', function() {
 
+            it('Handles delivery receipts', function() {
+                chat.handles(helper.getStanza('chat/receipt'))
+                    .should.be.true
+            })
+
+            it('Sends expected delivery receipt', function(done) {
+                socket.once('xmpp.chat.receipt', function(data) {
+                    data.from.should.eql({
+                        domain: 'royalty.england.lit',
+                        user: 'kingrichard',
+                        resource: 'throne'
+                    })
+                    data.id.should.equal('richard2-4.1.247')
+                    done()
+                })
+                chat.handle(helper.getStanza('chat/receipt'))
+                    .should.be.true
+            })
 
         })
 
