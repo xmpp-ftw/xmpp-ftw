@@ -18,9 +18,10 @@ describe('XEP-0184', function() {
             stanza = new ltx.Element('message')
         })
 
-        it('Doesn\'t add element if there\'s no receipt data', function() {
-            receipt.build(stanza, null)
-            stanza.toString().should.equal('<message/>')
+        it('Adds received element', function() {
+            receipt.build(stanza, { id: '1234' }, 'received')
+            stanza.root().getChild('received', receipt.NS).should.exist
+            stanza.root().getChild('received').attrs.id.should.equal('1234')
         })
 
     })
