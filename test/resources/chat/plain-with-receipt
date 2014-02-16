@@ -1,0 +1,7 @@
+<message
+    from='northumberland@shakespeare.lit/westminster'
+    id='richard2-4.1.247'
+    to='kingrichard@royalty.england.lit/throne'>
+  <body>My lord, dispatch; read o'er these articles.</body>
+  <request xmlns='urn:xmpp:receipts'/>
+</message>

@@ -85,7 +85,7 @@ describe('Chat', function() {
             chat.handle(helper.getStanza('chat/xhtml')).should.be.true
         })
 
-        it('Can handle <delay> element', function(done) {
+        it('Can handle <delay/> element', function(done) {
             socket.once('xmpp.chat.message', function(data) {
                 data.delay.when.should.equal('2002-09-10T23:08:25Z')
                 data.delay.reason.should.equal('Offline Storage')
@@ -314,6 +314,16 @@ describe('Chat', function() {
                     done()
                 })
                 chat.handle(helper.getStanza('chat/receipt'))
+                    .should.be.true
+            })
+
+            it('Informs the receiver that a receipt is requested', function(done) {
+                socket.on('xmpp.chat.message', function(data) {
+                    data.id.should.equal('richard2-4.1.247')
+                    data.receipt.should.be.true
+                    done()
+                })
+                chat.handle(helper.getStanza('chat/plain-with-receipt'))
                     .should.be.true
             })
 
