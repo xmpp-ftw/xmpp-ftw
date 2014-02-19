@@ -155,6 +155,25 @@ describe('Chat', function() {
             chat.handle(helper.getStanza('issues/40')).should.be.true
         })
 
+        it('Last messsage correction comes through on different event', function(done) {
+            socket.once('xmpp.chat.correction', function(data) {
+                data.should.eql({
+                    from: {
+                        domain: 'capulet.lit',
+                        user: 'juliet', resource:
+                        'balcony'
+                    },
+                    content: 'But soft, what light through yonder window breaks?',
+                    format: 'plain',
+                    id: 'good1',
+                    replace: 'bad1'
+                })
+                done()
+            })
+            chat.handle(helper.getStanza('chat/message-correction'))
+                .should.be.true
+        })
+
     })
 
     describe('Can send messages', function() {
