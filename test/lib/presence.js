@@ -214,6 +214,37 @@ describe('Presence', function() {
             )
         })
 
+        describe('Unsubscribe stanzas', function() {
+
+            it('Returns error when no \'to\' value provided', function(done) {
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                socket.once('xmpp.error.client', function(data) {
+                    data.type.should.equal('modify')
+                    data.condition.should.equal('client-error')
+                    data.description.should.equal('Missing \'to\' key')
+                    data.request.should.eql({})
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                })
+                socket.send('xmpp.presence.unsubscribe', {})
+            })
+
+            it('Can send unsubscribe stanza', function(done) {
+                    var to = 'juliet@example.com/balcony'
+                    xmpp.once('stanza', function(stanza) {
+                        stanza.is('presence').should.be.true
+                        stanza.attrs.to.should.equal(to)
+                        stanza.attrs.type.should.equal('unsubscribe')
+                        stanza.attrs.from.should.equal(manager.jid)
+                        done()
+                    })
+                    socket.send('xmpp.presence.unsubscribe', { to: to })
+                }
+            )
+        })
+
         describe('Unsubscribed stanzas', function() {
 
             it('Returns error when no \'to\' value provided', function(done) {
