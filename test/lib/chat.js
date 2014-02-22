@@ -1,10 +1,11 @@
 'use strict';
 
-var Chat      = require('../../index').Chat
-  , ltx       = require('ltx')
-  , helper    = require('../helper')
-  , should    = require('should')
-  , chatState = require('../../index').utils['xep-0085']
+var Chat       = require('../../index').Chat
+  , ltx        = require('ltx')
+  , helper     = require('../helper')
+  , should     = require('should')
+  , chatState  = require('../../index').utils['xep-0085']
+  , correction = require('../../index').utils['xep-0308']
 
 /* jshint -W030 */
 describe('Chat', function() {
@@ -153,25 +154,6 @@ describe('Chat', function() {
                 done()
             })
             chat.handle(helper.getStanza('issues/40')).should.be.true
-        })
-
-        it('Last messsage correction comes through on different event', function(done) {
-            socket.once('xmpp.chat.correction', function(data) {
-                data.should.eql({
-                    from: {
-                        domain: 'capulet.lit',
-                        user: 'juliet', resource:
-                        'balcony'
-                    },
-                    content: 'But soft, what light through yonder window breaks?',
-                    format: 'plain',
-                    id: 'good1',
-                    replace: 'bad1'
-                })
-                done()
-            })
-            chat.handle(helper.getStanza('chat/message-correction'))
-                .should.be.true
         })
 
     })
@@ -470,6 +452,72 @@ describe('Chat', function() {
                     done('Unexpected error')
                 })
                 socket.send('xmpp.chat.receipt', request)
+            })
+
+        })
+
+    })
+
+    describe('Last Message Correction XEP-0308', function() {
+
+        describe('Outgoing', function() {
+
+            it('Errors if correction provided but no content', function(done) {
+                var request = {
+                    to: 'user@example.com',
+                    replace: '1233'
+                }
+                xmpp.once('stanza', function() {
+                    done('Unexpected outgoing stanza')
+                })
+                var callback = function(error) {
+                    error.type.should.equal('modify')
+                    error.condition.should.equal('client-error')
+                    error.description
+                        .should.equal('Missing \'content\' key')
+                    error.request.should.eql(request)
+                    xmpp.removeAllListeners('stanza')
+                    done()
+                }
+                socket.send('xmpp.chat.message', request, callback)
+            })
+
+            it('Sends expected stanza', function(done) {
+                var request = {
+                    to: 'user@example.com',
+                    content: 'Whoops, correct value is 5',
+                    replace: '1233'
+                }
+                xmpp.once('stanza', function(message) {
+                    message.is('message').should.be.true
+                    message.attrs.to.should.equal(request.to)
+                    message.getChild('replace', correction.NS)
+                        .should.exist
+                    message.getChild('replace').attrs.id
+                        .should.equal(request.replace)
+                    message.getChildText('body')
+                        .should.equal(request.content)
+                    done()
+                })
+                socket.once('xmpp.error.client', function() {
+                    done('Unexpected error')
+                })
+                socket.send('xmpp.chat.message', request)
+            })
+
+        })
+
+        describe('Incoming', function() {
+
+            it('Adds \'replace\' parameter to incoming message', function(done) {
+                socket.on('xmpp.chat.message', function(data) {
+                    data.id.should.equal('good1')
+                    data.replace.should.equal('bad1')
+                    data.content.should.include('through yonder window')
+                    done()
+                })
+                chat.handle(helper.getStanza('chat/message-correction'))
+                    .should.be.true
             })
 
         })

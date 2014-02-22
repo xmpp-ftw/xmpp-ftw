@@ -4,7 +4,7 @@ var correction = require('../../../index').utils['xep-0308']
   , ltx   = require('ltx')
 
 /* jshint -W030 */
-describe('XEP-0304', function() {
+describe('XEP-0308', function() {
 
     it('Should export the correction namespace', function() {
         correction.NS.should.equal('urn:xmpp:message-correct:0')
@@ -19,7 +19,7 @@ describe('XEP-0304', function() {
         })
 
         it('Adds replace element', function() {
-            correction.build(stanza, { id: '1234' })
+            correction.build(stanza, { replace: '1234' })
             stanza.root().getChild('replace', correction.NS)
                 .should.exist
             stanza.root().getChild('replace').attrs.id
