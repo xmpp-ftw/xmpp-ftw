@@ -1,0 +1,5 @@
+<message from='romeo@montague.lit/castle'
+         to='juliet@capulet.net/balcony' id='good1'>
+  <body>But soft, what light through yonder window breaks?</body>
+  <replace id='bad1' xmlns='urn:xmpp:message-correct:0'/>
+</message>
