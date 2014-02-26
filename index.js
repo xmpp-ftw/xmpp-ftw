@@ -74,10 +74,10 @@ Xmpp.prototype._initialiseListeners = function() {
 
 Xmpp.prototype.logout = function(callback) {
    if (!this.client) return
-   this.client.emit('end')
+   this.client.end()
    delete this.client
    if (callback) return callback(null, true)
-   this.socket.disconnect()
+   this.socket.end()
 }
 
 Xmpp.prototype.anonymousLogin = function(data) {
