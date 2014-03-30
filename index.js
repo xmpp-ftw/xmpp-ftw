@@ -200,6 +200,8 @@ Xmpp.prototype.getJidType = function(type) {
                 this.fullJid.resource
         case 'bare':
             return this.fullJid.user + '@' + this.fullJid.domain
+        case 'domain':
+            return this.fullJid.domain
     }
 }
 
