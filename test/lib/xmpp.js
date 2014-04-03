@@ -75,6 +75,26 @@ describe('FTW', function() {
             ftw.catchTracked(stanza).should.be.false
         })
         
+        it('Should error if no callback provided', function(done) {
+            try {
+                ftw.trackId('1')
+                done('Expected exception')
+            } catch (e) {
+                e.message.should.equal(ftw.MISSING_CALLBACK)
+                done()
+            }
+        })
+        
+        it('Should error if non-function callback provided', function(done) {
+            try {
+                ftw.trackId('1', true)
+                done('Expected exception')
+            } catch (e) {
+                e.message.should.equal(ftw.INVALID_CALLBACK)
+                done()
+            }
+        })
+        
         it.skip('Should accept a stanza and capture', function() {
             
         })
