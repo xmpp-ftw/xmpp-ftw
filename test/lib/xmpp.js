@@ -1,8 +1,8 @@
 'use strict';
 
-var Ftw        = require('../index').Xmpp
-  , should     = require('should')
-  , events     = require('events')
+var Xmpp   = require('../../index').Xmpp
+  , should = require('should')
+  , events = require('events')
 
 /* jshint -W030 */
 describe('FTW', function() {
@@ -11,7 +11,7 @@ describe('FTW', function() {
 
     before(function() {
         socket = new events.EventEmitter()
-        ftw = new Ftw(socket)
+        ftw = new Xmpp(socket)
     })
 
     describe('Returns JID parts', function() {
