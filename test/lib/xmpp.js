@@ -50,5 +50,31 @@ describe('FTW', function() {
         })
 
     })
+    
+    describe.only('Tracking IDs', function() {
+        
+        it.skip('Should accept an ID and capture', function() {
+            
+        })
+        
+        it.skip('Should return false if untracked ID', function() {
+            
+        })
+        
+        it.skip('Should return false if no ID attribute', function() {
+            
+        })
+        
+        it.skip('Should accept a stanza and capture', function() {
+            
+        })
+        
+        it.skip('Should append an ID if none provided', function() {
+            // REALLY ?
+            // No! This is added in the base class
+            // What do I do if no ID attribute? Throw exception?
+        })
+        
+    })
 
 })
