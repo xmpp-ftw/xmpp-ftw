@@ -6,7 +6,8 @@
   "dependencies": {
     "ltx": "~0.3.3",
     "node-xmpp-client": "~0.4.0",
-    "node-xmpp-core": "~0.5.0"
+    "node-xmpp-core": "~0.5.0",
+    "node-uuid": "^1.4.1"
   },
   "devDependencies": {
     "mocha": "~1.13.0",
