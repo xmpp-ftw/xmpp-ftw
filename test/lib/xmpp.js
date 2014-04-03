@@ -69,8 +69,10 @@ describe('FTW', function() {
             ftw.catchTracked(stanza).should.be.false
         })
         
-        it.skip('Should return false if no ID attribute', function() {
-            
+        it('Should return false if no ID attribute', function() {
+            var stanza = ltx.parse('<iq />')
+            ftw.trackId('1', function() {})
+            ftw.catchTracked(stanza).should.be.false
         })
         
         it.skip('Should accept a stanza and capture', function() {
