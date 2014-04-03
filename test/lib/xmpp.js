@@ -3,6 +3,7 @@
 var Xmpp   = require('../../index').Xmpp
   , should = require('should')
   , events = require('events')
+  , ltx    = require('ltx')
 
 /* jshint -W030 */
 describe('FTW', function() {
@@ -53,8 +54,13 @@ describe('FTW', function() {
     
     describe.only('Tracking IDs', function() {
         
-        it.skip('Should accept an ID and capture', function() {
-            
+        it('Should accept an ID and capture', function(done) {
+            var stanza = ltx.parse('<iq id="1" />')
+            ftw.trackId('1', function(payload) {
+                payload.should.eql(stanza)
+                done()
+            })
+            ftw.catchTracked(stanza).should.be.true
         })
         
         it.skip('Should return false if untracked ID', function() {
