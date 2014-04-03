@@ -54,6 +54,16 @@ describe('FTW', function() {
     
     describe.only('Tracking IDs', function() {
         
+        it('Should error if no ID provided', function(done) {
+            try {
+                ftw.trackId()
+                done('Expected exception')
+            } catch (e) {
+                e.message.should.equal(ftw.MISSING_STANZA_ID)
+                done()
+            }
+        })
+        
         it('Should accept an ID and capture', function(done) {
             var stanza = ltx.parse('<iq id="1" />')
             ftw.trackId('1', function(payload) {
