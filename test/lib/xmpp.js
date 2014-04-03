@@ -63,8 +63,10 @@ describe('FTW', function() {
             ftw.catchTracked(stanza).should.be.true
         })
         
-        it.skip('Should return false if untracked ID', function() {
-            
+        it('Should return false if untracked ID', function() {
+            var stanza = ltx.parse('<iq id="2" />')
+            ftw.trackId('1', function() {})
+            ftw.catchTracked(stanza).should.be.false
         })
         
         it.skip('Should return false if no ID attribute', function() {
