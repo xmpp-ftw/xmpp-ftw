@@ -127,5 +127,26 @@ describe('FTW', function() {
         })
 
     })
+    
+    describe.only('Stanza ID spoofing protection', function() {
+        
+        it.skip('Should track a stanza from the same full JID', function(done) {
+            
+        })
+        
+        it.skip('Shouldn\'t track a stanza from a different JID', function(done) {
+           
+        })
+        
+        it.skip('Shouldn\'t track a stanza from the bare JID', function(done) {
+            
+        })
+        
+        it.skip('Assumes \'to\' address is server when not provided', function(done) {
+            
+        })
+        
+        
+    })
 
 })
