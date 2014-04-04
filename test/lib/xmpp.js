@@ -125,13 +125,7 @@ describe('FTW', function() {
                 done()
             }
         })
-        
-        it.skip('Should append an ID if none provided', function() {
-            // REALLY ?
-            // No! This is added in the base class
-            // What do I do if no ID attribute? Throw exception?
-        })
-        
+
     })
 
 })
