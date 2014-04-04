@@ -1,8 +1,8 @@
 'use strict';
 
-var ltx = require('ltx')
-  , fs = require('fs')
-  , Event = require('events').EventEmitter
+var ltx    = require('ltx')
+  , fs     = require('fs')
+  , Event  = require('events').EventEmitter
 
 exports.getStanza = function(file) {
     var stanza = fs.readFileSync(__dirname + '/resources/' + file)
