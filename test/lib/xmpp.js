@@ -97,7 +97,7 @@ describe('FTW', function() {
         
         it('Should error if non-function callback provided', function(done) {
             try {
-                ftw.trackId('1', true)
+                ftw.trackId('3', true)
                 done('Expected exception')
             } catch (e) {
                 e.message.should.equal(ftw.INVALID_CALLBACK)
@@ -105,8 +105,25 @@ describe('FTW', function() {
             }
         })
         
-        it.skip('Should accept a stanza and capture', function() {
-            
+        it('Should accept a stanza and capture', function(done) {
+            var incomingStanza = ltx.parse('<iq id="4" />')
+            var outGoingStanza = incomingStanza
+            ftw.trackId(outGoingStanza, function(payload) {
+                payload.should.eql(incomingStanza)
+                done()
+            })
+            ftw.catchTracked(incomingStanza).should.be.true
+        })
+        
+        it('Errors if stanza has no ID attribute', function(done) {
+            try {
+                var outgoingStanza = ltx.parse('<iq />')
+                ftw.trackId(outgoingStanza, function() {})
+                done('Expected exception')
+            } catch (e) {
+                e.message.should.equal(ftw.MISSING_STANZA_ID)
+                done()
+            }
         })
         
         it.skip('Should append an ID if none provided', function() {
