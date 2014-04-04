@@ -52,7 +52,7 @@ describe('FTW', function() {
 
     })
     
-    describe.only('Tracking IDs', function() {
+    describe('Tracking IDs', function() {
         
         it('Should error if no ID provided', function(done) {
             try {
