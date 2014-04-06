@@ -20,7 +20,7 @@ describe('FTW', function() {
         beforeEach(function() {
             ftw.fullJid = {
                 user: 'marty',
-                domain: 'mcfly',
+                domain: 'mcf.ly',
                 resource: 'thefuture'
             }
         })
@@ -130,6 +130,14 @@ describe('FTW', function() {
     
     describe.only('Stanza ID spoofing protection', function() {
         
+        beforeEach(function() {
+            ftw.fullJid = {
+                user: 'marty',
+                domain: 'mcf.ly',
+                resource: 'thefuture'
+            }
+        })
+        
         it('Should track a stanza from the same full JID', function(done) {
             var jid = 'you@example.com/resource'
             var id = '10'
@@ -187,8 +195,20 @@ describe('FTW', function() {
             done()
         })
         
-        it.skip('Assumes \'to\' address is server when not provided', function(done) {
-            
+        it('Assumes \'to\' address is server when not provided', function(done) {
+            var id = '10'
+            var outgoingStanza = ltx.parse(
+                '<iq id="' + id + '" />'
+            )
+            ftw.trackId(outgoingStanza, function(stanza) {
+                stanza.attrs.from.should.equal(ftw.fullJid.domain)
+                stanza.attrs.id.should.equal(id)
+                done()
+            })
+            var incomingStanza = outgoingStanza.clone()
+            incomingStanza.attrs.from = ftw.fullJid.domain
+            delete incomingStanza.attrs.to
+            ftw.catchTracked(incomingStanza).should.be.true
         })
         
         
