@@ -167,8 +167,24 @@ describe('FTW', function() {
             done()
         })
         
-        it.skip('Shouldn\'t track a stanza from the bare JID', function(done) {
-            
+        it('Shouldn\'t track a stanza from the bare JID', function(done) {
+            var jid = 'you@example.com/resource'
+            var wrongJid = jid.split('/')[0]
+            var id = '10'
+            var outgoingStanza = ltx.parse(
+                '<iq to="' + jid + '" id="' + id + '" />'
+            )
+            ftw.trackId(outgoingStanza, function() {
+                done('Should not have tracked stanza')
+            })
+            var incomingStanza = outgoingStanza.clone()
+            incomingStanza.attrs.from = wrongJid
+            delete incomingStanza.attrs.to
+            /* True as we have captured stanza, but it an 
+             * ID spoof so we don't want to do any more processing
+             */
+            ftw.catchTracked(incomingStanza).should.be.true
+            done()
         })
         
         it.skip('Assumes \'to\' address is server when not provided', function(done) {
