@@ -144,11 +144,27 @@ describe('FTW', function() {
             var incomingStanza = outgoingStanza.clone()
             incomingStanza.attrs.from = incomingStanza.attrs.to
             delete incomingStanza.attrs.to
-            ftw.catchTracked(incomingStanza)
+            ftw.catchTracked(incomingStanza).should.be.true
         })
         
-        it.skip('Shouldn\'t track a stanza from a different JID', function(done) {
-           
+        it('Shouldn\'t track a stanza from a different JID', function(done) {
+            var jid = 'you@example.com/resource'
+            var wrongJid = 'me@example.com/place'
+            var id = '10'
+            var outgoingStanza = ltx.parse(
+                '<iq to="' + jid + '" id="' + id + '" />'
+            )
+            ftw.trackId(outgoingStanza, function() {
+                done('Should not have tracked stanza')
+            })
+            var incomingStanza = outgoingStanza.clone()
+            incomingStanza.attrs.from = wrongJid
+            delete incomingStanza.attrs.to
+            /* True as we have captured stanza, but it an 
+             * ID spoof so we don't want to do any more processing
+             */
+            ftw.catchTracked(incomingStanza).should.be.true
+            done()
         })
         
         it.skip('Shouldn\'t track a stanza from the bare JID', function(done) {
