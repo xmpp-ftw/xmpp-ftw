@@ -129,7 +129,7 @@ describe('FTW', function() {
 
     })
     
-    describe.only('Stanza ID spoofing protection', function() {
+    describe('Stanza ID spoofing protection', function() {
         
         beforeEach(function() {
             ftw.fullJid = {
