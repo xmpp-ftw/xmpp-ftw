@@ -130,8 +130,21 @@ describe('FTW', function() {
     
     describe.only('Stanza ID spoofing protection', function() {
         
-        it.skip('Should track a stanza from the same full JID', function(done) {
-            
+        it('Should track a stanza from the same full JID', function(done) {
+            var jid = 'you@example.com/resource'
+            var id = '10'
+            var outgoingStanza = ltx.parse(
+                '<iq to="' + jid + '" id="' + id + '" />'
+            )
+            ftw.trackId(outgoingStanza, function(stanza) {
+                stanza.attr('id').should.equal(id)
+                stanza.attr('from').should.equal(jid)
+                done()
+            })
+            var incomingStanza = outgoingStanza.clone()
+            incomingStanza.attrs.from = incomingStanza.attrs.to
+            delete incomingStanza.attrs.to
+            ftw.catchTracked(incomingStanza)
         })
         
         it.skip('Shouldn\'t track a stanza from a different JID', function(done) {
