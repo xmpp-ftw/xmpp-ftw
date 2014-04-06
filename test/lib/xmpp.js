@@ -108,6 +108,7 @@ describe('FTW', function() {
         it('Should accept a stanza and capture', function(done) {
             var incomingStanza = ltx.parse('<iq id="4" />')
             var outGoingStanza = incomingStanza
+            incomingStanza.attrs.from = ftw.fullJid.domain
             ftw.trackId(outGoingStanza, function(payload) {
                 payload.should.eql(incomingStanza)
                 done()
