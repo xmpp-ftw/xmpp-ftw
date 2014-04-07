@@ -196,22 +196,41 @@ describe('FTW', function() {
             done()
         })
         
-        it('Assumes \'to\' address is server when not provided', function(done) {
-            var id = '10'
-            var outgoingStanza = ltx.parse(
-                '<iq id="' + id + '" />'
-            )
-            ftw.trackId(outgoingStanza, function(stanza) {
-                stanza.attrs.from.should.equal(ftw.fullJid.domain)
-                stanza.attrs.id.should.equal(id)
-                done()
-            })
-            var incomingStanza = outgoingStanza.clone()
-            incomingStanza.attrs.from = ftw.fullJid.domain
-            delete incomingStanza.attrs.to
-            ftw.catchTracked(incomingStanza).should.be.true
-        })
+        describe('No \'to\' address', function() {
         
+            it('Accepts server JID response', function(done) {
+                var id = '10'
+                var outgoingStanza = ltx.parse(
+                    '<iq id="' + id + '" />'
+                )
+                ftw.trackId(outgoingStanza, function(stanza) {
+                    stanza.attrs.from.should.equal(ftw.getJidType('domain'))
+                    stanza.attrs.id.should.equal(id)
+                    done()
+                })
+                var incomingStanza = outgoingStanza.clone()
+                incomingStanza.attrs.from = ftw.getJidType('domain')
+                delete incomingStanza.attrs.to
+                ftw.catchTracked(incomingStanza).should.be.true
+            })
+
+            it('Accepts bare JID response', function(done) {
+                var id = '10'
+                var outgoingStanza = ltx.parse(
+                    '<iq id="' + id + '" />'
+                )
+                ftw.trackId(outgoingStanza, function(stanza) {
+                    stanza.attrs.from.should.equal(ftw.getJidType('bare'))
+                    stanza.attrs.id.should.equal(id)
+                    done()
+                })
+                var incomingStanza = outgoingStanza.clone()
+                incomingStanza.attrs.from = ftw.getJidType('bare')
+                delete incomingStanza.attrs.to
+                ftw.catchTracked(incomingStanza).should.be.true
+            })
+            
+        })
         
     })
 
