@@ -20,7 +20,7 @@ describe('FTW', function() {
         beforeEach(function() {
             ftw.fullJid = {
                 user: 'marty',
-                domain: 'mcfly',
+                domain: 'mcf.ly',
                 resource: 'thefuture'
             }
         })
@@ -108,6 +108,7 @@ describe('FTW', function() {
         it('Should accept a stanza and capture', function(done) {
             var incomingStanza = ltx.parse('<iq id="4" />')
             var outGoingStanza = incomingStanza
+            incomingStanza.attrs.from = ftw.fullJid.domain
             ftw.trackId(outGoingStanza, function(payload) {
                 payload.should.eql(incomingStanza)
                 done()
@@ -126,6 +127,111 @@ describe('FTW', function() {
             }
         })
 
+    })
+    
+    describe('Stanza ID spoofing protection', function() {
+        
+        beforeEach(function() {
+            ftw.fullJid = {
+                user: 'marty',
+                domain: 'mcf.ly',
+                resource: 'thefuture'
+            }
+        })
+        
+        it('Should track a stanza from the same full JID', function(done) {
+            var jid = 'you@example.com/resource'
+            var id = '10'
+            var outgoingStanza = ltx.parse(
+                '<iq to="' + jid + '" id="' + id + '" />'
+            )
+            ftw.trackId(outgoingStanza, function(stanza) {
+                stanza.attr('id').should.equal(id)
+                stanza.attr('from').should.equal(jid)
+                done()
+            })
+            var incomingStanza = outgoingStanza.clone()
+            incomingStanza.attrs.from = incomingStanza.attrs.to
+            delete incomingStanza.attrs.to
+            ftw.catchTracked(incomingStanza).should.be.true
+        })
+        
+        it('Shouldn\'t track a stanza from a different JID', function(done) {
+            var jid = 'you@example.com/resource'
+            var wrongJid = 'me@example.com/place'
+            var id = '10'
+            var outgoingStanza = ltx.parse(
+                '<iq to="' + jid + '" id="' + id + '" />'
+            )
+            ftw.trackId(outgoingStanza, function() {
+                done('Should not have tracked stanza')
+            })
+            var incomingStanza = outgoingStanza.clone()
+            incomingStanza.attrs.from = wrongJid
+            delete incomingStanza.attrs.to
+            /* True as we have captured stanza, but it an 
+             * ID spoof so we don't want to do any more processing
+             */
+            ftw.catchTracked(incomingStanza).should.be.true
+            done()
+        })
+        
+        it('Shouldn\'t track a stanza from the bare JID', function(done) {
+            var jid = 'you@example.com/resource'
+            var wrongJid = jid.split('/')[0]
+            var id = '10'
+            var outgoingStanza = ltx.parse(
+                '<iq to="' + jid + '" id="' + id + '" />'
+            )
+            ftw.trackId(outgoingStanza, function() {
+                done('Should not have tracked stanza')
+            })
+            var incomingStanza = outgoingStanza.clone()
+            incomingStanza.attrs.from = wrongJid
+            delete incomingStanza.attrs.to
+            /* True as we have captured stanza, but it an 
+             * ID spoof so we don't want to do any more processing
+             */
+            ftw.catchTracked(incomingStanza).should.be.true
+            done()
+        })
+        
+        describe('No \'to\' address', function() {
+        
+            it('Accepts server JID response', function(done) {
+                var id = '10'
+                var outgoingStanza = ltx.parse(
+                    '<iq id="' + id + '" />'
+                )
+                ftw.trackId(outgoingStanza, function(stanza) {
+                    stanza.attrs.from.should.equal(ftw.getJidType('domain'))
+                    stanza.attrs.id.should.equal(id)
+                    done()
+                })
+                var incomingStanza = outgoingStanza.clone()
+                incomingStanza.attrs.from = ftw.getJidType('domain')
+                delete incomingStanza.attrs.to
+                ftw.catchTracked(incomingStanza).should.be.true
+            })
+
+            it('Accepts bare JID response', function(done) {
+                var id = '10'
+                var outgoingStanza = ltx.parse(
+                    '<iq id="' + id + '" />'
+                )
+                ftw.trackId(outgoingStanza, function(stanza) {
+                    stanza.attrs.from.should.equal(ftw.getJidType('bare'))
+                    stanza.attrs.id.should.equal(id)
+                    done()
+                })
+                var incomingStanza = outgoingStanza.clone()
+                incomingStanza.attrs.from = ftw.getJidType('bare')
+                delete incomingStanza.attrs.to
+                ftw.catchTracked(incomingStanza).should.be.true
+            })
+            
+        })
+        
     })
 
 })
