@@ -18,6 +18,8 @@ describe('Roster', function() {
             client: xmpp,
             jid: 'bottom@dreams.org',
             trackId: function(id, callback) {
+                if (typeof id !== 'object')
+                    throw new Error('Stanza protection ID not added')
                 this.callback = callback
             },
             makeCallback: function(error, data) {

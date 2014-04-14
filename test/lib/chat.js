@@ -20,6 +20,8 @@ describe('Chat', function() {
             client: xmpp,
             jid: 'test@example.com',
             trackId: function(id, callback) {
+                if (typeof id !== 'object')
+                    throw new Error('Stanza protection ID not added')
                 this.callback = callback
             },
             makeCallback: function(error, data) {
