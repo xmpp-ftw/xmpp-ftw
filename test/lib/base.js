@@ -29,10 +29,6 @@ describe('Base', function() {
 
     describe('Stanza ID', function() {
 
-        it('Should not have a counter until first ID is requested', function() {
-            should.not.exist(Base.prototype.id)
-        })
-        
         it('Sets a UUID as stanza ID', function() {
             var id = base._getId()
             var regex = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/
