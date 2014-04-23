@@ -1,0 +1,12 @@
+<iq from='pubsub.example.com'
+          id='9u2bax16'
+          to='juliet@im.example.com/balcony'
+          type='error'>
+    <error type='cancel'>
+        <unsupported
+            xmlns='http://jabber.org/protocol/pubsub#errors'
+            feature='retrieve-subscriptions'>'retrive-subscriptions' not supported</unsupported>
+        <feature-not-implemented
+            xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>
+    </error>
+</iq>

@@ -1,0 +1,10 @@
+<message
+    from='romeo@example.net'
+    id='sj2b371v'
+    to='juliet@im.example.com/churchyard'
+    type='error'>
+    <error type='cancel' by='example.net'>
+        <gone xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>
+        <text xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'>xmpp:romeo@afterlife.example.net</text>
+    </error>
+</message>
