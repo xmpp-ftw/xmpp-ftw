@@ -204,7 +204,7 @@ describe('Roster', function() {
                     error.should.eql({
                         type: 'cancel',
                         condition: 'error-condition',
-                        application: { 
+                        application: {
                             condition: 'unknown-error',
                             xmlns: 'http://jabber.org/protocol/pubsub#errors'
                         }
@@ -297,7 +297,7 @@ describe('Roster', function() {
                             error.should.eql({
                                 type: 'cancel',
                                 condition: 'error-condition',
-                                application: { 
+                                application: {
                                     condition: 'unknown-error',
                                     xmlns: 'http://jabber.org/protocol/pubsub#errors'
                                 }
@@ -379,7 +379,7 @@ describe('Roster', function() {
                     error.should.eql({
                         type: 'cancel',
                         condition: 'error-condition',
-                        application: { 
+                        application: {
                             condition: 'unknown-error',
                             xmlns: 'http://jabber.org/protocol/pubsub#errors'
                         }
@@ -557,7 +557,7 @@ describe('Roster', function() {
                     error.should.eql({
                         type: 'cancel',
                         condition: 'error-condition',
-                        application: { 
+                        application: {
                             condition: 'unknown-error',
                             xmlns: 'http://jabber.org/protocol/pubsub#errors'
                         }
