@@ -1,0 +1,8 @@
+<iq from='im.example.com'
+      id='zj3v142b'
+      to='juliet@im.example.com/balcony'
+      type='error'>
+    <error type='modify'>
+        <bad-request xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>
+    </error>
+</iq>

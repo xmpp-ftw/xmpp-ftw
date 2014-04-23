@@ -58,5 +58,40 @@ describe('Base', function() {
         })
 
     })
+    
+    describe('Error parsing', function() {
+        
+      it('Parses a basic error', function() {
+          var stanza = helper.getStanza('error-stanzas/basic')
+          var error = base._parseError(stanza)
+          error.type.should.equal('modify')
+          error.condition.should.equal('bad-request')
+          should.not.exist(error.description)
+          should.not.exist(error.application)
+      })
+      
+      it('Parses an extended error', function() {
+          var stanza = helper.getStanza('error-stanzas/extended')
+          var error = base._parseError(stanza)
+          error.type.should.equal('cancel')
+          error.condition.should.equal('feature-not-implemented')
+          should.not.exist(error.description)
+          
+          error.application.should.exist
+          error.application.condition.should.equal('unsupported')
+          error.application.xmlns.should.equal('http://jabber.org/protocol/pubsub#errors')
+          error.application.description.should.equal('\'retrive-subscriptions\' not supported')
+      })
+      
+      it('Parses an extended error with text description', function() {
+          var stanza = helper.getStanza('error-stanzas/extended-text')
+          var error = base._parseError(stanza)
+          error.type.should.equal('cancel')
+          console.log(error)
+          error.condition.should.equal('gone')
+          error.description.should.equal('xmpp:romeo@afterlife.example.net')
+          error.by.should.equal('example.net')
+      })
+    })
 
 })
