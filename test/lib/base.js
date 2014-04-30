@@ -94,5 +94,23 @@ describe('Base', function() {
         })
 
     })
+    
+    describe('JID parsing', function() {
+  
+        it('Parses a domain', function() {
+            var jid = base._getJid('mcfly.org')
+            jid.should.eql({ domain: 'mcfly.org' })
+        })
+        
+        it('Parses a bare JID', function() {
+            var jid = base._getJid('marty@mcfly.org')
+            jid.should.eql({ user: 'marty', domain: 'mcfly.org' })
+        })
+        
+        it('Parses a full JID', function() {
+            var jid = base._getJid('marty@mcfly.org/delorean')
+            jid.should.eql({ user: 'marty', domain: 'mcfly.org', resource: 'delorean' })
+        })
+    })
 
 })
