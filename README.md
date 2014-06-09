@@ -70,9 +70,8 @@ Methods used in XMPP-FTW projects are:
 If you want to run xmpp-ftw server side (e.g. to write a bot) then this should be a good starting point:
 
 ```
-var xmppFtw = require('xmpp-ftw');
-var Emitter = require('events').EventEmitter;
-var Muc = require('xmpp-ftw-muc');
+var xmppFtw = require('xmpp-ftw')
+var Emitter = require('events').EventEmitter
  
 var Socket = function() {
    this.server = new Emitter()
@@ -96,7 +95,7 @@ Socket.prototype.removeAllListeners = function(event) {
 }
  
 var socket = new Socket()
-var client = new xmppFtw.Xmpp(socket);
+var client = new xmppFtw.Xmpp(socket)
 
 var client = new xmppFtw.Xmpp(socket)
 socket.on('xmpp.connection', function(data) {
