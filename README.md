@@ -69,7 +69,7 @@ Methods used in XMPP-FTW projects are:
 
 If you want to run xmpp-ftw server side (e.g. to write a bot) then this should be a good starting point:
 
-```
+```javascript
 var xmppFtw = require('xmpp-ftw')
 var Emitter = require('events').EventEmitter
  
