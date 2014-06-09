@@ -65,6 +65,30 @@ Methods used in XMPP-FTW projects are:
 * info()
 * error()
 
+# Server-side
+
+If you want to run xmpp-ftw server side (e.g. to write a bot) then this should be a good starting point:
+
+```
+var xmppFtw = require('xmpp-ftw')
+  , Emitter = require('events').EventEmitter
+
+var socket = new Emitter()
+socket.send = socket.emit
+
+var client = new xmppFtw.Xmpp(socket)
+socket.on('xmpp.connection', function(data) {
+    console.log('Conected', data)
+})
+socket.on('xmpp.error', function(error) {
+    console.log('error', error)
+})
+socket.on('xmpp.error.client', function(error) {
+    console.log('client error', error)
+})
+socket.send('xmpp.login', { login: details, here: true })
+```
+
 # License
 
 License is Apache 2.0, please let me know if this doesn't suit.
