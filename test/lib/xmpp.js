@@ -231,7 +231,27 @@ describe('FTW', function() {
             })
             
         })
-        
+
+        describe('No response \'from\' address', function() {
+
+            it('Accepts server JID response', function(done) {
+                var id = '10'
+                var outgoingStanza = ltx.parse(
+                    '<iq id="' + id + '"/>'
+                )
+                ftw.trackId(outgoingStanza, function(stanza) {
+                    should.not.exist(stanza.attrs.from)
+                    stanza.attrs.id.should.equal(id)
+                    done()
+                })
+                var incomingStanza = outgoingStanza.clone()
+                delete incomingStanza.attrs.from
+                delete incomingStanza.attrs.to
+                ftw.catchTracked(incomingStanza).should.be.true
+            })
+
+        })
+    
     })
 
 })
