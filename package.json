@@ -6,7 +6,7 @@
   "dependencies": {
     "ltx": "^0.5.2",
     "node-uuid": "~1.4.1",
-    "node-xmpp-client": "^1.0.0-alpha2",
+    "node-xmpp-client": "^1.0.0-alpha3",
     "node-xmpp-core": "^1.0.0-alpha3"
   },
   "devDependencies": {
