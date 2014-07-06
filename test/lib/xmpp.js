@@ -2,17 +2,22 @@
 
 var Xmpp   = require('../../index').Xmpp
   , should = require('should')
-  , events = require('events')
   , ltx    = require('ltx')
+  , helper = require('../helper')
 
 /* jshint -W030 */
 describe('FTW', function() {
 
-    var ftw, socket
+    var ftw, socket, xmpp
 
-    before(function() {
-        socket = new events.EventEmitter()
+    beforeEach(function() {
+        socket = new helper.SocketEventer()
+        xmpp = new helper.XmppEventer()
         ftw = new Xmpp(socket)
+        ftw.client = xmpp
+        xmpp.end = function() {
+            this.emit('end')
+        }
     })
 
     describe('Returns JID parts', function() {
@@ -252,6 +257,24 @@ describe('FTW', function() {
 
         })
     
+    })
+    
+    describe.only('Login', function() {
+    
+        it('Tries to logout before login', function(done) {
+            ftw.client.on('end', function() {
+                done()
+            })
+            socket.send('xmpp.login', {})
+        })
+        
+        it('Tries to logout before anonymous login', function(done) {
+            ftw.client.on('end', function() {
+                done()
+            })
+            socket.send('xmpp.login.anonymous', {})
+        })
+        
     })
 
 })
