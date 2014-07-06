@@ -274,14 +274,14 @@ describe('FTW', function() {
     describe('Login', function() {
     
         it('Tries to logout before login', function(done) {
-            ftw.client.on('end', function() {
+            ftw.client.once('end', function() {
                 done()
             })
             socket.send('xmpp.login', {})
         })
         
         it('Tries to logout before anonymous login', function(done) {
-            ftw.client.on('end', function() {
+            ftw.client.once('end', function() {
                 done()
             })
             socket.send('xmpp.login.anonymous', {})
