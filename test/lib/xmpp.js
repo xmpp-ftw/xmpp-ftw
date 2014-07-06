@@ -18,6 +18,12 @@ describe('FTW', function() {
         xmpp.end = function() {
             this.emit('end')
         }
+        ftw.fullJid = {
+            domain: 'dreams.org',
+            user: 'bottom',
+            local: 'bottom',
+            resource: 'spell'
+        }
     })
 
     describe('Returns JID parts', function() {
@@ -259,7 +265,7 @@ describe('FTW', function() {
     
     })
     
-    describe.only('Login', function() {
+    describe('Login', function() {
     
         it('Tries to logout before login', function(done) {
             ftw.client.on('end', function() {
