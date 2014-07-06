@@ -25,6 +25,12 @@ describe('FTW', function() {
             resource: 'spell'
         }
     })
+    
+    afterEach(function() {
+        socket = null
+        ftw    = null
+        xmpp   = null
+    })
 
     describe('Returns JID parts', function() {
 
