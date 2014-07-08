@@ -288,7 +288,7 @@ describe('FTW', function() {
                 error.condition.should.equal(ftw.error.condition.LOGIN_FAIL)
                 done()
             })
-            ftw.handleError({ message: '"XMPP authentication failure"' })
+            ftw.handleError('XMPP authentication failure')
         })
         
     })
