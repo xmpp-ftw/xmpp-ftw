@@ -26,12 +26,6 @@ describe('FTW', function() {
         }
     })
     
-    afterEach(function() {
-        socket = null
-        ftw    = null
-        xmpp   = null
-    })
-
     describe('Returns JID parts', function() {
 
         beforeEach(function() {
@@ -285,6 +279,16 @@ describe('FTW', function() {
                 done()
             })
             socket.send('xmpp.login.anonymous', {})
+        })
+        
+        it('Handles login failure as expected', function(done) {
+            socket.on('xmpp.error', function(error) {
+                error.description.should.equal(ftw.error.message.AUTHENTICATION_FAIL)
+                error.type.should.equal(ftw.error.type.AUTH)
+                error.condition.should.equal(ftw.error.condition.LOGIN_FAIL)
+                done()
+            })
+            ftw.handleError({ message: '"XMPP authentication failure"' })
         })
         
     })
