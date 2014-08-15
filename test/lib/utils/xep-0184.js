@@ -33,7 +33,9 @@ describe('XEP-0184', function() {
 
     describe('Parse an incoming message with receipt request', function() {
 
-        var stanza = ltx.parse('<message><received xmlns="' + receipt.NS + '" id="5" /></message>')
+        var stanza = ltx.parse(
+            '<message><received xmlns="' + receipt.NS + '" id="5" /></message>'
+        )
 
         it('Adds receipt data', function() {
             var data = {}
