@@ -1,0 +1,16 @@
+<message xmlns='jabber:client'
+        from='romeo@montague.example'
+        to='romeo@montague.example/garden'
+        type='chat'>
+  <sent xmlns='urn:xmpp:carbons:2'>
+    <forwarded xmlns='urn:xmpp:forward:0'>
+      <message xmlns='jabber:client'
+               to='juliet@capulet.example/balcony'
+               from='romeo@montague.example/home'
+               type='chat'>
+        <body>Neither, fair saint, if either thee dislike.</body>
+        <thread>0e3141cd80894871a68e6fe6b1ec56fa</thread>
+      </message>
+    </forwarded>
+  </sent>
+</message>
