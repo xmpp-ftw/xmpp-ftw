@@ -1,0 +1,3 @@
+<presence to='juliet@example.com' from='montague@example.net' type='subscribe'>
+    <nick>monty</nick>
+</presence>
