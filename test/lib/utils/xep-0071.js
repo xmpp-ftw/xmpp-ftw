@@ -88,4 +88,15 @@ describe('XEP-0071', function() {
             .should.equal(request.content)
         done()
     })
+    
+    it('Adds type \'chat\' if not set', function(done) {
+        var request = {
+            content: 'XMPP-FTW ROCKS!'
+        }
+        var data = { to: 'room@muc.example.com' }
+
+        var stanza = xep0071.builder(request, data, caller)
+        stanza.attrs.type.should.equal('chat')
+        done()
+    })
 })

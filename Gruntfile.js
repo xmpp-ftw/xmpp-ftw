@@ -19,13 +19,13 @@ module.exports = function(grunt) {
         },
         'mocha_istanbul': {
             coveralls: {
-                src: 'test/lib',
+                src: [ 'test/lib', 'test/lib/utils' ],
                 options: {
                     coverage: true,
                     legend: true,
                     check: {
-                        lines: 68,
-                        statements: 70
+                        lines: 86,
+                        statements: 86
                     },
                     root: './lib',
                     reportFormats: ['lcov']
