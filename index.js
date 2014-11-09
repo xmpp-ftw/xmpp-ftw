@@ -15,6 +15,8 @@ module.exports = {
         'xep-0085': require('./lib/utils/xep-0085'),
         'xep-0184': require('./lib/utils/xep-0184'),
         'xep-0203': require('./lib/utils/xep-0203'),
-        'xep-0308': require('./lib/utils/xep-0308')
+        'xep-0308': require('./lib/utils/xep-0308'),
+        'xep-0280': require('./lib/utils/xep-0280'),
+        'xep-0297': require('./lib/utils/xep-0297')
     }
 }

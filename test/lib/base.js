@@ -112,5 +112,22 @@ describe('Base', function() {
             jid.should.eql({ user: 'marty', domain: 'mcfly.org', resource: 'delorean' })
         })
     })
+    
+    describe('Cache', function() {
 
+        it('When setting cache \'this\' is returned', function() {
+            base.setCache({}).should.equal(base)
+        })
+        
+        it('Returns cache when it has been set', function() {
+            var cache = { caching: { is: 'fun' } }
+            base.setCache(cache)._getCache().should.equal(cache)
+        })
+        
+        it('Returns null when a cache hasn\'t been set', function() {
+            base._getCache().should.be.null
+        })
+        
+    })
+    
 })

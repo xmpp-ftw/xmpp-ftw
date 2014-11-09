@@ -1,0 +1,16 @@
+<message to='mercutio@verona.lit' from='romeo@montague.lit/orchard' type='chat' id='28gs'>
+    <body>A most courteous exposition!</body>
+    <forwarded xmlns='urn:xmpp:forward:0'>
+      <delay xmlns='urn:xmpp:delay' stamp='2010-07-10T23:08:25Z'/>
+      <message from='juliet@capulet.lit/orchard'
+               id='0202197'
+               to='romeo@montague.lit'
+               type='chat'
+               xmlns='jabber:client'>
+          <body>Yet I should kill thee with much cherishing.</body>
+          <mood xmlns='http://jabber.org/protocol/mood'>
+              <amorous/>
+          </mood>
+      </message>
+    </forwarded>
+</message>

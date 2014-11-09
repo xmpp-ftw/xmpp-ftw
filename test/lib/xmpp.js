@@ -137,6 +137,20 @@ describe('FTW', function() {
                 done()
             }
         })
+        
+        it('Reduces tracked queue after making callback', function(done) {
+            var incomingStanza = ltx.parse('<iq id="4" />')
+            var outGoingStanza = incomingStanza
+            incomingStanza.attrs.from = ftw.fullJid.domain
+            Object.keys(ftw.tracking).length.should.equal(0)
+            ftw.trackId(outGoingStanza, function(payload) {
+                payload.should.eql(incomingStanza)
+                Object.keys(ftw.tracking).length.should.equal(0)
+                done()
+            })
+            Object.keys(ftw.tracking).length.should.equal(1)
+            ftw.catchTracked(incomingStanza).should.be.true
+        })
 
     })
     
@@ -267,14 +281,15 @@ describe('FTW', function() {
     
     describe('Login', function() {
     
-        it('Tries to logout before login', function(done) {
+        it.skip('Tries to logout before login', function(done) {
             ftw.client.once('end', function() {
                 done()
             })
+            
             socket.send('xmpp.login', {})
         })
         
-        it('Tries to logout before anonymous login', function(done) {
+        it.skip('Tries to logout before anonymous login', function(done) {
             ftw.client.once('end', function() {
                 done()
             })

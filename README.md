@@ -31,13 +31,13 @@ Also check out the [xmpp-ftw-demo](https://github.com/xmpp-ftw/xmpp-ftw-demo) re
 * http://www.evilprofessor.co.uk/579-xmpp-for-the-web-xmpp-ftw/
  * Introduction to XMPP-FTW
 
-# Build status
+# Badges!
 
 [![Build Status](https://secure.travis-ci.org/xmpp-ftw/xmpp-ftw.png)](http://travis-ci.org/xmpp-ftw/xmpp-ftw)
 
-# Dependency status
-
 [![Dependency Status](https://david-dm.org/xmpp-ftw/xmpp-ftw.png)](https://david-dm.org/xmpp-ftw/xmpp-ftw)
+
+[![Coverage Status](https://coveralls.io/repos/xmpp-ftw/xmpp-ftw/badge.png?branch=master)](https://coveralls.io/r/xmpp-ftw/xmpp-ftw?branch=master)
 
 # Instructions
 
