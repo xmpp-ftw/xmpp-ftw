@@ -71,6 +71,14 @@ describe('Presence', function() {
             presence.handle(helper.getStanza('presence/subscribe'))
         })
 
+        it('Can handle subscription requests with nickname', function(done) {
+            socket.once('xmpp.presence.subscribe', function(data) {
+                data.nick.should.equal('monty')
+                done()
+            })
+            presence.handle(helper.getStanza('presence/subscribe-nick'))
+        })
+                
         it('Can handle another user going offline', function(done) {
             socket.once('xmpp.presence', function(data) {
                 data.show.should.equal('offline')

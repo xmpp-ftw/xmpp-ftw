@@ -306,6 +306,11 @@ describe('Chat', function() {
                     .should.be.true
             })
 
+            it('Handles delivery receipts', function() {
+                chat.handles(helper.getStanza('chat/headline'))
+                    .should.be.true
+            })
+            
             it('Sends expected delivery receipt', function(done) {
                 socket.once('xmpp.chat.receipt', function(data) {
                     data.from.should.eql({
@@ -524,6 +529,21 @@ describe('Chat', function() {
 
         })
 
+    })
+    
+    it('Can unregister events', function(done) {
+        var request = {
+            to: 'user@example.com',
+            content: 'Whoops, correct value is 5',
+            replace: '1233'
+        }
+        chat.unregisterEvents()
+        xmpp.once('stanza', function() {
+            done('Should not have listened to event')
+        })
+
+        socket.send('xmpp.chat.message', request)
+        done()
     })
 
 })

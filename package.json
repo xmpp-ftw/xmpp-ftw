@@ -4,17 +4,17 @@
   "description": "XMPP-FTW (For the Web/Win) ::: Powerful XMPP, simple JSON",
   "main": "index.js",
   "dependencies": {
+    "debounce": "^1.0.0",
     "ltx": "^0.5.2",
     "node-uuid": "~1.4.1",
-    "debounce": "^1.0.0",
-    "node-xmpp-client": "^1.0.0-alpha15",
-    "node-xmpp-core": "^1.0.0-alpha10"
+    "node-xmpp-client": "1.0.0-alpha17",
+    "node-xmpp-core": "1.0.0-alpha10"
   },
   "devDependencies": {
-    "coveralls": "^2.11.1",
+    "coveralls": "^2.11.2",
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-mocha-cli": "~1.4.0",
-    "grunt-mocha-istanbul": "^2.1.0",
+    "grunt-mocha-istanbul": "^2.2.0",
     "istanbul": "^0.3.2",
     "mocha": "~1.13.0",
     "nodemon": "~0.7.2",

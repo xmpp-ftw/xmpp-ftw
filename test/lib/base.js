@@ -130,4 +130,12 @@ describe('Base', function() {
         
     })
     
+    describe('Events', function() {
+
+        it('Doesn\'t do anything when there\'s no events object', function() {
+            base.unregisterEvents()
+        })
+        
+    })
+    
 })
