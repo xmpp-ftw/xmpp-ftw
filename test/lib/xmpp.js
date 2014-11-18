@@ -357,6 +357,17 @@ describe('FTW', function() {
             ftw.handleError(errorMessages.condition.NOT_CONNECTED)
         })
         
+        it('Handles unknown error', function(done) {
+            socket.once('xmpp.error', function(error) {
+                error.type.should.equal(errorMessages.type.CANCEL)
+                error.condition
+                    .should.equal(errorMessages.condition.UNKNOWN)
+                should.not.exist(error.description)
+                done()
+            })
+            ftw.handleError()
+        })
+        
     })
 
 })
