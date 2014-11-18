@@ -59,13 +59,14 @@ describe('XEP-0071', function() {
     })
 
     it('Returns error if unparsable XHTML provided', function() {
-        xep0071.builder(
+        var response = xep0071.builder(
             { content: 'Invalid <strong>yes', format: 'xhtml' },
             { to: 'romeo@example.com' },
             caller
         )
         caller.error.should.equal('Can not parse XHTML message')
         caller.request.should.be.null
+        response.should.be.false
     })
 
     it('Can build an XHTML chat message', function(done) {
