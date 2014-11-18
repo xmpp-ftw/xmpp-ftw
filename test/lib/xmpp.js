@@ -297,13 +297,64 @@ describe('FTW', function() {
         })
         
         it('Handles login failure as expected', function(done) {
-            socket.on('xmpp.error', function(error) {
+            socket.once('xmpp.error', function(error) {
                 error.description.should.equal(ftw.error.message.AUTHENTICATION_FAIL)
                 error.type.should.equal(ftw.error.type.AUTH)
                 error.condition.should.equal(ftw.error.condition.LOGIN_FAIL)
                 done()
             })
             ftw.handleError('XMPP authentication failure')
+        })
+        
+    })
+    
+    describe('Errors', function() {
+        
+        var errorMessages = require('../../lib/utils/errors')
+        
+        it('Sends expected registration fail message', function(done) {
+            socket.once('xmpp.error', function(error) {
+                error.type.should.equal(errorMessages.type.AUTH)
+                error.condition
+                    .should.equal(errorMessages.condition.REGISTRATION_FAIL)
+                error.description.should.equal(ftw.REGISTRATION_ERROR)
+                done()
+            })
+            ftw.handleError({ message: ftw.REGISTRATION_ERROR })
+        })
+        
+        it('Sends expected authentication fail message', function(done) {
+            socket.once('xmpp.error', function(error) {
+                error.type.should.equal(errorMessages.type.AUTH)
+                error.condition.should.equal(errorMessages.condition.LOGIN_FAIL)
+                error.description
+                    .should.equal(errorMessages.message.AUTHENTICATION_FAIL)
+                done()
+            })
+            ftw.handleError(ftw.AUTHENTICATION_ERROR)
+        })
+        
+        it('Sends expected disconnection fail message', function(done) {
+            socket.once('xmpp.error', function(error) {
+                error.type.should.equal(errorMessages.type.CONNECTION)
+                error.condition.should.equal(errorMessages.condition.DISCONNECTED)
+                error.description
+                    .should.equal(errorMessages.message.DISCONNECTED)
+                done()
+            })
+            ftw.handleError(errorMessages.condition.DISCONNECTED)
+        })
+        
+        it('Sends expected not connected message', function(done) {
+            socket.once('xmpp.error', function(error) {
+                error.type.should.equal(errorMessages.type.CONNECTION)
+                error.condition
+                    .should.equal(errorMessages.condition.NOT_CONNECTED)
+                error.description
+                    .should.equal(errorMessages.message.NOT_CONNECTED)
+                done()
+            })
+            ftw.handleError(errorMessages.condition.NOT_CONNECTED)
         })
         
     })
