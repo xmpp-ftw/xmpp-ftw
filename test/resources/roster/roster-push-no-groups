@@ -3,6 +3,6 @@
     to='alice@wonderland.lit/rabbithole'
     type='set'>
    <query xmlns='jabber:iq:roster'>
-       <item jid='mapbot@wonderland.lit' name='Alice' subscription='both' />
+       <item jid='mapbot@wonderland.lit' name='Alice' subscription='both' ask='subscribe' />
    </query>
 </iq>

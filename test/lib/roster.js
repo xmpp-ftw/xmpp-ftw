@@ -70,6 +70,7 @@ describe('Roster', function() {
                     })
                     data.subscription.should.equal('both')
                     should.not.exist(data.groups)
+                    data.ask.should.equal('subscribe')
                     done()
                 })
                 roster.handle(helper.getStanza('roster/roster-push-no-groups'))

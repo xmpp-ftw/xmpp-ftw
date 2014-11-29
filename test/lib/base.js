@@ -27,6 +27,14 @@ describe('Base', function() {
         base.init(manager)
     })
 
+    it('Handles nothing', function() {
+        should(base.handles()).be.false
+    })
+
+    it('Handle(s) nothing', function() {
+        should(base.handle()).be.false
+    })
+
     describe('Stanza ID', function() {
 
         it('Sets a UUID as stanza ID', function() {

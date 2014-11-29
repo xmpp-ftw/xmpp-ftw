@@ -43,16 +43,6 @@ module.exports = function(grunt) {
             done()
         })
     })
-
-    grunt.event.on('coverage', function(lcov, done){
-        require('coveralls').handleInput(lcov, function(error) {
-            if (error) {
-                console.log(error)
-                return done(error)
-            }
-            done()
-        })
-    })
     
     // Load the plugins
     grunt.loadNpmTasks('grunt-contrib-jshint')
