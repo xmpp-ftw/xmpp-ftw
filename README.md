@@ -72,17 +72,17 @@ If you want to run xmpp-ftw server side (e.g. to write a bot) then this should b
 ```javascript
 var xmppFtw = require('xmpp-ftw')
 var Emitter = require('events').EventEmitter
- 
+
 var Socket = function() {
-   this.server = new Emitter()
-   this.client = new Emitter()
-   var self = this
-   this.server.send = function(event, data, rsm, callback) {
-       self.client.emit(event, data, rsm, callback)
-   }
-   this.client.send = function(event, data, callback) {
-       self.server.emit(event, data, callback)
-   }
+    this.server = new Emitter()
+    this.client = new Emitter()
+    var self = this
+    this.server.send = function(event, data, rsm, callback) {
+        self.client.emit(event, data, rsm, callback)
+    }
+    this.client.send = function(event, data, callback) {
+        self.server.emit(event, data, callback)
+    }
 }
 Socket.prototype.on = function(event, data, rsm) {
     this.server.on(event, data, rsm)
@@ -93,21 +93,27 @@ Socket.prototype.send = function(event, data, callback) {
 Socket.prototype.removeAllListeners = function(event) {
     this.server.removeAllListeners(event)
 }
- 
+
 var socket = new Socket()
 var client = new xmppFtw.Xmpp(socket)
-
-var client = new xmppFtw.Xmpp(socket)
-socket.on('xmpp.connection', function(data) {
-    console.log('Conected', data)
+socket.client.on('xmpp.connection', function (data) {
+    console.log('Connected', data)
 })
-socket.client.on('xmpp.error', function(error) {
+socket.client.on('xmpp.error', function (error) {
     console.log('error', error)
 })
-socket.client.on('xmpp.error.client', function(error) {
+socket.client.on('xmpp.error.client', function (error) {
     console.log('client error', error)
 })
-socket.client.send('xmpp.login', { login: details, here: true })
+socket.client.send('xmpp.login', { login: 'detiails', here: true })
+socket.client.send(
+    'xmpp.chat.message',
+    {
+        to: 'aother@user.com',
+        content: 'Hello world'
+    },
+    function (error, data) { console.log(error, data) }
+)
 ```
 
 # License
@@ -118,7 +124,3 @@ License is Apache 2.0, please let me know if this doesn't suit.
 
 * Strophe http://strophe.im/
 * Stanza.io https://github.com/legastero/stanza.io
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/xmpp-ftw/xmpp-ftw/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
