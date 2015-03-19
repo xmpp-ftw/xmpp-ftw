@@ -160,6 +160,19 @@ describe('Presence', function() {
             socket.send('xmpp.presence', data)
         })
 
+        it('Handles no data payload', function(done) {
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('presence').should.be.true
+                should.not.exist(stanza.attrs.type)
+                should.not.exist(stanza.attrs.to)
+                should.not.exist(stanza.getChild('status'))
+                should.not.exist(stanza.getChild('priority'))
+                should.not.exist(stanza.getChild('show'))
+                done()
+            })
+            socket.send('xmpp.presence')
+        })
+
         describe('Subscribe stanzas', function() {
 
             it('Returns error when no \'to\' value provided', function(done) {
