@@ -312,7 +312,7 @@ describe('FTW', function() {
                 domain: 'exmaple.com',
                 resource: 'mobile'
             }
-            ftw.on('online', function(data) {
+            ftw.on('client:online', function(data) {
                 data.jid.should.equal(jid)
                 done()
             })
