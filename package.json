@@ -1,14 +1,18 @@
 {
   "name": "xmpp-ftw",
+<<<<<<< HEAD
   "version": "1.16.7",
+=======
+  "version": "1.16.9",
+>>>>>>> 30efbac894177f14e2be01a01a72e6fb0ceca628
   "description": "XMPP-FTW (For the Web/Win) ::: Powerful XMPP, simple JSON",
   "main": "index.js",
   "dependencies": {
     "debounce": "^1.0.0",
-    "ltx": "^0.5.2",
+    "ltx": "^0.7.2",
     "node-uuid": "~1.4.1",
-    "node-xmpp-client": "1.0.0-alpha17",
-    "node-xmpp-core": "1.0.0-alpha10"
+    "node-xmpp-client": "1.0.0-alpha18",
+    "node-xmpp-core": "1.0.0-alpha11"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
