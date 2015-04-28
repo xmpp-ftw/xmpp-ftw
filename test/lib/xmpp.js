@@ -305,6 +305,20 @@ describe('FTW', function() {
             })
             ftw.handleError('XMPP authentication failure')
         })
+
+        it('Emits online event once online', function(done) {
+            var jid = {
+                local: 'test',
+                domain: 'exmaple.com',
+                resource: 'mobile'
+            }
+            ftw.on('online', function(data) {
+                data.jid.should.equal(jid)
+                done()
+            })
+            ftw.fullJid = jid
+            ftw.online()
+        })
         
     })
     
