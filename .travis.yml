@@ -1,14 +1,17 @@
-before_install:
-  - sudo apt-get install libicu-dev
-  - npm i -g npm
-  # Workaround for a permissions issue with Travis virtual machine images
-  # that breaks Python's multiprocessing:
-  # https://github.com/travis-ci/travis-cookbooks/issues/155
-  - sudo rm -rf /dev/shm
-  - sudo ln -s /run/shm /dev/shm
-before_script:
-  - npm install -g grunt-cli
+sudo: false
+
 language: node_js
+
 node_js:
-  - "0.11"
-  - "0.10"
+  - '0.10'
+  - '0.12'
+  - '4.0'
+  - '4.1'
+  - '4.2'
+  - 'stable'
+
+before_script:
+  - npm install -g standard
+
+after_script:
+  - npm run coveralls
