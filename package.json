@@ -11,7 +11,7 @@
     "node-xmpp-core": "1.0.0-alpha11"
   },
   "devDependencies": {
-    "coveralls": "^2.11.2",
+    "coveralls": "^2.11.4",
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-mocha-cli": "~1.4.0",
     "grunt-mocha-istanbul": "^2.2.0",
