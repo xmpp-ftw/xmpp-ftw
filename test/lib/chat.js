@@ -520,7 +520,7 @@ describe('Chat', function() {
                 socket.on('xmpp.chat.message', function(data) {
                     data.id.should.equal('good1')
                     data.replace.should.equal('bad1')
-                    data.content.should.include('through yonder window')
+                    data.content.should.containEql('through yonder window')
                     done()
                 })
                 chat.handle(helper.getStanza('chat/message-correction'))
