@@ -1,17 +1,11 @@
-sudo: false
-
-language: node_js
-
-node_js:
-  - '0.10'
-  - '0.12'
-  - '4.0'
-  - '4.1'
-  - '4.2'
-  - 'stable'
-
 before_script:
-  - npm install -g standard
-
-after_script:
-  - npm run coveralls
+  - npm install -g grunt-cli
+language: node_js
+sudo: false
+node_js:
+  - "0.11"
+  - "0.10"
+  - "0.12"
+  - "4.2"
+  - "iojs"
+  - "stable"
