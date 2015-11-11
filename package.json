@@ -8,7 +8,7 @@
     "ltx": "^2.0.2",
     "node-uuid": "~1.4.1",
     "node-xmpp-client": "2.1.0",
-    "node-xmpp-core": "4.1.0"
+    "node-xmpp-core": "4.2.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
