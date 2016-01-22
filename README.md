@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/xmpp-ftw/xmpp-ftw.png?label=ready&title=Ready)](https://waffle.io/xmpp-ftw/xmpp-ftw)
 # XMPP-FTW (For The Web/Win)
 
 The goal of this project is to make XMPP really simple to use for developers. This module takes away all of the XML 
