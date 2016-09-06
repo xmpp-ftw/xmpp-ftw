@@ -7,16 +7,16 @@ and pass in as a connection.
 
 # Try it out...
 
-The code is now up and running at https://xmpp-ftw.jit.su so you can try it out. Be aware that this 
-setup is only for trying xmpp-ftw out and may be slow as we need to go client ↔ nodejitsu (east coast US) ↔  your XMPP server and back each time.
+The code is now up and running at http://xmpp-ftw.org so you can try it out. Be aware that this 
+setup is only for trying xmpp-ftw out and may be slow as we need to go client ↔ heroku (east coast US) ↔  your XMPP server and back each time.
 
-* https://xmpp-ftw.jit.su/manual -- XMPP-FTW manual
-* https://xmpp-ftw.jit.su/demo -- Awesome demo tool, generated from manual
-* <del>https://xmpp-ftw.jit.su/chat</del> -- Old chat client, no longer updated
+* http://xmpp-ftw.org/manual -- XMPP-FTW manual
+* http://xmpp-ftw.org/demo -- Awesome demo tool, generated from manual
+* <del>http://xmpp-ftw.org/chat</del> -- Old chat client, no longer updated
 
 The version running on the website matches 'master' branch here and auto-deploys with commits.
 
-Also check out the [xmpp-ftw-demo](https://github.com/xmpp-ftw/xmpp-ftw-demo) repository which is what https://xmpp-ftw.jit.su is running.
+Also check out the [xmpp-ftw-demo](https://github.com/xmpp-ftw/xmpp-ftw-demo) repository which is what http://xmpp-ftw.org is running.
 
 # Blog posts/Talks
 
