@@ -39,6 +39,8 @@ Also check out the [xmpp-ftw-demo](https://github.com/xmpp-ftw/xmpp-ftw-demo) re
 
 [![Coverage Status](https://coveralls.io/repos/xmpp-ftw/xmpp-ftw/badge.png?branch=master)](https://coveralls.io/r/xmpp-ftw/xmpp-ftw?branch=master)
 
+[![Known Vulnerabilities](https://snyk.io/test/npm/xmpp-ftw/badge.svg)](https://snyk.io/test/npm/xmpp-ftw)
+
 # Instructions
 
 * npm i xmpp-ftw
