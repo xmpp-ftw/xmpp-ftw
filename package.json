@@ -19,7 +19,7 @@
     "grunt-mocha-istanbul": "^5.0.2",
     "istanbul": "^0.4.0",
     "mocha": "~3.0.2",
-    "nodemon": "~1.10.2",
+    "nodemon": "~1.11.0",
     "should": "~11.1.0"
   },
   "repository": {
