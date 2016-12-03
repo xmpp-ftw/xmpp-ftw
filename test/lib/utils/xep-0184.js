@@ -1,8 +1,8 @@
 'use strict'
 /* eslint-env mocha */
 
-var receipt = require('../../../index').utils['xep-0184'],
-  ltx = require('ltx')
+const receipt = require('../../../index').utils['xep-0184']
+const ltx = require('ltx')
 
 /* jshint -W030 */
 describe('XEP-0184', function () {
@@ -11,7 +11,7 @@ describe('XEP-0184', function () {
   })
 
   describe('Build a receipt element', function () {
-    var stanza
+    let stanza = null
 
     beforeEach(function () {
       stanza = new ltx.Element('message')
@@ -30,12 +30,12 @@ describe('XEP-0184', function () {
   })
 
   describe('Parse an incoming message with receipt request', function () {
-    var stanza = ltx.parse(
-            '<message><received xmlns="' + receipt.NS + '" id="5" /></message>'
-        )
+    const stanza = ltx.parse(
+      `<message><received xmlns="${receipt.NS}" id="5" /></message>`
+    )
 
     it('Adds receipt data', function () {
-      var data = {}
+      const data = {}
       receipt.parse(stanza, data)
       data.id.should.equal('5')
     })

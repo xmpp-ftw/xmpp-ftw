@@ -1,7 +1,7 @@
 'use strict'
 /* eslint-env mocha */
 
-var carbons = require('../../../index').utils['xep-0280']
+const carbons = require('../../../index').utils['xep-0280']
 
 /* jshint -W030 */
 describe('XEP-0280 Carbons', function () {

@@ -31,12 +31,12 @@ describe('Presence', function () {
     })
 
     it('Should confirm it can handle presence stanzas', function () {
-      var item = ltx.parse('<presence />')
+      const item = ltx.parse('<presence />')
       presence.handles(item).should.be.true
     })
 
     it('Can handle error stanzas', function (done) {
-      socket.once('xmpp.presence.error', function (data) {
+      socket.once('xmpp.presence.error', (data) => {
         data.error.should.eql('gone')
         data.from.user.should.equal('mercutio')
         data.from.domain.should.equal('example.org')
@@ -47,18 +47,18 @@ describe('Presence', function () {
     })
 
     it('Can handle error stanza with no \'from\'', function (done) {
-      socket.once('xmpp.presence.error', function (data) {
+      socket.once('xmpp.presence.error', (data) => {
         data.error.should.eql('gone')
         should.not.exist(data.from)
         done()
       })
-      var stanza = helper.getStanza('presence/error')
+      const stanza = helper.getStanza('presence/error')
       delete stanza.attrs.from
       presence.handle(stanza)
     })
 
     it('Can handle subscription requests', function (done) {
-      socket.once('xmpp.presence.subscribe', function (data) {
+      socket.once('xmpp.presence.subscribe', (data) => {
         data.from.user.should.equal('montague')
         data.from.domain.should.equal('example.net')
         should.not.exist(data.from.resource)
@@ -68,7 +68,7 @@ describe('Presence', function () {
     })
 
     it('Can handle subscription requests with nickname', function (done) {
-      socket.once('xmpp.presence.subscribe', function (data) {
+      socket.once('xmpp.presence.subscribe', (data) => {
         data.nick.should.equal('monty')
         done()
       })
@@ -76,7 +76,7 @@ describe('Presence', function () {
     })
 
     it('Can handle another user going offline', function (done) {
-      socket.once('xmpp.presence', function (data) {
+      socket.once('xmpp.presence', (data) => {
         data.show.should.equal('offline')
         data.from.user.should.equal('juliet')
         data.from.domain.should.equal('example.com')
@@ -87,7 +87,7 @@ describe('Presence', function () {
     })
 
     it('Should be able to receive a blank presence stanza', function (done) {
-      socket.once('xmpp.presence', function (data) {
+      socket.once('xmpp.presence', (data) => {
         data.should.eql({ from: {
           user: 'juliet',
           domain: 'example.com',
@@ -99,7 +99,7 @@ describe('Presence', function () {
     })
 
     it('Should handle standard presence elements', function (done) {
-      socket.once('xmpp.presence', function (data) {
+      socket.once('xmpp.presence', (data) => {
         data.from.should.eql({
           user: 'juliet',
           domain: 'example.com',
@@ -116,7 +116,7 @@ describe('Presence', function () {
 
   describe('Can send presence stanzas', function () {
     it('Can send a minimal presence stanza', function (done) {
-      xmpp.once('stanza', function (stanza) {
+      xmpp.once('stanza', (stanza) => {
         stanza.root().toString().should.equal('<presence/>')
         done()
       })
@@ -124,7 +124,7 @@ describe('Presence', function () {
     })
 
     it('Can send offline stanza', function (done) {
-      xmpp.once('stanza', function (stanza) {
+      xmpp.once('stanza', (stanza) => {
         stanza.is('presence').should.be.true
         stanza.attrs.type.should.equal('unavailable')
         done()
@@ -133,30 +133,30 @@ describe('Presence', function () {
     })
 
     it('Can send full presence stanza', function (done) {
-      var data = {
+      const data = {
         type: 'should-not-exist',
         to: 'juliet@example.com/balcony',
         status: 'Looking for Romeo...',
         priority: '100',
         show: 'chat'
       }
-      xmpp.once('stanza', function (stanza) {
+      xmpp.once('stanza', (stanza) => {
         stanza.is('presence').should.be.true
         should.not.exist(stanza.attrs.type)
         stanza.attrs.to.should.equal(data.to)
         stanza.getChild('status').getText()
-                    .should.equal(data.status)
+          .should.equal(data.status)
         stanza.getChild('priority').getText()
-                    .should.equal(data.priority)
+          .should.equal(data.priority)
         stanza.getChild('show').getText()
-                    .should.equal(data.show)
+          .should.equal(data.show)
         done()
       })
       socket.send('xmpp.presence', data)
     })
 
     it('Handles no data payload', function (done) {
-      xmpp.once('stanza', function (stanza) {
+      xmpp.once('stanza', (stanza) => {
         stanza.is('presence').should.be.true
         should.not.exist(stanza.attrs.type)
         should.not.exist(stanza.attrs.to)
@@ -170,10 +170,8 @@ describe('Presence', function () {
 
     describe('Subscribe stanzas', function () {
       it('Returns error when no \'to\' value provided', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (data) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (data) => {
           data.type.should.equal('modify')
           data.condition.should.equal('client-error')
           data.description.should.equal('Missing \'to\' key')
@@ -185,25 +183,23 @@ describe('Presence', function () {
       })
 
       it('Can send subscribe stanza', function (done) {
-        var to = 'juliet@example.com/balcony'
-        xmpp.once('stanza', function (stanza) {
+        const to = 'juliet@example.com/balcony'
+        xmpp.once('stanza', (stanza) => {
           stanza.is('presence').should.be.true
           stanza.attrs.to.should.equal(to)
           stanza.attrs.type.should.equal('subscribe')
           stanza.attrs.from.should.equal(manager.jid)
           done()
         })
-        socket.send('xmpp.presence.subscribe', { to: to })
+        socket.send('xmpp.presence.subscribe', { to })
       }
             )
     })
 
     describe('Subscribed stanzas', function () {
       it('Returns error when no \'to\' value provided', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (data) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (data) => {
           data.type.should.equal('modify')
           data.condition.should.equal('client-error')
           data.description.should.equal('Missing \'to\' key')
@@ -215,25 +211,23 @@ describe('Presence', function () {
       })
 
       it('Can send subscribed stanza', function (done) {
-        var to = 'juliet@example.com/balcony'
-        xmpp.once('stanza', function (stanza) {
+        const to = 'juliet@example.com/balcony'
+        xmpp.once('stanza', (stanza) => {
           stanza.is('presence').should.be.true
           stanza.attrs.to.should.equal(to)
           stanza.attrs.type.should.equal('subscribed')
           stanza.attrs.from.should.equal(manager.jid)
           done()
         })
-        socket.send('xmpp.presence.subscribed', { to: to })
+        socket.send('xmpp.presence.subscribed', { to })
       }
             )
     })
 
     describe('Unsubscribe stanzas', function () {
       it('Returns error when no \'to\' value provided', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (data) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (data) => {
           data.type.should.equal('modify')
           data.condition.should.equal('client-error')
           data.description.should.equal('Missing \'to\' key')
@@ -245,25 +239,23 @@ describe('Presence', function () {
       })
 
       it('Can send unsubscribe stanza', function (done) {
-        var to = 'juliet@example.com/balcony'
-        xmpp.once('stanza', function (stanza) {
+        const to = 'juliet@example.com/balcony'
+        xmpp.once('stanza', (stanza) => {
           stanza.is('presence').should.be.true
           stanza.attrs.to.should.equal(to)
           stanza.attrs.type.should.equal('unsubscribe')
           stanza.attrs.from.should.equal(manager.jid)
           done()
         })
-        socket.send('xmpp.presence.unsubscribe', { to: to })
+        socket.send('xmpp.presence.unsubscribe', { to })
       }
             )
     })
 
     describe('Unsubscribed stanzas', function () {
       it('Returns error when no \'to\' value provided', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (data) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (data) => {
           data.type.should.equal('modify')
           data.condition.should.equal('client-error')
           data.description.should.equal('Missing \'to\' key')
@@ -275,24 +267,22 @@ describe('Presence', function () {
       })
 
       it('Can send unsubscribed stanza', function (done) {
-        var to = 'juliet@example.com/balcony'
-        xmpp.once('stanza', function (stanza) {
+        const to = 'juliet@example.com/balcony'
+        xmpp.once('stanza', (stanza) => {
           stanza.is('presence').should.be.true
           stanza.attrs.to.should.equal(to)
           stanza.attrs.type.should.equal('unsubscribed')
           stanza.attrs.from.should.equal(manager.jid)
           done()
         })
-        socket.send('xmpp.presence.unsubscribed', { to: to })
+        socket.send('xmpp.presence.unsubscribed', { to })
       }
             )
     })
 
     it('Presence request errors when missing \'to\'', function (done) {
-      xmpp.once('stazna', function () {
-        done('Unexpected outgoing stanza')
-      })
-      socket.once('xmpp.error.client', function (data) {
+      xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+      socket.once('xmpp.error.client', (data) => {
         data.type.should.equal('modify')
         data.condition.should.equal('client-error')
         data.description.should.equal('Missing \'to\' key')
@@ -304,18 +294,18 @@ describe('Presence', function () {
     })
 
     it('Can request a user\'s presence', function (done) {
-      var to = 'juliet@example.com/balcony'
-      xmpp.once('stanza', function (stanza) {
+      const to = 'juliet@example.com/balcony'
+      xmpp.once('stanza', (stanza) => {
         stanza.is('presence').should.be.true
         stanza.attrs.from.should.equal(manager.jid)
         stanza.attrs.to.should.equal(to)
         done()
       })
-      socket.send('xmpp.presence.get', { to: to })
+      socket.send('xmpp.presence.get', { to })
     })
 
     it('Sends \'unavailable\' presence when asked', function (done) {
-      xmpp.once('stanza', function (stanza) {
+      xmpp.once('stanza', (stanza) => {
         stanza.is('presence').should.be.true
         stanza.attrs.type.should.equal('unavailable')
         done()
@@ -324,7 +314,7 @@ describe('Presence', function () {
     })
 
     it('Sends \'unavailable\' when going offline', function (done) {
-      xmpp.once('stanza', function (stanza) {
+      xmpp.once('stanza', (stanza) => {
         stanza.is('presence').should.be.true
         stanza.attrs.type.should.equal('unavailable')
         done()
@@ -336,11 +326,9 @@ describe('Presence', function () {
   describe('XEP-0115 Entity capibilities', function () {
     describe('Sending', function () {
       it('Errors if \'client\' key is not an object', function (done) {
-        var request = { client: false }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        const request = { client: false }
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('\'client\' key must be an object')
@@ -352,11 +340,9 @@ describe('Presence', function () {
       })
 
       it('Errors if missing \'node\' key', function (done) {
-        var request = { client: {} }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        const request = { client: {} }
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing \'node\' key')
@@ -368,11 +354,9 @@ describe('Presence', function () {
       })
 
       it('Errors if missing \'ver\' key', function (done) {
-        var request = { client: { node: 'node-value' } }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        const request = { client: { node: 'node-value' } }
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing \'ver\' key')
@@ -384,13 +368,11 @@ describe('Presence', function () {
       })
 
       it('Errors if missing \'hash\' key', function (done) {
-        var request = {
+        const request = {
           client: { node: 'node-value', ver: 'ver-value' }
         }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing \'hash\' key')
@@ -402,16 +384,16 @@ describe('Presence', function () {
       })
 
       it('Sends expected stanza', function (done) {
-        var data = {
+        const data = {
           client: {
             node: 'node-value',
             ver: 'ver-value',
             hash: 'hash-value'
           }
         }
-        xmpp.once('stanza', function (stanza) {
+        xmpp.once('stanza', (stanza) => {
           stanza.is('presence').should.be.true
-          var c = stanza.getChild('c', presence.NS_ENTITY_CAPABILITIES)
+          const c = stanza.getChild('c', presence.NS_ENTITY_CAPABILITIES)
           c.should.exist
           c.attrs.node.should.equal(data.client.node)
           c.attrs.ver.should.equal(data.client.ver)
@@ -424,7 +406,7 @@ describe('Presence', function () {
 
     describe('Receiving', function () {
       it('Adds entity capability data', function (done) {
-        socket.once('xmpp.presence', function (data) {
+        socket.once('xmpp.presence', (data) => {
           data.client.should.exist
           data.client.ver.should.equal('ver-value')
           data.client.hash.should.equal('hash-value')

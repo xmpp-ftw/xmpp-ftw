@@ -1,8 +1,8 @@
 'use strict'
 /* eslint-env mocha */
 
-var correction = require('../../../index').utils['xep-0308'],
-  ltx = require('ltx')
+const correction = require('../../../index').utils['xep-0308']
+const ltx = require('ltx')
 
 /* jshint -W030 */
 describe('XEP-0308', function () {
@@ -11,7 +11,7 @@ describe('XEP-0308', function () {
   })
 
   describe('Build a replace element', function () {
-    var stanza
+    let stanza = null
 
     beforeEach(function () {
       stanza = new ltx.Element('message')
@@ -20,17 +20,19 @@ describe('XEP-0308', function () {
     it('Adds replace element', function () {
       correction.build(stanza, { replace: '1234' })
       stanza.root().getChild('replace', correction.NS)
-                .should.exist
+        .should.exist
       stanza.root().getChild('replace').attrs.id
-                .should.equal('1234')
+        .should.equal('1234')
     })
   })
 
   describe('Parse an incoming message with correction request', function () {
-    var stanza = ltx.parse('<message><replace xmlns="' + correction.NS + '" id="5" /></message>')
+    const stanza = ltx.parse(
+      `<message><replace xmlns="${correction.NS}" id="5" /></message>`
+    )
 
     it('Adds correction data', function () {
-      var data = {}
+      const data = {}
       correction.parse(stanza, data)
       data.replace.should.equal('5')
     })

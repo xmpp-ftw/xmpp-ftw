@@ -20,15 +20,13 @@ describe('Roster', function () {
       socket: socket,
       client: xmpp,
       jid: 'bottom@dreams.org',
-      trackId: function (id, callback) {
+      trackId: (id, callback) => {
         if (typeof id !== 'object') {
           throw new Error('Stanza protection ID not added')
         }
         this.callback = callback
       },
-      makeCallback: function (error, data) {
-        this.callback(error, data)
-      }
+      makeCallback: (error, data) => this.callback(error, data)
     }
     roster = new Roster()
     roster.init(manager)
@@ -44,20 +42,20 @@ describe('Roster', function () {
     })
 
     it('Should confirm it can handle roster IQs', function () {
-      var request = ltx.parse(`<iq><query xmlns="${roster.NS}"/></iq>`)
+      const request = ltx.parse(`<iq><query xmlns="${roster.NS}"/></iq>`)
       roster.handles(request).should.be.true
     })
 
     it('Should return false from \'handle\' with non-set stanza', function () {
-      var request = ltx.parse(
-                '<iq type="get"><query xmlns="' + roster.NS + '"/></iq>'
-            )
+      const request = ltx.parse(
+        `<iq type="get"><query xmlns="${roster.NS}"/></iq>`
+      )
       roster.handle(request).should.be.false
     })
 
     describe('Roster push', function () {
       it('Handles no groups', function (done) {
-        socket.once('xmpp.roster.push', function (data) {
+        socket.once('xmpp.roster.push', (data) => {
           data.jid.should.eql({
             user: 'mapbot',
             domain: 'wonderland.lit'
@@ -72,7 +70,7 @@ describe('Roster', function () {
       })
 
       it('Can handle roster push', function (done) {
-        socket.once('xmpp.roster.push', function (data) {
+        socket.once('xmpp.roster.push', (data) => {
           data.jid.should.eql({
             user: 'mapbot',
             domain: 'wonderland.lit'
@@ -89,10 +87,8 @@ describe('Roster', function () {
   describe('Can send roster IQ stanzas', function () {
     describe('Add a user to roster', function () {
       it('Returns error when no jid provided', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.send('xmpp.roster.add', {}, function (error, success) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.send('xmpp.roster.add', {}, (error, success) => {
           should.not.exist(success)
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
@@ -103,10 +99,8 @@ describe('Roster', function () {
       })
 
       it('Errors when no callback provided', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing callback')
@@ -117,10 +111,8 @@ describe('Roster', function () {
       })
 
       it('Errors when non-function callback provided', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing callback')
@@ -131,15 +123,15 @@ describe('Roster', function () {
       })
 
       it('Sends expected add stanza', function (done) {
-        var jid = 'alice@wonderland.lit'
-        xmpp.once('stanza', function (stanza) {
+        const jid = 'alice@wonderland.lit'
+        xmpp.once('stanza', (stanza) => {
           stanza.is('iq').should.be.true
           stanza.attrs.type.should.equal('set')
           should.exist(stanza.attrs.id)
           manager.makeCallback(ltx.parse('<iq type="result" />'))
         }
                 )
-        var callback = function (error, success) {
+        const callback = (error, success) => {
           should.not.exist(error)
           success.should.be.true
           done()
@@ -148,28 +140,28 @@ describe('Roster', function () {
       })
 
       it('Can handle roster add with additional data', function (done) {
-        var request = {
+        const request = {
           jid: 'alice@wonderland.lit',
           groups: [ 'group1', 'group2' ],
           name: 'Alice'
         }
-        xmpp.once('stanza', function (stanza) {
+        xmpp.once('stanza', (stanza) => {
           stanza.is('iq').should.be.true
           stanza.attrs.type.should.equal('set')
           should.exist(stanza.attrs.id)
-          var query = stanza.getChild('query', roster.NS)
-          var item = query.getChild('item')
+          const query = stanza.getChild('query', roster.NS)
+          const item = query.getChild('item')
           item.attrs.jid.should.equal(request.jid)
           item.attrs.name.should.equal(request.name)
           item.getChildren('group').length.should.equal(2)
           item.getChildren('group')[0].getText()
-                            .should.equal('group1')
+            .should.equal('group1')
           item.getChildren('group')[1].getText()
-                            .should.equal('group2')
+            .should.equal('group2')
           manager.makeCallback(ltx.parse('<iq type="result" />'))
         }
                 )
-        var callback = function (error, success) {
+        const callback = (error, success) => {
           should.not.exist(error)
           success.should.be.true
           done()
@@ -178,16 +170,16 @@ describe('Roster', function () {
       })
 
       it('Can handle error response', function (done) {
-        var jid = 'alice@wonderland.lit'
-        xmpp.once('stanza', function (stanza) {
+        const jid = 'alice@wonderland.lit'
+        xmpp.once('stanza', (stanza) => {
           stanza.is('iq').should.be.true
           stanza.attrs.type.should.equal('set')
           should.exist(stanza.attrs.id)
-          var query = stanza.getChild('query', roster.NS)
+          const query = stanza.getChild('query', roster.NS)
           query.getChild('item').attrs.jid.should.equal(jid)
           manager.makeCallback(helper.getStanza('iq-error'))
         })
-        var callback = function (error, success) {
+        const callback = (error, success) => {
           should.not.exist(success)
           error.should.eql({
             type: 'cancel',
@@ -205,7 +197,7 @@ describe('Roster', function () {
 
     describe('Roster retrieval', function () {
       it('Can get roster', function (done) {
-        xmpp.once('stanza', function (stanza) {
+        xmpp.once('stanza', (stanza) => {
           stanza.is('iq').should.be.true
           stanza.attrs.type.should.equal('get')
           should.exist(stanza.attrs.id)
@@ -215,7 +207,7 @@ describe('Roster', function () {
           manager.makeCallback(helper.getStanza('roster/get'))
         }
                 )
-        var callback = function (error, roster) {
+        const callback = (error, roster) => {
           should.not.exist(error)
           roster.length.should.equal(2)
           roster[0].jid.should.eql({
@@ -240,10 +232,8 @@ describe('Roster', function () {
       })
 
       it('Errors when no callback provided', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing callback')
@@ -255,10 +245,8 @@ describe('Roster', function () {
       })
 
       it('Errors when non-function callback provided', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing callback')
@@ -270,7 +258,7 @@ describe('Roster', function () {
       })
 
       it('Can handle error response', function (done) {
-        xmpp.once('stanza', function (stanza) {
+        xmpp.once('stanza', (stanza) => {
           stanza.is('iq').should.be.true
           stanza.attrs.type.should.equal('get')
           should.exist(stanza.attrs.id)
@@ -278,7 +266,7 @@ describe('Roster', function () {
           manager.makeCallback(helper.getStanza('iq-error'))
         }
                     )
-        var callback = function (error, success) {
+        const callback = (error, success) => {
           should.not.exist(success)
           error.should.eql({
             type: 'cancel',
@@ -296,10 +284,8 @@ describe('Roster', function () {
 
     describe('Edit roster', function () {
       it('Not providing \'jid\' returns error', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.send('xmpp.roster.edit', {}, function (error, success) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.send('xmpp.roster.edit', {}, (error, success) => {
           should.not.exist(success)
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
@@ -311,11 +297,9 @@ describe('Roster', function () {
       })
 
       it('Not providing \'groups\' return error', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        var request = { jid: 'juliet@example.com' }
-        socket.send('xmpp.roster.edit', request, function (error, success) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        const request = { jid: 'juliet@example.com' }
+        socket.send('xmpp.roster.edit', request, (error, success) => {
           should.not.exist(success)
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
@@ -327,14 +311,12 @@ describe('Roster', function () {
       })
 
       it('Not passing array for \'groups\' returns error', function (done) {
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        var request = {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        const request = {
           jid: 'juliet@example.com',
           groups: { 0: 'group1' }
         }
-        socket.send('xmpp.roster.edit', request, function (error, success) {
+        socket.send('xmpp.roster.edit', request, (error, success) => {
           should.not.exist(success)
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
@@ -346,19 +328,19 @@ describe('Roster', function () {
       })
 
       it('Handles error response stanza', function (done) {
-        var request = {
+        const request = {
           jid: 'alice@wonderland.lit',
           groups: [ 'group1', 'group2' ]
         }
-        xmpp.once('stanza', function (stanza) {
+        xmpp.once('stanza', (stanza) => {
           stanza.is('iq').should.be.true
           stanza.attrs.type.should.equal('set')
           should.exist(stanza.attrs.id)
-          var query = stanza.getChild('query', roster.NS)
+          const query = stanza.getChild('query', roster.NS)
           query.getChild('item').attrs.jid.should.equal(request.jid)
           manager.makeCallback(helper.getStanza('iq-error'))
         })
-        var callback = function (error, success) {
+        const callback = (error, success) => {
           should.not.exist(success)
           error.should.eql({
             type: 'cancel',
@@ -374,23 +356,23 @@ describe('Roster', function () {
       })
 
       it('Allows the setting of roster groups', function (done) {
-        var request = {
+        const request = {
           jid: 'alice@wonderland.lit',
           groups: [ 'group1', 'group2' ]
         }
-        xmpp.once('stanza', function (stanza) {
+        xmpp.once('stanza', (stanza) => {
           stanza.is('iq').should.be.true
           stanza.attrs.type.should.equal('set')
           should.exist(stanza.attrs.id)
-          var item = stanza.getChild('query', roster.NS)
-                            .getChild('item')
+          const item = stanza.getChild('query', roster.NS)
+            .getChild('item')
           item.attrs.jid.should.equal(request.jid)
           item.getChildren('group').length.should.equal(2)
           item.getChildren('group')[0].getText().should.equal('group1')
           item.getChildren('group')[1].getText().should.equal('group2')
           manager.makeCallback(helper.getStanza('iq-result'))
         })
-        var callback = function (error, success) {
+        const callback = (error, success) => {
           should.not.exist(error)
           success.should.be.true
           done()
@@ -399,14 +381,12 @@ describe('Roster', function () {
       })
 
       it('Errors when no callback provided', function (done) {
-        var request = {
+        const request = {
           jid: 'alice@wonderland.lit',
           groups: [ 'group1', 'group2' ]
         }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing callback')
@@ -418,14 +398,12 @@ describe('Roster', function () {
       })
 
       it('Errors when non-function callback provided', function (done) {
-        var request = {
+        const request = {
           jid: 'alice@wonderland.lit',
           groups: [ 'group1', 'group2' ]
         }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing callback')
@@ -437,32 +415,30 @@ describe('Roster', function () {
       })
 
       it('Can handle name field', function (done) {
-        var request = {
+        const request = {
           jid: 'alice@wonderland.lit',
           groups: [],
           name: 'Alice'
         }
-        xmpp.once('stanza', function (stanza) {
+        xmpp.once('stanza', (stanza) => {
           stanza.is('iq').should.be.true
           stanza.attrs.type.should.equal('set')
           should.exist(stanza.attrs.id)
-          var query = stanza.getChild('query', roster.NS)
+          const query = stanza.getChild('query', roster.NS)
           query.getChild('item').attrs.jid.should.equal(request.jid)
           query.getChild('item').attrs.name.should.equal(request.name)
           manager.makeCallback(helper.getStanza('iq-error'))
           done()
         })
-        socket.send('xmpp.roster.edit', request, function () {})
+        socket.send('xmpp.roster.edit', request, () => {})
       })
     })
   })
 
   describe('Remove a roster item', function () {
     it('Returns error when no jid provided', function (done) {
-      xmpp.once('stanza', function () {
-        done('Unexpected outgoing stanza')
-      })
-      socket.send('xmpp.roster.remove', {}, function (error, success) {
+      xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+      socket.send('xmpp.roster.remove', {}, (error, success) => {
         should.not.exist(success)
         error.type.should.equal('modify')
         error.condition.should.equal('client-error')
@@ -474,10 +450,8 @@ describe('Roster', function () {
     })
 
     it('Errors when no callback provided', function (done) {
-      xmpp.once('stanza', function () {
-        done('Unexpected outgoing stanza')
-      })
-      socket.once('xmpp.error.client', function (error) {
+      xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+      socket.once('xmpp.error.client', (error) => {
         error.type.should.equal('modify')
         error.condition.should.equal('client-error')
         error.description.should.equal('Missing callback')
@@ -489,10 +463,8 @@ describe('Roster', function () {
     })
 
     it('Errors when non-function callback provided', function (done) {
-      xmpp.once('stanza', function () {
-        done('Unexpected outgoing stanza')
-      })
-      socket.once('xmpp.error.client', function (error) {
+      xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+      socket.once('xmpp.error.client', (error) => {
         error.type.should.equal('modify')
         error.condition.should.equal('client-error')
         error.description.should.equal('Missing callback')
@@ -504,36 +476,36 @@ describe('Roster', function () {
     })
 
     it('Sends expected remove stanza', function (done) {
-      var jid = 'alice@wonderland.lit'
-      xmpp.once('stanza', function (stanza) {
+      const jid = 'alice@wonderland.lit'
+      xmpp.once('stanza', (stanza) => {
         stanza.is('iq').should.be.true
         stanza.attrs.type.should.equal('set')
         should.exist(stanza.attrs.id)
-        var item = stanza.getChild('query', roster.NS).getChild('item')
+        const item = stanza.getChild('query', roster.NS).getChild('item')
         item.should.exist
         item.attrs.jid.should.equal(jid)
         item.attrs.subscription.should.equal('remove')
         manager.makeCallback(ltx.parse('<iq type="result" />'))
       })
-      var callback = function (error, success) {
+      const callback = (error, success) => {
         should.not.exist(error)
         success.should.be.true
         done()
       }
-      socket.send('xmpp.roster.remove', { jid: jid }, callback)
+      socket.send('xmpp.roster.remove', { jid }, callback)
     })
 
     it('Can handle error response', function (done) {
-      var jid = 'alice@wonderland.lit'
-      xmpp.once('stanza', function (stanza) {
+      const jid = 'alice@wonderland.lit'
+      xmpp.once('stanza', (stanza) => {
         stanza.is('iq').should.be.true
         stanza.attrs.type.should.equal('set')
         should.exist(stanza.attrs.id)
-        var query = stanza.getChild('query', roster.NS)
+        const query = stanza.getChild('query', roster.NS)
         query.getChild('item').attrs.jid.should.equal(jid)
         manager.makeCallback(helper.getStanza('iq-error'))
       })
-      var callback = function (error, success) {
+      const callback = (error, success) => {
         should.not.exist(success)
         error.should.eql({
           type: 'cancel',
@@ -545,7 +517,7 @@ describe('Roster', function () {
         })
         done()
       }
-      socket.send('xmpp.roster.remove', { jid: jid }, callback)
+      socket.send('xmpp.roster.remove', { jid }, callback)
     })
   })
 })

@@ -34,8 +34,8 @@ describe('Base', function () {
 
   describe('Stanza ID', function () {
     it('Sets a UUID as stanza ID', function () {
-      var id = base._getId()
-      var regex = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/
+      const id = base._getId()
+      const regex = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/
       id.should.match(regex)
     })
 
@@ -51,12 +51,12 @@ describe('Base', function () {
     })
 
     it('Should generate different IDs', function () {
-      var ids = []
-      var max = 100
-      for (var i = 0; i < max + 1; i++) {
+      const ids = []
+      const max = 100
+      for (let i = 0; i < max + 1; i++) {
         ids.push(base._getId())
       }
-      for (var j = 0; j < max; j++) {
+      for (let j = 0; j < max; j++) {
         ids[j].should.not.equal(ids[j + 1])
       }
     })
@@ -64,8 +64,8 @@ describe('Base', function () {
 
   describe('Error parsing', function () {
     it('Parses a basic error', function () {
-      var stanza = helper.getStanza('error-stanzas/basic')
-      var error = base._parseError(stanza)
+      const stanza = helper.getStanza('error-stanzas/basic')
+      const error = base._parseError(stanza)
       error.type.should.equal('modify')
       error.condition.should.equal('bad-request')
       should.not.exist(error.description)
@@ -73,8 +73,8 @@ describe('Base', function () {
     })
 
     it('Parses an extended error', function () {
-      var stanza = helper.getStanza('error-stanzas/extended')
-      var error = base._parseError(stanza)
+      const stanza = helper.getStanza('error-stanzas/extended')
+      const error = base._parseError(stanza)
       error.type.should.equal('cancel')
       error.condition.should.equal('feature-not-implemented')
       should.not.exist(error.description)
@@ -86,8 +86,8 @@ describe('Base', function () {
     })
 
     it('Parses an extended error with text description', function () {
-      var stanza = helper.getStanza('error-stanzas/extended-text')
-      var error = base._parseError(stanza)
+      const stanza = helper.getStanza('error-stanzas/extended-text')
+      const error = base._parseError(stanza)
 
       error.type.should.equal('cancel')
       error.condition.should.equal('gone')
@@ -98,17 +98,17 @@ describe('Base', function () {
 
   describe('JID parsing', function () {
     it('Parses a domain', function () {
-      var jid = base._getJid('mcfly.org')
+      const jid = base._getJid('mcfly.org')
       jid.should.eql({ domain: 'mcfly.org' })
     })
 
     it('Parses a bare JID', function () {
-      var jid = base._getJid('marty@mcfly.org')
+      const jid = base._getJid('marty@mcfly.org')
       jid.should.eql({ user: 'marty', domain: 'mcfly.org' })
     })
 
     it('Parses a full JID', function () {
-      var jid = base._getJid('marty@mcfly.org/delorean')
+      const jid = base._getJid('marty@mcfly.org/delorean')
       jid.should.eql({ user: 'marty', domain: 'mcfly.org', resource: 'delorean' })
     })
   })
@@ -119,7 +119,7 @@ describe('Base', function () {
     })
 
     it('Returns cache when it has been set', function () {
-      var cache = { caching: { is: 'fun' } }
+      const cache = { caching: { is: 'fun' } }
       base.setCache(cache)._getCache().should.equal(cache)
     })
 

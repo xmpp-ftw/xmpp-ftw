@@ -1,8 +1,8 @@
 'use strict'
 /* eslint-env mocha */
 
-var delay = require('../../../index').utils['xep-0203'],
-  ltx = require('ltx')
+const delay = require('../../../index').utils['xep-0203']
+const ltx = require('ltx')
 
 /* jshint -W030 */
 describe('XEP-0203', function () {
@@ -11,7 +11,7 @@ describe('XEP-0203', function () {
   })
 
   describe('Build a chat state element', function () {
-    var stanza
+    let stanza = null
 
     beforeEach(function () {
       stanza = new ltx.Element('message')
@@ -28,21 +28,21 @@ describe('XEP-0203', function () {
     })
 
     it('Adds basic delay data', function () {
-      var stamp = '2015-10-21T16:29:00Z'
+      const stamp = '2015-10-21T16:29:00Z'
       delay.build(stanza, { when: stamp })
-      var element = stanza.getChild('delay', delay.NS)
+      const element = stanza.getChild('delay', delay.NS)
       element.should.exist
       element.attrs.stamp.should.equal(stamp)
     })
 
     it('Adds detailed delay data', function () {
-      var request = {
+      const request = {
         when: '2015-10-21T16:29:00Z',
         from: 'shakespeare.lit',
         reason: 'Offline storage'
       }
       delay.build(stanza, request)
-      var element = stanza.getChild('delay', delay.NS)
+      const element = stanza.getChild('delay', delay.NS)
       element.should.exist
       element.attrs.stamp.should.equal(request.when)
       element.attrs.from.should.equal(request.from)
@@ -51,34 +51,38 @@ describe('XEP-0203', function () {
   })
 
   describe('Parse a delay element', function () {
-    var stanza
+    let stanza = null
 
     beforeEach(function () {
-      stanza = ltx.parse('<message>' +
-                '<delay xmlns="' + delay.NS + '" ' +
-                    'stamp="2015-10-21T16:29:00Z" from="shakespeare.lit">' +
-                    'Offline storage' +
-                '</delay>' +
-                '</message>')
+      stanza = ltx.parse(
+        '<message>' +
+        `<delay xmlns="${delay.NS}" ` +
+            'stamp="2015-10-21T16:29:00Z" from="shakespeare.lit">' +
+            'Offline storage' +
+        '</delay>' +
+        '</message>'
+      )
     })
 
     it('Returns empty object if no delay element', function () {
-      var data = {}
+      const data = {}
       delay.parse(ltx.parse('<message/>'), data)
       data.should.eql({})
     })
 
     it('Should add basic delay data if available', function () {
-      var data = {}
-      stanza = ltx.parse('<message>' +
-                '<delay xmlns="' + delay.NS + '" stamp="2015-10-21T16:29:00Z" />' +
-                '</message>')
+      const data = {}
+      stanza = ltx.parse(
+        '<message>' +
+        `<delay xmlns="${delay.NS}" stamp="2015-10-21T16:29:00Z" />` +
+        '</message>'
+      )
       delay.parse(stanza, data)
       data.should.eql({ delay: { when: '2015-10-21T16:29:00Z' }})
     })
 
     it('Should add full delay data if available', function () {
-      var data = {}
+      const data = {}
       delay.parse(stanza, data)
       data.should.eql({ delay: {
         when: '2015-10-21T16:29:00Z',

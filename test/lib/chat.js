@@ -22,15 +22,13 @@ describe('Chat', function () {
       socket: socket,
       client: xmpp,
       jid: 'test@example.com',
-      trackId: function (id, callback) {
+      trackId: (id, callback) => {
         if (typeof id !== 'object') {
           throw new Error('Stanza protection ID not added')
         }
         this.callback = callback
       },
-      makeCallback: function (error, data) {
-        this.callback(error, data)
-      }
+      makeCallback: (error, data) => this.callback(error, data)
     }
     chat = new Chat()
     chat.init(manager)
@@ -46,17 +44,17 @@ describe('Chat', function () {
     })
 
     it('Should confirm it can handle chat messages', function () {
-      var item = ltx.parse('<message type="headline" />')
+      const item = ltx.parse('<message type="headline" />')
       chat.handles(item).should.be.false
     })
 
     it('Should handle chat type messages', function () {
-      var item = ltx.parse('<message type="chat" />')
+      const item = ltx.parse('<message type="chat" />')
       chat.handles(item).should.be.true
     })
 
     it('Can handle simple plain text messages', function (done) {
-      socket.once('xmpp.chat.message', function (data) {
+      socket.once('xmpp.chat.message', (data) => {
         data.from.should.eql({
           user: 'user',
           domain: 'domain',
@@ -142,7 +140,7 @@ describe('Chat', function () {
     })
 
     it('https://github.com/lloydwatkin/xmpp-ftw/issues/40', function (done) {
-      socket.once('xmpp.chat.message', function (data) {
+      socket.once('xmpp.chat.message', (data) => {
         data.should.eql({
           from: { domain: 'buddycloud.org', user: 'lloyd', resource: '...' },
           content: 'hey',
@@ -158,7 +156,7 @@ describe('Chat', function () {
 
   describe('Can send messages', function () {
     it('Sends error message if \'to\' parameter missing', function (done) {
-      socket.once('xmpp.error.client', function (data) {
+      socket.once('xmpp.error.client', (data) => {
         data.description.should.equal('Missing \'to\' key')
         data.type.should.equal('modify')
         data.condition.should.equal('client-error')
@@ -182,9 +180,9 @@ describe('Chat', function () {
     })
 
     it('Can send simple plain text messages', function (done) {
-      var to = 'user@domain/resource'
-      var content = 'message'
-      xmpp.once('stanza', function (stanza) {
+      const to = 'user@domain/resource'
+      const content = 'message'
+      xmpp.once('stanza', (stanza) => {
         stanza.attrs.to.should.equal(to)
         stanza.attrs.type.should.equal('chat')
         stanza.getChild('body').getText().should.equal(content)
@@ -194,8 +192,8 @@ describe('Chat', function () {
     })
 
     it('Returns error if invalid XHTML provided', function (done) {
-      var to = 'romeo@montague.net/orchard'
-      var content = 'This will <strong>fail'
+      const to = 'romeo@montague.net/orchard'
+      const content = 'This will <strong>fail'
       socket.once('xmpp.error.client', function (data) {
         data.description.should.equal('Can not parse XHTML message')
         data.type.should.equal('modify')
@@ -213,67 +211,61 @@ describe('Chat', function () {
     })
 
     it('Returns expected XHTML message stanza', function (done) {
-      var to = 'romeo@montague.net/orchard'
-      var content = '<p>This will <strong>pass</strong></p>'
-      xmpp.once('stanza', function (stanza) {
+      const to = 'romeo@montague.net/orchard'
+      const content = '<p>This will <strong>pass</strong></p>'
+      xmpp.once('stanza', (stanza) => {
         stanza.getChild('body').getText()
-                    .should.equal('This will pass')
+          .should.equal('This will pass')
         stanza.attrs.to.should.equal(to)
         stanza.getChild('html', 'http://jabber.org/protocol/xhtml-im')
-                    .should.exist
+          .should.exist
         stanza.getChild('html')
-                    .getChild('body', 'http://www.w3.org/1999/xhtml')
-                    .should.exist
+          .getChild('body', 'http://www.w3.org/1999/xhtml')
+          .should
+          .exist
         stanza.getChild('html')
-                    .getChild('body')
-                    .children.join('')
-                    .should.equal(content)
+          .getChild('body')
+          .children.join('')
+          .should.equal(content)
         done()
       })
-      chat.sendMessage({
-        to: to,
-        content: content,
-        format: chat.XHTML
-      })
+      chat.sendMessage({ to, content, format: chat.XHTML })
     })
 
     it('Should build stanza with chat state notification', function (done) {
-      var to = 'romeo@montague.net/orchard'
-      var content = '<p>This will <strong>pass</strong></p>'
-      xmpp.once('stanza', function (stanza) {
+      const to = 'romeo@montague.net/orchard'
+      const content = '<p>This will <strong>pass</strong></p>'
+      xmpp.once('stanza', (stanza) => {
         stanza.getChild('body').getText()
-                    .should.equal('This will pass')
+          .should
+          .equal('This will pass')
         stanza.attrs.to.should.equal(to)
         stanza.getChild('html', 'http://jabber.org/protocol/xhtml-im')
-                    .should.exist
+          .should
+          .exist
         stanza.getChild('html')
-                    .getChild('body', 'http://www.w3.org/1999/xhtml')
-                    .should.exist
+          .getChild('body', 'http://www.w3.org/1999/xhtml')
+          .should
+          .exist
         stanza.getChild('html')
-                    .getChild('body')
-                    .children.join('')
-                    .should.equal(content)
+          .getChild('body')
+          .children.join('')
+          .should
+          .equal(content)
         done()
       })
-      chat.sendMessage({
-        to: to,
-        content: content,
-        format: chat.XHTML
-      })
+      chat.sendMessage({ to, content, format: chat.XHTML })
     })
 
     it('Should build stanza with just chat state', function (done) {
-      var to = 'romeo@montague.net/orchard'
-      var state = 'composing'
-      xmpp.once('stanza', function (stanza) {
+      const to = 'romeo@montague.net/orchard'
+      const state = 'composing'
+      xmpp.once('stanza', (stanza) => {
         stanza.attrs.to.should.equal(to)
         stanza.getChild('composing', chatState.NS).should.exist
         done()
       })
-      chat.sendMessage({
-        to: to,
-        state: state
-      })
+      chat.sendMessage({ to, state })
     })
   })
 
@@ -293,16 +285,16 @@ describe('Chat', function () {
     describe('Incoming', function () {
       it('Handles delivery receipts', function () {
         chat.handles(helper.getStanza('chat/receipt'))
-                    .should.be.true
+          .should.be.true
       })
 
       it('Handles delivery receipts', function () {
         chat.handles(helper.getStanza('chat/headline'))
-                    .should.be.true
+          .should.be.true
       })
 
       it('Sends expected delivery receipt', function (done) {
-        socket.once('xmpp.chat.receipt', function (data) {
+        socket.once('xmpp.chat.receipt', (data) => {
           data.from.should.eql({
             domain: 'royalty.england.lit',
             user: 'kingrichard',
@@ -312,31 +304,29 @@ describe('Chat', function () {
           done()
         })
         chat.handle(helper.getStanza('chat/receipt'))
-                    .should.be.true
+          .should.be.true
       })
 
       it('Informs the receiver that a receipt is requested', function (done) {
-        socket.on('xmpp.chat.message', function (data) {
+        socket.on('xmpp.chat.message', (data) => {
           data.id.should.equal('richard2-4.1.247')
           data.receipt.should.be.true
           done()
         })
         chat.handle(helper.getStanza('chat/plain-with-receipt'))
-                    .should.be.true
+          .should.be.true
       })
     })
 
     describe('Outgoing', function () {
       it('Errors if receipt requested but no callback provided', function (done) {
-        var request = {
+        const request = {
           to: 'user@example.com',
           content: 'hello',
           receipt: true
         }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Callback required')
@@ -348,15 +338,13 @@ describe('Chat', function () {
       })
 
       it('Errors if non-function callback provided', function (done) {
-        var request = {
+        const request = {
           to: 'user@example.com',
           content: 'hello',
           receipt: true
         }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing callback')
@@ -368,9 +356,9 @@ describe('Chat', function () {
       })
 
       it('Sends expected stanza with receipt request', function (done) {
-        var to = 'user@domain/resource'
-        var content = 'message'
-        xmpp.once('stanza', function (stanza) {
+        const to = 'user@domain/resource'
+        const content = 'message'
+        xmpp.once('stanza', (stanza) => {
           stanza.attrs.to.should.equal(to)
           stanza.attrs.type.should.equal('chat')
           stanza.getChild('body').getText().should.equal(content)
@@ -378,28 +366,26 @@ describe('Chat', function () {
           stanza.attrs.id.should.exist
           done()
         })
-        chat.sendMessage({ to: to, content: content, receipt: true }, function () {})
+        chat.sendMessage({ to, content, receipt: true }, () => {})
       })
 
       it('Retuns message ID', function (done) {
-        var to = 'user@domain/resource'
-        var content = 'message'
-        var callback = function (error, success) {
+        const to = 'user@domain/resource'
+        const content = 'message'
+        const callback = (error, success) => {
           should.not.exist(error)
           success.id.should.exist
           done()
         }
-        chat.sendMessage({ to: to, content: content, receipt: true }, callback)
+        chat.sendMessage({ to, content, receipt: true }, callback)
       })
     })
 
     describe('Sending delivery receipt', function () {
       it('Errors if missing \'to\' key', function (done) {
-        var request = {}
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        const request = {}
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing \'to\' key')
@@ -411,13 +397,9 @@ describe('Chat', function () {
       })
 
       it('Errors if missing \'id\' key', function (done) {
-        var request = {
-          to: 'user@example.com'
-        }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        socket.once('xmpp.error.client', function (error) {
+        const request = { to: 'user@example.com' }
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        socket.once('xmpp.error.client', (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description.should.equal('Missing \'id\' key')
@@ -429,11 +411,11 @@ describe('Chat', function () {
       })
 
       it('Sends expected stanza', function (done) {
-        var request = {
+        const request = {
           to: 'user@example.com',
           id: '1234'
         }
-        xmpp.once('stanza', function (message) {
+        xmpp.once('stanza', (message) => {
           message.is('message').should.be.true
           message.attrs.id.should.exist
           message.attrs.to.should.equal(request.to)
@@ -441,9 +423,7 @@ describe('Chat', function () {
           message.getChild('received').attrs.id.should.equal(request.id)
           done()
         })
-        socket.once('xmpp.error.client', function () {
-          done('Unexpected error')
-        })
+        socket.once('xmpp.error.client', () => done('Unexpected error'))
         socket.send('xmpp.chat.receipt', request)
       })
     })
@@ -452,18 +432,16 @@ describe('Chat', function () {
   describe('Last Message Correction XEP-0308', function () {
     describe('Outgoing', function () {
       it('Errors if correction provided but no content', function (done) {
-        var request = {
+        const request = {
           to: 'user@example.com',
           replace: '1233'
         }
-        xmpp.once('stanza', function () {
-          done('Unexpected outgoing stanza')
-        })
-        var callback = function (error) {
+        xmpp.once('stanza', () => done('Unexpected outgoing stanza'))
+        const callback = (error) => {
           error.type.should.equal('modify')
           error.condition.should.equal('client-error')
           error.description
-                        .should.equal('Missing \'content\' key')
+            .should.equal('Missing \'content\' key')
           error.request.should.eql(request)
           xmpp.removeAllListeners('stanza')
           done()
@@ -472,12 +450,12 @@ describe('Chat', function () {
       })
 
       it('Sends expected stanza', function (done) {
-        var request = {
+        const request = {
           to: 'user@example.com',
           content: 'Whoops, correct value is 5',
           replace: '1233'
         }
-        xmpp.once('stanza', function (message) {
+        xmpp.once('stanza', (message) => {
           message.is('message').should.be.true
           message.attrs.to.should.equal(request.to)
           message.getChild('replace', correction.NS)
@@ -488,38 +466,33 @@ describe('Chat', function () {
                         .should.equal(request.content)
           done()
         })
-        socket.once('xmpp.error.client', function () {
-          done('Unexpected error')
-        })
+        socket.once('xmpp.error.client', () => done('Unexpected error'))
         socket.send('xmpp.chat.message', request)
       })
     })
 
     describe('Incoming', function () {
       it('Adds \'replace\' parameter to incoming message', function (done) {
-        socket.on('xmpp.chat.message', function (data) {
+        socket.on('xmpp.chat.message', (data) => {
           data.id.should.equal('good1')
           data.replace.should.equal('bad1')
           data.content.should.containEql('through yonder window')
           done()
         })
         chat.handle(helper.getStanza('chat/message-correction'))
-                    .should.be.true
+          .should.be.true
       })
     })
   })
 
   it('Can unregister events', function (done) {
-    var request = {
+    const request = {
       to: 'user@example.com',
       content: 'Whoops, correct value is 5',
       replace: '1233'
     }
     chat.unregisterEvents()
-    xmpp.once('stanza', function () {
-      done('Should not have listened to event')
-    })
-
+    xmpp.once('stanza', () => done('Should not have listened to event'))
     socket.send('xmpp.chat.message', request)
     done()
   })
