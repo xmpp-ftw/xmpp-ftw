@@ -37,7 +37,7 @@
   "author": "Steven Lloyd Watkin <lloyd@evilprofessor.co.uk>",
   "license": "Apache 2.0",
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "scripts": {
     "test": "./node_modules/.bin/grunt test"
