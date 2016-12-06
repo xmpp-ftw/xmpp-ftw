@@ -1,149 +1,136 @@
-'use strict';
+'use strict'
+/* eslint-env mocha */
 
-var Base   = require('../../index').Base
-  , helper = require('../helper')
-  , should = require('should')
+const Base = require('../../index').Base
+const helper = require('../helper')
+const should = require('should')
 
 /* jshint -W030 */
-describe('Base', function() {
+describe('Base', function () {
+  let base = null
+  let socket = null
+  let xmpp = null
+  let manager = null
 
-    var base, socket, xmpp, manager
+  beforeEach(function () {
+    socket = new helper.SocketEventer()
+    xmpp = new helper.XmppEventer()
+    manager = {
+      socket: socket,
+      client: xmpp,
+      jid: 'test@example.com'
+    }
+    base = new Base()
+    base.init(manager)
+  })
 
-    before(function() {
-        socket = new helper.SocketEventer()
-        xmpp = new helper.XmppEventer()
-        manager = {
-            socket: socket,
-            client: xmpp,
-            jid: 'test@example.com'
-        }
-        base = new Base()
-        base.init(manager)
+  it('Handles nothing', function () {
+    should(base.handles()).be.false
+  })
+
+  it('Handle(s) nothing', function () {
+    should(base.handle()).be.false
+  })
+
+  describe('Stanza ID', function () {
+    it('Sets a UUID as stanza ID', function () {
+      const id = base._getId()
+      const regex = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/
+      id.should.match(regex)
     })
 
-    beforeEach(function() {
-        socket.removeAllListeners()
-        xmpp.removeAllListeners()
-        base.init(manager)
+    it('Increments counter on prototype', function () {
+      delete Base.prototype.id
+      base._getId()
+      Base.prototype.id.counter.should.exist
+      Base.prototype.id.counter.should.equal(1)
+      base._getId()
+      Base.prototype.id.counter.should.equal(2)
+      base._getId()
+      Base.prototype.id.counter.should.equal(3)
     })
 
-    it('Handles nothing', function() {
-        should(base.handles()).be.false
+    it('Should generate different IDs', function () {
+      const ids = []
+      const max = 100
+      for (let i = 0; i < max + 1; i++) {
+        ids.push(base._getId())
+      }
+      for (let j = 0; j < max; j++) {
+        ids[j].should.not.equal(ids[j + 1])
+      }
+    })
+  })
+
+  describe('Error parsing', function () {
+    it('Parses a basic error', function () {
+      const stanza = helper.getStanza('error-stanzas/basic')
+      const error = base._parseError(stanza)
+      error.type.should.equal('modify')
+      error.condition.should.equal('bad-request')
+      should.not.exist(error.description)
+      should.not.exist(error.application)
     })
 
-    it('Handle(s) nothing', function() {
-        should(base.handle()).be.false
+    it('Parses an extended error', function () {
+      const stanza = helper.getStanza('error-stanzas/extended')
+      const error = base._parseError(stanza)
+      error.type.should.equal('cancel')
+      error.condition.should.equal('feature-not-implemented')
+      should.not.exist(error.description)
+
+      error.application.should.exist
+      error.application.condition.should.equal('unsupported')
+      error.application.xmlns.should.equal('http://jabber.org/protocol/pubsub#errors')
+      error.application.description.should.equal('\'retrive-subscriptions\' not supported')
     })
 
-    describe('Stanza ID', function() {
+    it('Parses an extended error with text description', function () {
+      const stanza = helper.getStanza('error-stanzas/extended-text')
+      const error = base._parseError(stanza)
 
-        it('Sets a UUID as stanza ID', function() {
-            var id = base._getId()
-            var regex = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/
-            id.should.match(regex)
-        })
-
-        it('Increments counter on prototype', function() {
-            delete Base.prototype.id
-            base._getId()
-            Base.prototype.id.counter.should.exist
-            Base.prototype.id.counter.should.equal(1)
-            base._getId()
-            Base.prototype.id.counter.should.equal(2)
-            base._getId()
-            Base.prototype.id.counter.should.equal(3)
-        })
-        
-        it('Should generate different IDs', function() {
-            var ids = []
-            var max = 100
-            for (var i = 0; i < max + 1; i++) {
-                ids.push(base._getId())
-            }
-            for (var j = 0; j < max; j++) {
-                ids[j].should.not.equal(ids[j+1])
-            }
-        })
-
+      error.type.should.equal('cancel')
+      error.condition.should.equal('gone')
+      error.description.should.equal('xmpp:romeo@afterlife.example.net')
+      error.by.should.equal('example.net')
     })
-    
-    describe('Error parsing', function() {
-        
-        it('Parses a basic error', function() {
-            var stanza = helper.getStanza('error-stanzas/basic')
-            var error = base._parseError(stanza)
-            error.type.should.equal('modify')
-            error.condition.should.equal('bad-request')
-            should.not.exist(error.description)
-            should.not.exist(error.application)
-        })
-      
-        it('Parses an extended error', function() {
-            var stanza = helper.getStanza('error-stanzas/extended')
-            var error = base._parseError(stanza)
-            error.type.should.equal('cancel')
-            error.condition.should.equal('feature-not-implemented')
-            should.not.exist(error.description)
-          
-            error.application.should.exist
-            error.application.condition.should.equal('unsupported')
-            error.application.xmlns.should.equal('http://jabber.org/protocol/pubsub#errors')
-            error.application.description.should.equal('\'retrive-subscriptions\' not supported')
-        })
-      
-        it('Parses an extended error with text description', function() {
-            var stanza = helper.getStanza('error-stanzas/extended-text')
-            var error = base._parseError(stanza)
-            
-            error.type.should.equal('cancel')
-            error.condition.should.equal('gone')
-            error.description.should.equal('xmpp:romeo@afterlife.example.net')
-            error.by.should.equal('example.net')
-        })
+  })
 
+  describe('JID parsing', function () {
+    it('Parses a domain', function () {
+      const jid = base._getJid('mcfly.org')
+      jid.should.eql({ domain: 'mcfly.org' })
     })
-    
-    describe('JID parsing', function() {
-  
-        it('Parses a domain', function() {
-            var jid = base._getJid('mcfly.org')
-            jid.should.eql({ domain: 'mcfly.org' })
-        })
-        
-        it('Parses a bare JID', function() {
-            var jid = base._getJid('marty@mcfly.org')
-            jid.should.eql({ user: 'marty', domain: 'mcfly.org' })
-        })
-        
-        it('Parses a full JID', function() {
-            var jid = base._getJid('marty@mcfly.org/delorean')
-            jid.should.eql({ user: 'marty', domain: 'mcfly.org', resource: 'delorean' })
-        })
-    })
-    
-    describe('Cache', function() {
 
-        it('When setting cache \'this\' is returned', function() {
-            base.setCache({}).should.equal(base)
-        })
-        
-        it('Returns cache when it has been set', function() {
-            var cache = { caching: { is: 'fun' } }
-            base.setCache(cache)._getCache().should.equal(cache)
-        })
-        
-        it('Returns null when a cache hasn\'t been set', function() {
-            base._getCache().should.be.null
-        })
-        
+    it('Parses a bare JID', function () {
+      const jid = base._getJid('marty@mcfly.org')
+      jid.should.eql({ user: 'marty', domain: 'mcfly.org' })
     })
-    
-    describe('Events', function() {
 
-        it('Doesn\'t do anything when there\'s no events object', function() {
-            base.unregisterEvents()
-        })
-        
+    it('Parses a full JID', function () {
+      const jid = base._getJid('marty@mcfly.org/delorean')
+      jid.should.eql({ user: 'marty', domain: 'mcfly.org', resource: 'delorean' })
     })
-    
+  })
+
+  describe('Cache', function () {
+    it('When setting cache \'this\' is returned', function () {
+      base.setCache({}).should.equal(base)
+    })
+
+    it('Returns cache when it has been set', function () {
+      const cache = { caching: { is: 'fun' } }
+      base.setCache(cache)._getCache().should.equal(cache)
+    })
+
+    it('Returns null when a cache hasn\'t been set', function () {
+      should.equal(base._getCache(), null)
+    })
+  })
+
+  describe('Events', function () {
+    it('Doesn\'t do anything when there\'s no events object', function () {
+      base.unregisterEvents()
+    })
+  })
 })

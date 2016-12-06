@@ -6,7 +6,7 @@
   "dependencies": {
     "debounce": "^1.0.0",
     "ltx": "^2.1.1",
-    "node-uuid": "~1.4.1",
+    "node-uuid": "^1.4.7",
     "node-xmpp-client": "^3.0.0",
     "node-xmpp-core": "^5.0.1"
   },
@@ -14,9 +14,9 @@
     "coveralls": "^2.11.4",
     "grunt": "~1.0.1",
     "grunt-cli": "^1.1.0",
-    "grunt-contrib-jshint": "~1.0.0",
     "grunt-mocha-cli": "~2.1.0",
     "grunt-mocha-istanbul": "^5.0.2",
+    "grunt-standard": "^2.0.0",
     "istanbul": "^0.4.0",
     "mocha": "~3.1.0",
     "nodemon": "~1.11.0",
@@ -37,7 +37,7 @@
   "author": "Steven Lloyd Watkin <lloyd@evilprofessor.co.uk>",
   "license": "Apache 2.0",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6"
   },
   "scripts": {
     "test": "./node_modules/.bin/grunt test"
