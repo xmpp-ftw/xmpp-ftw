@@ -7,7 +7,7 @@ module.exports = {
   Presence: require('./lib/presence'),
   Chat: require('./lib/chat'),
   Roster: require('./lib/roster'),
-  JID: require('node-xmpp-core').JID,
+  JID: require('node-xmpp-client').JID,
   utils: {
     'xep-0004': require('./lib/utils/xep-0004'),
     'xep-0059': require('./lib/utils/xep-0059'),

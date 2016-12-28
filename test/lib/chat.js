@@ -2,7 +2,7 @@
 /* eslint-env mocha */
 
 const Chat = require('../../index').Chat
-const ltx = require('ltx')
+const ltx = require('node-xmpp-client').ltx
 const helper = require('../helper')
 const should = require('should')
 const chatState = require('../../index').utils['xep-0085']

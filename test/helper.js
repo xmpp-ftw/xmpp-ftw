@@ -1,6 +1,6 @@
 'use strict'
 
-const ltx = require('ltx')
+const ltx = require('node-xmpp-client').ltx
 const fs = require('fs')
 const Event = require('events').EventEmitter
 

@@ -2,7 +2,7 @@
 /* eslint-env mocha */
 
 const correction = require('../../../index').utils['xep-0308']
-const ltx = require('ltx')
+const ltx = require('node-xmpp-client').ltx
 
 /* jshint -W030 */
 describe('XEP-0308', function () {
