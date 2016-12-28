@@ -3,7 +3,7 @@
 
 const Xmpp = require('../../index').Xmpp
 const should = require('should')
-const ltx = require('ltx')
+const ltx = require('node-xmpp-client').ltx
 const helper = require('../helper')
 
 /* jshint -W030 */

@@ -2,7 +2,7 @@
 /* eslint-env mocha */
 
 const receipt = require('../../../index').utils['xep-0184']
-const ltx = require('ltx')
+const ltx = require('node-xmpp-client').ltx
 
 /* jshint -W030 */
 describe('XEP-0184', function () {

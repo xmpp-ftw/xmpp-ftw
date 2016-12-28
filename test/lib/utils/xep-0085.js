@@ -2,7 +2,7 @@
 /* eslint-env mocha */
 
 const state = require('../../../index').utils['xep-0085']
-const ltx = require('ltx')
+const ltx = require('node-xmpp-client').ltx
 
 /* jshint -W030 */
 describe('XEP-0085', function () {

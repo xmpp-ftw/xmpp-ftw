@@ -4,7 +4,7 @@
 const dataForm = require('../../../index').utils['xep-0004']
 const should = require('should')
 const helper = require('../../helper')
-const ltx = require('ltx')
+const ltx = require('node-xmpp-client').ltx
 
 /* jshint -W030 */
 describe('XEP-0004', function () {

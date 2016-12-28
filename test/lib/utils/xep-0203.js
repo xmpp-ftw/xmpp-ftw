@@ -2,7 +2,7 @@
 /* eslint-env mocha */
 
 const delay = require('../../../index').utils['xep-0203']
-const ltx = require('ltx')
+const ltx = require('node-xmpp-client').ltx
 
 /* jshint -W030 */
 describe('XEP-0203', function () {
