@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "debounce": "^1.0.0",
-    "node-xmpp-client": "^3.0.0",
+    "node-xmpp-client": "^3.2.0",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
