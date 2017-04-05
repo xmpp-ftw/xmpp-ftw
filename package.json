@@ -14,7 +14,7 @@
     "grunt-cli": "^1.1.0",
     "grunt-mocha-cli": "3",
     "grunt-mocha-istanbul": "^5.0.2",
-    "grunt-standard": "^2.0.0",
+    "grunt-standard": "^3.1.0",
     "istanbul": "^0.4.0",
     "mocha": "~3.2.0",
     "nodemon": "~1.11.0",
