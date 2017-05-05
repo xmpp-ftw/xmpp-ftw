@@ -1,5 +1,7 @@
 # XMPP-FTW (For The Web/Win)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/xmpp-ftw/xmpp-ftw.svg)](https://greenkeeper.io/)
+
 The goal of this project is to make XMPP really simple to use for developers. This module takes away all of the XML 
 and works by hooking to events which are passed between client and server using a transport in JSON. In the example 
 code we use socket.io, but there is no reason this can not be replaced with engine.io, or implement your own transport 
